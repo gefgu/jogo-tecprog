@@ -1,0 +1,9 @@
+.vs/
+SFML-2.6.1/
+x64/
+*.sln
+**/*.sln
+**.vcxproj**
+**/*.vcxproj**
+Jogo/x64/
+Jogo/x64/*
