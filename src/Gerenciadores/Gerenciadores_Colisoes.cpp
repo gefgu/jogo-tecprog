@@ -1,0 +1,1 @@
+#include "Gerenciador_Colisoes.hpp"
