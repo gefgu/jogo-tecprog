@@ -1,3 +1,6 @@
+#ifndef GERENCIADOR_GRAFICO_HPP
+#define GERENCIADOR_GRAFICO_HPP
+
 #include "Ente.hpp"
 
 class BiblioGrafica;
@@ -12,3 +15,5 @@ public:
   ~Gerenciador_Grafico();
   void desenharEnte(Ente *pE);
 }
+
+#endif // GERENCIADOR_GRAFICO_HPP

@@ -1,3 +1,5 @@
+#ifndef ENTE_HPP
+#define ENTE_HPP
 
 class Gerenciador_Grafico;
 class Figura;
@@ -15,3 +17,5 @@ public:
   virtual void executar() = 0;
   void desenhar();
 }
+
+#endif // ENTE_HPP

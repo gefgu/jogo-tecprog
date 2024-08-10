@@ -1,3 +1,6 @@
+#ifndef LISTAENTIDADES_HPP
+#define LISTAENTIDADES_HPP
+
 #include "Entidade.hpp"
 #include "Lista.hpp"
 
@@ -12,3 +15,5 @@ public:
   void incluir(Entidade *pE);
   void percorrer();
 }
+
+#endif // LISTAENTIDADES_HPP
