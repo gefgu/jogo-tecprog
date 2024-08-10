@@ -6,7 +6,14 @@ class Elemento
 {
 private:
   Elemento<TE> *pProx;
-  TE pInfo;
+  TE *pInfo;
+
+public:
+  Elemento(TE *elem);
+  ~Elemento();
+  TE *getInfo();
+  Elemento<TE> *getProximo();
+  void setProximo(Elemento<TE> *prox);
 }
 
 #endif // ELEMENTO_HPP
