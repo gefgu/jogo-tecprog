@@ -14,6 +14,7 @@ public:
     Entidade(int px, int py);
     virtual ~Entidade();
     virtual void executar() = 0;
+    void desenhar(sf::RenderWindow &window);
     // virtual void desenhar();
 };
 

@@ -11,9 +11,9 @@ void Ente::setGerenciadorGrafico(Gerenciador_Grafico *pGerenciador)
   pGG = pGerenciador;
 }
 
-Ente::Ente() : id(cont++), sprite()
+Ente::Ente() : id(cont++)
 {
-  sprite.setPosition(20, 20);
+  // sprite.setPosition(20, 20);
 }
 
 Ente::~Ente() {}
@@ -30,7 +30,7 @@ void Ente::desenhar()
   }
 }
 
-sf::Sprite Ente::getSprite()
-{
-  return sprite;
-}
+// sf::Sprite Ente::getSprite()
+// {
+//   return sprite;
+// }

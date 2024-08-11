@@ -10,7 +10,7 @@ class Ente
 {
 protected:
   int id;
-  sf::Sprite sprite;
+  // sf::Sprite sprite;
   static Gerenciador_Grafico *pGG;
   static int cont;
   // Figura *pFig;
@@ -21,7 +21,7 @@ public:
   virtual void executar() = 0;
   void desenhar();
   static void setGerenciadorGrafico(Gerenciador_Grafico *pGerenciador);
-  sf::Sprite getSprite();
+  // sf::Sprite getSprite();
 };
 
 #endif // ENTE_HPP
