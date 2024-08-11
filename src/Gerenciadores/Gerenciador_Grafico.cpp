@@ -2,6 +2,7 @@
 
 Gerenciador_Grafico::Gerenciador_Grafico() : window(sf::VideoMode(1600, 900), "Meu Jogo")
 {
+  clock.restart();
 }
 
 Gerenciador_Grafico::~Gerenciador_Grafico()
@@ -28,10 +29,22 @@ void Gerenciador_Grafico::display()
   }
 
   window.display();
-  // sf::sleep(sf::milliseconds(100));
+  updateElapsedTime();
+  sf::sleep(sf::milliseconds(1000 / 120)); // 120 FPS max
 }
 
 bool Gerenciador_Grafico::isWindowOpen()
 {
   return window.isOpen();
+}
+
+void Gerenciador_Grafico::updateElapsedTime()
+{
+  elapsed_time = clock.getElapsedTime().asMilliseconds();
+  clock.restart();
+}
+
+float Gerenciador_Grafico::getElapsedTime()
+{
+  return elapsed_time;
 }
