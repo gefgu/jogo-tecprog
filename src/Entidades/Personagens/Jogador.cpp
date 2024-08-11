@@ -7,7 +7,7 @@ const float TEMPO_FRAME = 0.016f; // Duração de cada frame (em segundos) - par
 const string IDLE_P1_PATH = "./assets/Gangsters_1/Idle.png";
 
 Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas),
-                                                  velocidadeY(0), noChao(false)
+                                                  velocidadeY(0), noChao(false), animation_index(0), animation_max_frames(5)
 {
     shape.setFillColor(sf::Color::Green); // Cor diferente para o jogador
 
@@ -37,7 +37,15 @@ void Jogador::executar()
     }
 
     sprite.setPosition(x, y);
-    sprite.setTextureRect(sf::IntRect(128, 0, 128, 128));
+    if (animation_index < animation_max_frames)
+    {
+        animation_index++;
+    }
+    else
+    {
+        animation_index = 0;
+    }
+    sprite.setTextureRect(sf::IntRect(128 * animation_index, 0, 128, 128));
 }
 
 void Jogador::aplicarGravidade()

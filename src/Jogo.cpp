@@ -34,5 +34,5 @@ void Jogo::executar()
         entidades.desenhar();
 
         gerenciadorGrafico.display();
-    }
+        }
 }

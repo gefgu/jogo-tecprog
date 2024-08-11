@@ -28,6 +28,7 @@ void Gerenciador_Grafico::display()
   }
 
   window.display();
+  // sf::sleep(sf::milliseconds(100));
 }
 
 bool Gerenciador_Grafico::isWindowOpen()
