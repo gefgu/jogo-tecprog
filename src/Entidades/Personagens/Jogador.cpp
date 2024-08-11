@@ -6,8 +6,10 @@ const float TEMPO_FRAME = 0.016f; // Duração de cada frame (em segundos) - par
 
 const string IDLE_P1_PATH = "./assets/Gangsters_1/Idle.png";
 
+const int ANIMATION_FRAMES_BEFORE_CHANGE = 24;
+
 Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas),
-                                                  velocidadeY(0), noChao(false), animation_index(0), animation_max_frames(5)
+                                                  velocidadeY(0), noChao(false), animation_index(0), animation_max_frames(5 * ANIMATION_FRAMES_BEFORE_CHANGE)
 {
     shape.setFillColor(sf::Color::Green); // Cor diferente para o jogador
 
@@ -25,6 +27,7 @@ void Jogador::atacar()
 void Jogador::executar()
 {
     // aplicarGravidade();
+
     float elapsed_time = pGG->getElapsedTime();
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
@@ -46,7 +49,7 @@ void Jogador::executar()
     {
         animation_index = 0;
     }
-    sprite.setTextureRect(sf::IntRect(128 * animation_index, 0, 128, 128));
+    sprite.setTextureRect(sf::IntRect(128 * (animation_index / (int)ANIMATION_FRAMES_BEFORE_CHANGE), 0, 128, 128));
 }
 
 void Jogador::aplicarGravidade()
