@@ -10,9 +10,11 @@ Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas),
                                                   velocidadeY(0), noChao(false)
 {
     shape.setFillColor(sf::Color::Green); // Cor diferente para o jogador
-    // sf::Texture textura = pGG->carregaTextura(IDLE_P1_PATH);
-    // sprite.setTexture(textura);
-    // sprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
+
+    carregaTextura(IDLE_P1_PATH);
+    sprite.setTexture(textura);
+    sprite.setTextureRect(sf::IntRect(0, 0, 128, 128));
+    sprite.scale(3, 3);
 }
 
 void Jogador::atacar()
@@ -25,16 +27,17 @@ void Jogador::executar()
     aplicarGravidade();
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        x -= 100 * TEMPO_FRAME; // Movimentação horizontal ajustada para 200 unidades/segundo
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        x += 100 * TEMPO_FRAME;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && noChao)
+        x -= 10 * TEMPO_FRAME; // Movimentação horizontal ajustada para 200 unidades/segundo
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        x += 10 * TEMPO_FRAME;
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && noChao)
     {
         velocidadeY = -sqrt(2 * GRAVIDADE * 80); // Cálculo da velocidade inicial para alcançar 150 unidades de altura
         noChao = false;
     }
 
-    shape.setPosition(x, y);
+    sprite.setPosition(x, y);
+    sprite.setTextureRect(sf::IntRect(128, 0, 128, 128));
 }
 
 void Jogador::aplicarGravidade()

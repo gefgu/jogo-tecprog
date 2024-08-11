@@ -1,7 +1,4 @@
 #include "Ente.hpp"
-#include <iostream>
-
-using namespace std;
 
 int Ente::cont(0);
 Gerenciador_Grafico *Ente::pGG(NULL);
@@ -11,9 +8,9 @@ void Ente::setGerenciadorGrafico(Gerenciador_Grafico *pGerenciador)
   pGG = pGerenciador;
 }
 
-Ente::Ente() : id(cont++)
+Ente::Ente() : id(cont++), textura(), sprite()
 {
-  // sprite.setPosition(20, 20);
+  sprite.setPosition(60, 60);
 }
 
 Ente::~Ente() {}
@@ -30,7 +27,15 @@ void Ente::desenhar()
   }
 }
 
-// sf::Sprite Ente::getSprite()
-// {
-//   return sprite;
-// }
+sf::Sprite Ente::getSprite()
+{
+  return sprite;
+}
+
+void Ente::carregaTextura(string textura_path)
+{
+  if (!textura.loadFromFile(textura_path))
+  {
+    cout << "Erro carregando textura: " << textura_path << endl;
+  }
+}

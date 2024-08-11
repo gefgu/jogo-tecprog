@@ -10,7 +10,7 @@ Gerenciador_Grafico::~Gerenciador_Grafico()
 
 void Gerenciador_Grafico::desenharEnte(Ente *pE)
 {
-  // window.draw(pE->getSprite());
+  window.draw(pE->getSprite());
 }
 
 void Gerenciador_Grafico::clear()
@@ -33,15 +33,4 @@ void Gerenciador_Grafico::display()
 bool Gerenciador_Grafico::isWindowOpen()
 {
   return window.isOpen();
-}
-
-sf::Texture Gerenciador_Grafico::carregaTextura(string textura_path)
-{
-  sf::Texture tex;
-  if (!tex.loadFromFile(textura_path, sf::IntRect(0, 0, 32, 32)))
-  {
-    cout << "Erro carregando textura: " << textura_path << endl;
-    tex.create(32, 32);
-  }
-  return tex;
 }

@@ -15,7 +15,7 @@ public:
     virtual ~Entidade();
     virtual void executar() = 0;
     void desenhar(sf::RenderWindow &window);
-    // virtual void desenhar();
+    virtual void desenhar();
 };
 
 #endif // ENTIDADE_HPP
