@@ -1,1 +1,1 @@
-#include "Obstaculo_Facil.hpp"
+#include "Entidades/Obstaculos/Obstaculo_Facil.hpp"

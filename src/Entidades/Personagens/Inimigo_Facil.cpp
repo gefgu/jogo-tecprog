@@ -1,1 +1,1 @@
-#include "Inimigo_Facil.hpp"
+#include "Entidades/Personagens/Inimigo_Facil.hpp"

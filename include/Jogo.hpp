@@ -3,24 +3,26 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "Entidade.hpp"
-#include "Personagem.hpp"
-#include "Jogador.hpp"
-#include "Inimigo.hpp"
-#include "Obstaculo.hpp"
-#include "Mapa.hpp"
+#include "Entidades/Entidade.hpp"
+#include "Entidades/Personagens/Personagem.hpp"
+#include "Entidades/Personagens/Jogador.hpp"
+#include "Entidades/Personagens/Inimigo.hpp"
+#include "Entidades/Obstaculos/Obstaculo.hpp"
+#include "Listas/ListaEntidades.hpp"
+// #include "Mapa.hpp"
 
-class Jogo {
+class Jogo
+{
 private:
     sf::RenderWindow window;
-    Mapa mapa;
-    std::vector<Entidade*> entidades;
-    Jogador* jogador;
+    // Mapa mapa;
+    ListaEntidades entidades;
+    Jogador *jogador;
 
 public:
     Jogo();
     ~Jogo();
-    void adicionarEntidade(Entidade* e);
+    void adicionarEntidade(Entidade *e);
     void executar();
 };
 

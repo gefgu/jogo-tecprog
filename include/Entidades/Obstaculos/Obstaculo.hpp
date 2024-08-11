@@ -1,9 +1,10 @@
 #ifndef OBSTACULO_HPP
 #define OBSTACULO_HPP
 
-#include "Entidade.hpp"
+#include "Entidades/Entidade.hpp"
 
-class Obstaculo : public Entidade {
+class Obstaculo : public Entidade
+{
 protected:
     bool danoso;
 

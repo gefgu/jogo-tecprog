@@ -7,6 +7,6 @@ class Obstaculo_Medio : public Obstaculo
 {
 public:
   void executar();
-}
+};
 
 #endif // OBSTACULO_MEDIO_HPP

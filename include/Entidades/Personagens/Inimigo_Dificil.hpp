@@ -7,6 +7,6 @@ class Inimigo_Dificil : public Inimigo
 {
 public:
   void executar();
-}
+};
 
 #endif // INIMIGO_DIFICIL_HPP

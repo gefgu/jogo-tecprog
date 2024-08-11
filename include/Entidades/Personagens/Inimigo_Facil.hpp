@@ -12,6 +12,6 @@ private:
 public:
   void executar();
   void danificar(Jogador *p);
-}
+};
 
 #endif // INIMIGO_FACIL_HPP

@@ -1,9 +1,10 @@
 #ifndef JOGADOR_HPP
 #define JOGADOR_HPP
 
-#include "Personagem.hpp"
+#include "Entidades/Personagens/Personagem.hpp"
 
-class Jogador : public Personagem {
+class Jogador : public Personagem
+{
 private:
     float velocidadeY;
     bool noChao;
