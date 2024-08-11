@@ -7,6 +7,8 @@ class Personagem : public Entidade
 {
 protected:
     int num_vidas;
+    float velocidadeX; // em unidades por segundo
+    float velocidadeY; // em unidades por segundo
 
 public:
     Personagem(float px, float py, int vidas);

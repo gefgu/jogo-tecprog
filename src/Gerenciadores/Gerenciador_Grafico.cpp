@@ -30,7 +30,7 @@ void Gerenciador_Grafico::display()
 
   window.display();
   updateElapsedTime();
-  // sf::sleep(sf::milliseconds(100));
+  sf::sleep(sf::milliseconds(1000 / 120)); // 120 FPS max
 }
 
 bool Gerenciador_Grafico::isWindowOpen()
@@ -42,4 +42,9 @@ void Gerenciador_Grafico::updateElapsedTime()
 {
   elapsed_time = clock.getElapsedTime().asMilliseconds();
   clock.restart();
+}
+
+float Gerenciador_Grafico::getElapsedTime()
+{
+  return elapsed_time;
 }

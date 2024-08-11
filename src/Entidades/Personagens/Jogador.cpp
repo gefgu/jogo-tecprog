@@ -24,12 +24,13 @@ void Jogador::atacar()
 
 void Jogador::executar()
 {
-    aplicarGravidade();
+    // aplicarGravidade();
+    float elapsed_time = pGG->getElapsedTime();
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        x -= 10 * TEMPO_FRAME; // Movimentação horizontal ajustada para 200 unidades/segundo
+        x -= velocidadeX * (elapsed_time / 100.0);
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        x += 10 * TEMPO_FRAME;
+        x += velocidadeX * (elapsed_time / 100.0);
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && noChao)
     {
         velocidadeY = -sqrt(2 * GRAVIDADE * 80); // Cálculo da velocidade inicial para alcançar 150 unidades de altura
