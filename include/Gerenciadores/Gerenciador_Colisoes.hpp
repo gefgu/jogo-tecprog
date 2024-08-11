@@ -3,8 +3,8 @@
 
 #include "vector"
 #include "list"
-#include "Inimigo.hpp"
-#include "Obstaculo.hpp"
+#include "Entidades/Personagens/Inimigo.hpp"
+#include "Entidades/Obstaculos/Obstaculo.hpp"
 
 using namespace std;
 
@@ -20,6 +20,6 @@ public:
   void incluirObstaculo();
   void tratarColisoesJogsObstaculos();
   void tratarColisoesJogsInimigos();
-}
+};
 
 #endif // GERENCIADOR_COLISOES_HPP

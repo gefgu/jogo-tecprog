@@ -8,7 +8,7 @@ class Lista
 {
 private:
   Elemento<TL> *pPrimeiro;
-  Element<TL> *pUltimo;
+  Elemento<TL> *pUltimo;
 
 public:
   Lista();
@@ -16,10 +16,10 @@ public:
   void incluir(TL *elem);
   Elemento<TL> *getPrimeiro();
   Elemento<TL> *getUltimo();
-}
+};
 
 template <class TL>
-Lista<TL>::Lista() : pPrimeiro(NULL), pUltimo(NULL),
+Lista<TL>::Lista() : pPrimeiro(NULL), pUltimo(NULL)
 {
 }
 

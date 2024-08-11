@@ -1,1 +1,1 @@
-#include "Gerenciador_Colisoes.hpp"
+#include "Gerenciadores/Gerenciador_Colisoes.hpp"

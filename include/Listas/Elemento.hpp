@@ -1,5 +1,8 @@
 #ifndef ELEMENTO_HPP
 #define ELEMENTO_HPP
+#include <iostream>
+
+using namespace std;
 
 template <class TE>
 class Elemento
@@ -14,10 +17,10 @@ public:
   TE *getInfo();
   Elemento<TE> *getProximo();
   void setProximo(Elemento<TE> *prox);
-}
+};
 
 template <class TE>
-Elemento<TE>::Elemento(TE *elem) : pInfo(NULL), pProx(NULL),
+Elemento<TE>::Elemento(TE *elem) : pInfo(NULL), pProx(NULL)
 {
   if (elem)
   {
@@ -49,7 +52,7 @@ Elemento<TE> *Elemento<TE>::getProximo()
 }
 
 template <class TE>
-Elemento<TE> *Elemento<TE>::setProximo(Elemento<TE> *prox)
+void Elemento<TE>::setProximo(Elemento<TE> *prox)
 {
   if (prox)
   {

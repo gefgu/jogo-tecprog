@@ -7,3 +7,4 @@ x64/
 **/*.vcxproj**
 Jogo/x64/
 Jogo/x64/*
+**/*.o

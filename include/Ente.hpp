@@ -16,6 +16,6 @@ public:
   ~Ente();
   virtual void executar() = 0;
   void desenhar();
-}
+};
 
 #endif // ENTE_HPP

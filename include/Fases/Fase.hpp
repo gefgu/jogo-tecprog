@@ -10,6 +10,6 @@ public:
   void gerenciar_colisoes();
   void criarInimMedios();
   void criarObstaculosMedios();
-}
+};
 
 #endif // FASE_HPP

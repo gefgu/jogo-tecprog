@@ -3,17 +3,17 @@
 
 #include "Ente.hpp"
 
-class BiblioGrafica;
+// class BiblioGrafica;
 
 class Gerenciador_Grafico
 {
 private:
-  BiblioGrafica obj;
+  // BiblioGrafica obj;
 
 public:
   Gerenciador_Grafico();
   ~Gerenciador_Grafico();
   void desenharEnte(Ente *pE);
-}
+};
 
 #endif // GERENCIADOR_GRAFICO_HPP

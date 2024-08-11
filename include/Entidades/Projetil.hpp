@@ -7,6 +7,6 @@ class Projetil : public Entidade
 {
 public:
   void executar();
-}
+};
 
 #endif // PROJETIL_HPP

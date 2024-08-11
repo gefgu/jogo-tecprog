@@ -1,9 +1,10 @@
 #ifndef PERSONAGEM_HPP
 #define PERSONAGEM_HPP
 
-#include "Entidade.hpp"
+#include "Entidades/Entidade.hpp"
 
-class Personagem : public Entidade {
+class Personagem : public Entidade
+{
 protected:
     int num_vidas;
 

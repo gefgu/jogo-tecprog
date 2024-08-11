@@ -1,1 +1,1 @@
-#include "Gerenciador_Grafico.hpp"
+#include "Gerenciadores/Gerenciador_Grafico.hpp"

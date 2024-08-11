@@ -2,7 +2,7 @@
 #define OBSTACULO_FACIL_HPP
 
 #include "Obstaculo.hpp"
-#include "Jogador.hpp"
+#include "Entidades/Personagens/Jogador.hpp"
 
 class Obstaculo_Facil : public Obstaculo
 {
@@ -12,6 +12,6 @@ private:
 public:
   void executar();
   void obstacular(Jogador *p);
-}
+};
 
 #endif // OBSTACULO_FACIL_HPP
