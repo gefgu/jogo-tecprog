@@ -1,5 +1,5 @@
 #include "Ente.hpp"
-#include "iostream"
+#include <iostream>
 
 using namespace std;
 
@@ -11,8 +11,9 @@ void Ente::setGerenciadorGrafico(Gerenciador_Grafico *pGerenciador)
   pGG = pGerenciador;
 }
 
-Ente::Ente() : id(cont++)
+Ente::Ente() : id(cont++), sprite()
 {
+  sprite.setPosition(20, 20);
 }
 
 Ente::~Ente() {}
@@ -27,4 +28,9 @@ void Ente::desenhar()
   {
     cout << "Gerenciador Gráfico não encontrado em Ente" << endl;
   }
+}
+
+sf::Sprite Ente::getSprite()
+{
+  return sprite;
 }

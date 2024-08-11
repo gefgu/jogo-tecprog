@@ -4,9 +4,15 @@
 const float GRAVIDADE = 9.8f;     // Aceleração da gravidade (em unidades por segundo^2)
 const float TEMPO_FRAME = 0.016f; // Duração de cada frame (em segundos) - para 60 FPS
 
-Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas), velocidadeY(0), noChao(false)
+const string IDLE_P1_PATH = "./assets/Gangsters_1/Idle.png";
+
+Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas),
+                                                  velocidadeY(0), noChao(false)
 {
     shape.setFillColor(sf::Color::Green); // Cor diferente para o jogador
+    sf::Texture textura = pGG->carregaTextura(IDLE_P1_PATH);
+    sprite.setTexture(textura);
+    sprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
 }
 
 void Jogador::atacar()
