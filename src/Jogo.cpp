@@ -29,7 +29,9 @@ void Jogo::executar()
         gerenciadorGrafico.clear();
 
         // execute all
+        entidades.executar();
         // render all
+        entidades.desenhar();
 
         gerenciadorGrafico.display();
     }

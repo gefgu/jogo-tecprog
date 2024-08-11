@@ -13,7 +13,8 @@ public:
   ListaEntidades();
   ~ListaEntidades();
   void incluir(Entidade *pE);
-  void percorrer();
+  void executar();
+  void desenhar();
 };
 
 #endif // LISTAENTIDADES_HPP
