@@ -8,6 +8,8 @@ class Jogador : public Personagem
 private:
     float velocidadeY;
     bool noChao;
+    int animation_index;
+    int animation_max_frames;
 
 public:
     Jogador(float px, float py, int vidas);
