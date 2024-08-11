@@ -9,12 +9,13 @@
 #include "Entidades/Personagens/Inimigo.hpp"
 #include "Entidades/Obstaculos/Obstaculo.hpp"
 #include "Listas/ListaEntidades.hpp"
+#include "Gerenciadores/Gerenciador_Grafico.hpp"
 // #include "Mapa.hpp"
 
 class Jogo
 {
 private:
-    sf::RenderWindow window;
+    Gerenciador_Grafico gerenciadorGrafico;
     // Mapa mapa;
     ListaEntidades entidades;
     Jogador *jogador;

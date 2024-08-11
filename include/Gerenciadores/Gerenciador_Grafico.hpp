@@ -2,18 +2,19 @@
 #define GERENCIADOR_GRAFICO_HPP
 
 #include "Ente.hpp"
-
-// class BiblioGrafica;
+#include <SFML/Graphics.hpp>
 
 class Gerenciador_Grafico
 {
 private:
-  // BiblioGrafica obj;
+  sf::RenderWindow window;
 
 public:
   Gerenciador_Grafico();
   ~Gerenciador_Grafico();
   void desenharEnte(Ente *pE);
+  void display();
+  bool isWindowOpen();
 };
 
 #endif // GERENCIADOR_GRAFICO_HPP
