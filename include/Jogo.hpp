@@ -10,6 +10,7 @@
 #include "Entidades/Obstaculos/Obstaculo.hpp"
 #include "Listas/ListaEntidades.hpp"
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
+#include "Ente.hpp"
 // #include "Mapa.hpp"
 
 class Jogo

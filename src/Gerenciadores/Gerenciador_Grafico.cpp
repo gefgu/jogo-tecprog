@@ -1,6 +1,6 @@
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
 
-Gerenciador_Grafico::Gerenciador_Grafico() : window(sf::VideoMode(800, 600), "Meu Jogo")
+Gerenciador_Grafico::Gerenciador_Grafico() : window(sf::VideoMode(1600, 900), "Meu Jogo")
 {
 }
 
@@ -10,6 +10,11 @@ Gerenciador_Grafico::~Gerenciador_Grafico()
 
 void Gerenciador_Grafico::desenharEnte(Ente *pE)
 {
+}
+
+void Gerenciador_Grafico::clear()
+{
+  window.clear();
 }
 
 void Gerenciador_Grafico::display()
