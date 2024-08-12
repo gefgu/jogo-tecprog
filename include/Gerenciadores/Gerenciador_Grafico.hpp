@@ -28,6 +28,11 @@ public:
   bool isWindowOpen();
   sf::Texture carregaTextura(string textura_path);
   float getElapsedTime();
+  sf::Vector2u getWindowSize() const;
+  bool pollEvent(sf::Event& event);
+  void fecharJanela();
+  sf::RenderWindow& getWindow();
+
 };
 
 #endif // GERENCIADOR_GRAFICO_HPP

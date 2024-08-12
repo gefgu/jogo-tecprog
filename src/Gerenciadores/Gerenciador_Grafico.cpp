@@ -48,3 +48,19 @@ float Gerenciador_Grafico::getElapsedTime()
 {
   return elapsed_time;
 }
+
+sf::Vector2u Gerenciador_Grafico::getWindowSize() const {
+    return window.getSize();
+}
+
+bool Gerenciador_Grafico::pollEvent(sf::Event& event) {
+    return window.pollEvent(event);
+}
+
+void Gerenciador_Grafico::fecharJanela() {
+    window.close();
+}
+
+sf::RenderWindow& Gerenciador_Grafico::getWindow() {
+    return window;
+}

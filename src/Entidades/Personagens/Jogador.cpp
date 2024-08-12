@@ -11,12 +11,13 @@ const int ANIMATION_FRAMES_BEFORE_CHANGE = 24;
 Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas),
                                                   velocidadeY(0), noChao(false), animation_index(0), animation_max_frames(5 * ANIMATION_FRAMES_BEFORE_CHANGE)
 {
-    shape.setFillColor(sf::Color::Green); // Cor diferente para o jogador
 
     carregaTextura(IDLE_P1_PATH);
     sprite.setTexture(textura);
     sprite.setTextureRect(sf::IntRect(0, 0, 128, 128));
     sprite.scale(3, 3);
+    // sprite.setColor(sf::Color::Red); // Cor diferente para o jogador
+
 }
 
 void Jogador::atacar()

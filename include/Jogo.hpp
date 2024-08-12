@@ -11,21 +11,26 @@
 #include "Listas/ListaEntidades.hpp"
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
 #include "Ente.hpp"
-// #include "Mapa.hpp"
+#include "Menu.hpp"  // Incluí o Menu
 
 class Jogo
 {
 private:
     Gerenciador_Grafico gerenciadorGrafico;
-    // Mapa mapa;
     ListaEntidades entidades;
     Jogador *jogador;
+    Menu menu; 
+    sf::Texture texturaBotao;
+    sf::Font fonte;
+    sf::Texture texturaFundo;
+    bool menuAtivo;  // Flag para verificar se o menu está ativado
 
 public:
     Jogo();
     ~Jogo();
     void adicionarEntidade(Entidade *e);
     void executar();
+    void processarMenu();  // Função para processar o menu
 };
 
 #endif // JOGO_HPP
