@@ -2,7 +2,7 @@
 #include <cmath> // Para usar std::max
 
 const float GRAVIDADE = 9.8f;     // Aceleração da gravidade (em unidades por segundo^2)
-const float TEMPO_FRAME = 0.016f; // Duração de cada frame (em segundos) - para 60 FPS
+const float TEMPO_FRAME = 0.16f; // Duração de cada frame (em segundos) - para 60 FPS
 
 const string IDLE_P1_PATH = "./assets/Gangsters_1/Idle.png";
 
@@ -27,7 +27,7 @@ void Jogador::atacar()
 
 void Jogador::executar()
 {
-    // aplicarGravidade();
+    aplicarGravidade();
 
     float elapsed_time = pGG->getElapsedTime();
 
@@ -35,9 +35,9 @@ void Jogador::executar()
         x -= velocidadeX * (elapsed_time / 100.0);
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         x += velocidadeX * (elapsed_time / 100.0);
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && noChao)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && noChao)
     {
-        velocidadeY = -sqrt(2 * GRAVIDADE * 80); // Cálculo da velocidade inicial para alcançar 150 unidades de altura
+        velocidadeY = -sqrt(2 * GRAVIDADE * 100); // Cálculo da velocidade inicial para alcançar 150 unidades de altura
         noChao = false;
     }
 
