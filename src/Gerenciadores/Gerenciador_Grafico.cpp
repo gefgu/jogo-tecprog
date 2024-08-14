@@ -8,6 +8,11 @@ Gerenciador_Grafico::Gerenciador_Grafico() : window(sf::VideoMode(1600, 900), "M
 
 Gerenciador_Grafico::~Gerenciador_Grafico()
 {
+  map<const char *, sf::Texture *>::iterator it = texturesMap.begin();
+  for (it = texturesMap.begin(); it != texturesMap.end(); it++)
+  {
+    delete (it->second);
+  }
 }
 
 void Gerenciador_Grafico::desenharEnte(Ente *pE)
