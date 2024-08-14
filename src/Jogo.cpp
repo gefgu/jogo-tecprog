@@ -1,10 +1,8 @@
 #include "Jogo.hpp"
 #include <iostream>
 
-Jogo::Jogo() 
-    : gerenciadorGrafico(), 
-      menu(gerenciadorGrafico.getWindowSize().x, gerenciadorGrafico.getWindowSize().y), 
-      menuAtivo(true)
+Jogo::Jogo() : gerenciadorGrafico(Gerenciador_Grafico::getInstance()), menu(gerenciadorGrafico.getWindowSize().x, gerenciadorGrafico.getWindowSize().y),
+               menuAtivo(true)
 {
     Ente::setGerenciadorGrafico(&gerenciadorGrafico);
     jogador = new Jogador(100, 100, 3);
@@ -24,25 +22,41 @@ void Jogo::adicionarEntidade(Entidade *e)
 void Jogo::processarMenu()
 {
     sf::Event event;
-    while (gerenciadorGrafico.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
+    while (gerenciadorGrafico.pollEvent(event))
+    {
+        if (event.type == sf::Event::Closed)
+        {
             gerenciadorGrafico.fecharJanela();
-        } else if (event.type == sf::Event::KeyPressed) {
-            if (event.key.code == sf::Keyboard::Up) {
+        }
+        else if (event.type == sf::Event::KeyPressed)
+        {
+            if (event.key.code == sf::Keyboard::Up)
+            {
                 menu.moveUp();
-            } else if (event.key.code == sf::Keyboard::Down) {
+            }
+            else if (event.key.code == sf::Keyboard::Down)
+            {
                 menu.moveDown();
-            } else if (event.key.code == sf::Keyboard::Enter) {
+            }
+            else if (event.key.code == sf::Keyboard::Enter)
+            {
                 int selectedItem = menu.getSelectedItemIndex();
-                if (selectedItem == 0) {
+                if (selectedItem == 0)
+                {
                     // Começar Fase 1
                     menuAtivo = false;
-                } else if (selectedItem == 1) {
+                }
+                else if (selectedItem == 1)
+                {
                     // Começar Fase 2
                     menuAtivo = false;
-                } else if (selectedItem == 2) {
+                }
+                else if (selectedItem == 2)
+                {
                     // Configurações
-                } else if (selectedItem == 3) {
+                }
+                else if (selectedItem == 3)
+                {
                     // Carregar jogo salvo
                 }
             }
@@ -56,10 +70,14 @@ void Jogo::processarMenu()
 
 void Jogo::executar()
 {
-    while (gerenciadorGrafico.isWindowOpen()) {
-        if (menuAtivo) {
+    while (gerenciadorGrafico.isWindowOpen())
+    {
+        if (menuAtivo)
+        {
             processarMenu();
-        } else {
+        }
+        else
+        {
             gerenciadorGrafico.clear();
 
             // execute all

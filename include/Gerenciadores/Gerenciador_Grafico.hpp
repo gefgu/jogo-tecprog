@@ -19,10 +19,19 @@ private:
   map<const char *, sf::Texture *> texturesMap;
 
   void updateElapsedTime(); // it updates on the display
+  Gerenciador_Grafico();    // Singleton
+  ~Gerenciador_Grafico();   // Singleton
+
+  // Delete copy constructor and assignment operator to prevent copying
+  Gerenciador_Grafico(const Gerenciador_Grafico &) = delete;
+  Gerenciador_Grafico &operator=(const Gerenciador_Grafico &) = delete;
 
 public:
-  Gerenciador_Grafico();
-  ~Gerenciador_Grafico();
+  static Gerenciador_Grafico &getInstance()
+  {
+    static Gerenciador_Grafico instance;
+    return instance;
+  }
   void desenharEnte(Ente *pE);
   void clear();
   void display();
