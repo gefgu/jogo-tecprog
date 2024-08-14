@@ -99,3 +99,8 @@ sf::Texture *Gerenciador_Grafico::carregaTextura(const char *path)
   texturesMap.insert(pair<const char *, sf::Texture *>(path, tex));
   return tex;
 }
+
+void Gerenciador_Grafico::drawSprite(sf::Sprite s)
+{
+  window.draw(s);
+}

@@ -42,6 +42,7 @@ public:
   bool pollEvent(sf::Event &event);
   void fecharJanela();
   sf::RenderWindow &getWindow();
+  void drawSprite(sf::Sprite s);
 };
 
 #endif // GERENCIADOR_GRAFICO_HPP

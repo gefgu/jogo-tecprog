@@ -12,6 +12,7 @@
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
 #include "Ente.hpp"
 #include "Menu.hpp" // Incluí o Menu
+#include "Fases/Fase_Primeira.hpp"
 
 class Jogo
 {
@@ -20,10 +21,10 @@ private:
     ListaEntidades entidades;
     Jogador *jogador;
     Menu menu;
-    sf::Texture texturaBotao;
     sf::Font fonte;
-    sf::Texture texturaFundo;
     bool menuAtivo; // Flag para verificar se o menu está ativado
+    bool fase_primeira_ativa;
+    Fase_Primeira fase1;
 
 public:
     Jogo();

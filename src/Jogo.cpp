@@ -2,7 +2,7 @@
 #include <iostream>
 
 Jogo::Jogo() : gerenciadorGrafico(Gerenciador_Grafico::getInstance()), menu(gerenciadorGrafico.getWindowSize().x, gerenciadorGrafico.getWindowSize().y),
-               menuAtivo(true)
+               menuAtivo(true), fase_primeira_ativa(false)
 {
     Ente::setGerenciadorGrafico(&gerenciadorGrafico);
     jogador = new Jogador(100, 100, 3);
@@ -79,6 +79,9 @@ void Jogo::executar()
         else
         {
             gerenciadorGrafico.clear();
+
+            fase1.executar();
+            fase1.desenhar();
 
             // execute all
             entidades.executar();
