@@ -16,6 +16,7 @@ private:
   sf::RenderWindow window;
   sf::Clock clock;
   float elapsed_time; // since last re-render
+  map<const char *, sf::Texture *> texturesMap;
 
   void updateElapsedTime(); // it updates on the display
 
@@ -26,13 +27,12 @@ public:
   void clear();
   void display();
   bool isWindowOpen();
-  sf::Texture carregaTextura(string textura_path);
+  sf::Texture *carregaTextura(const char *textura_path);
   float getElapsedTime();
   sf::Vector2u getWindowSize() const;
-  bool pollEvent(sf::Event& event);
+  bool pollEvent(sf::Event &event);
   void fecharJanela();
-  sf::RenderWindow& getWindow();
-
+  sf::RenderWindow &getWindow();
 };
 
 #endif // GERENCIADOR_GRAFICO_HPP
