@@ -2,19 +2,20 @@
 #define JOGADOR_HPP
 
 #include "Entidades/Personagens/Personagem.hpp"
+#include "ElementosGraficos/TrilhaAnimacao.hpp"
 
 class Jogador : public Personagem
 {
 private:
     float velocidadeY;
     bool noChao;
-    int animation_index;
-    int animation_max_frames;
+    TrilhaAnimacao trilha;
 
 public:
     Jogador(float px, float py, int vidas);
     void atacar() override;
     void executar();
     void aplicarGravidade();
+    void desenhar();
 };
 #endif // JOGADOR_HPP

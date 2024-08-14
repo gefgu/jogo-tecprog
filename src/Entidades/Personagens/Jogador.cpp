@@ -4,19 +4,13 @@
 const float GRAVIDADE = 9.8f;    // Aceleração da gravidade (em unidades por segundo^2)
 const float TEMPO_FRAME = 0.16f; // Duração de cada frame (em segundos) - para 60 FPS
 
-const string IDLE_P1_PATH = "./assets/Gangsters_1/Idle.png";
-
-const int ANIMATION_FRAMES_BEFORE_CHANGE = 24;
-
 Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas),
-                                                  velocidadeY(0), noChao(false), animation_index(0), animation_max_frames(5 * ANIMATION_FRAMES_BEFORE_CHANGE)
+                                                  velocidadeY(0), noChao(false),
+                                                  trilha(5, 15, 128, 128, 3, 3, "./assets/Gangsters_1/Idle.png")
 {
-
-    carregaTextura(IDLE_P1_PATH);
-    sprite.setTexture(textura);
-    sprite.setTextureRect(sf::IntRect(0, 0, 128, 128));
-    sprite.scale(3, 3);
-    // sprite.setColor(sf::Color::Red); // Cor diferente para o jogador
+    x = px;
+    y = py;
+    trilha.setPosition(x, y);
 }
 
 void Jogador::atacar()
@@ -40,16 +34,8 @@ void Jogador::executar()
         noChao = false;
     }
 
-    sprite.setPosition(x, y);
-    if (animation_index < animation_max_frames)
-    {
-        animation_index++;
-    }
-    else
-    {
-        animation_index = 0;
-    }
-    sprite.setTextureRect(sf::IntRect(128 * (animation_index / (int)ANIMATION_FRAMES_BEFORE_CHANGE), 0, 128, 128));
+    trilha.update();
+    trilha.setPosition(x, y);
 }
 
 void Jogador::aplicarGravidade()
@@ -67,5 +53,10 @@ void Jogador::aplicarGravidade()
         noChao = true;
     }
 
-    shape.setPosition(x, y);
+    trilha.setPosition(x, y);
+}
+
+void Jogador::desenhar()
+{
+    trilha.desenhar();
 }

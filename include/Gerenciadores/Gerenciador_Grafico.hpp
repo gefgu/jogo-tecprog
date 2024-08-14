@@ -32,7 +32,7 @@ public:
     static Gerenciador_Grafico instance;
     return instance;
   }
-  void desenharEnte(Ente *pE);
+  // void desenharEnte(Ente *pE);
   void clear();
   void display();
   bool isWindowOpen();

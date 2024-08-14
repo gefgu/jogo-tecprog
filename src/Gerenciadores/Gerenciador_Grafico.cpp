@@ -17,10 +17,10 @@ Gerenciador_Grafico::~Gerenciador_Grafico()
   texturesMap.clear();
 }
 
-void Gerenciador_Grafico::desenharEnte(Ente *pE)
-{
-  window.draw(pE->getSprite());
-}
+// void Gerenciador_Grafico::desenharEnte(Ente *pE)
+// {
+//   window.draw(pE->getSprite());
+// }
 
 void Gerenciador_Grafico::clear()
 {
