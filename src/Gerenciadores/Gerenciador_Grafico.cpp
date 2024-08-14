@@ -1,8 +1,9 @@
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
 #include <cstring>
 
-Gerenciador_Grafico::Gerenciador_Grafico() : window(sf::VideoMode(1600, 900), "Meu Jogo")
+Gerenciador_Grafico::Gerenciador_Grafico() : window(sf::VideoMode(1600, 900), "Meu Jogo"), texturesMap()
 {
+  texturesMap.clear();
   clock.restart();
 }
 
@@ -13,6 +14,7 @@ Gerenciador_Grafico::~Gerenciador_Grafico()
   {
     delete (it->second);
   }
+  texturesMap.clear();
 }
 
 void Gerenciador_Grafico::desenharEnte(Ente *pE)
@@ -82,7 +84,7 @@ sf::Texture *Gerenciador_Grafico::carregaTextura(const char *path)
   for (it = texturesMap.begin(); it != texturesMap.end(); it++)
   {
     if (!strcmp(it->first, path))
-      return it->second;
+      return (it->second);
   }
 
   // If not found, then load it.
@@ -95,4 +97,5 @@ sf::Texture *Gerenciador_Grafico::carregaTextura(const char *path)
   }
 
   texturesMap.insert(pair<const char *, sf::Texture *>(path, tex));
+  return tex;
 }
