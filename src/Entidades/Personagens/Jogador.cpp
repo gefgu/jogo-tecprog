@@ -1,7 +1,7 @@
 #include "Entidades/Personagens/Jogador.hpp"
 #include <cmath> // Para usar std::max
 
-const float GRAVIDADE = 9.8f;     // Aceleração da gravidade (em unidades por segundo^2)
+const float GRAVIDADE = 9.8f;    // Aceleração da gravidade (em unidades por segundo^2)
 const float TEMPO_FRAME = 0.16f; // Duração de cada frame (em segundos) - para 60 FPS
 
 const string IDLE_P1_PATH = "./assets/Gangsters_1/Idle.png";
@@ -17,7 +17,6 @@ Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas),
     sprite.setTextureRect(sf::IntRect(0, 0, 128, 128));
     sprite.scale(3, 3);
     // sprite.setColor(sf::Color::Red); // Cor diferente para o jogador
-
 }
 
 void Jogador::atacar()

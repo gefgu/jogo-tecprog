@@ -1,31 +1,39 @@
 #include "Menu.hpp"
 #include <iostream>
 
-Menu::Menu(float largura, float altura) : itemSelecionado(0) {
-
-    sf::Texture texturaFundo;
-    setFundoTexture(texturaFundo);
-    if (!texturaFundo.loadFromFile("/home/padovam/jogo-tecprog/assets/images/fundo_menu.png")) {
+Menu::Menu(float largura, float altura) : itemSelecionado(0), gerenciadorGrafico(Gerenciador_Grafico::getInstance())
+{
+    sf::Texture *texturaFundo = gerenciadorGrafico.carregaTextura("./assets/images/fundo_menu.png");
+    if (!texturaFundo)
+    {
         std::cerr << "Erro ao carregar a textura de fundo!" << std::endl;
-    } else {
-        std::cout << "Textura de fundo carregada com sucesso." << std::endl;
+        // Handle error accordingly, possibly return or use a fallback
     }
+    fundo.setTexture(*texturaFundo);
+    fundo.setPosition(0, 0);
+    fundo.setScale(largura / fundo.getTexture()->getSize().x, altura / fundo.getTexture()->getSize().y);
 
-        sf::Texture texturaBotao;
-    if (!texturaBotao.loadFromFile("/home/padovam/jogo-tecprog/assets/images/botoes.png")) {
+    sf::Texture *texturaBotao = gerenciadorGrafico.carregaTextura("./assets/images/botoes.png");
+    if (!texturaBotao)
+    {
         std::cerr << "Erro ao carregar a textura dos botões!" << std::endl;
     }
 
-    if (!fonte.loadFromFile("/home/padovam/jogo-tecprog/assets/fonts/BACKTO1982.TTF")) {
+    if (!fonte.loadFromFile("./assets/fonts/BACKTO1982.TTF"))
+    {
         std::cerr << "Erro ao carregar a fonte!" << std::endl;
-    } else {
+    }
+    else
+    {
         std::cout << "Fonte carregada com sucesso." << std::endl;
     }
 
     // Criar botões
-    for (int i = 0; i < 4; i++) {
-        sf::RectangleShape botao(sf::Vector2f(300, 100));  // Tamanho dos botões
+    for (int i = 0; i < 4; i++)
+    {
+        sf::RectangleShape botao(sf::Vector2f(300, 100)); // Tamanho dos botões
         botao.setPosition(sf::Vector2f((largura / 2) - 150, (altura / (5 + 1) * (i + 1))));
+        botao.setTexture(texturaBotao);
         botoes.push_back(botao);
 
         sf::Text texto;
@@ -42,33 +50,42 @@ Menu::Menu(float largura, float altura) : itemSelecionado(0) {
     setBotaoTexto(2, "Load Games", fonte);
     setBotaoTexto(3, "Settings", fonte);
 
-    if (!botoes.empty()) {
-        botoes[itemSelecionado].setFillColor(sf::Color::Red);  // Destacar o botão selecionado
+    if (!botoes.empty())
+    {
+        botoes[itemSelecionado].setFillColor(sf::Color::Red); // Destacar o botão selecionado
         std::cout << "Botão " << itemSelecionado << " destacado." << std::endl;
     }
 }
 
-Menu::~Menu() {
+Menu::~Menu()
+{
     std::cout << "Destruindo menu." << std::endl;
 }
 
-void Menu::draw(sf::RenderWindow& window) {
+void Menu::draw(sf::RenderWindow &window)
+{
     // Verifique se a textura do fundo está carregada corretamente antes de desenhar
-    if (fundo.getTexture() != nullptr) {
+    if (fundo.getTexture() != NULL)
+    {
         window.draw(fundo);
-    } else {
+    }
+    else
+    {
         std::cerr << "Erro: Textura de fundo não carregada." << std::endl;
     }
 
-    for (size_t i = 0; i < botoes.size(); i++) {
+    for (size_t i = 0; i < botoes.size(); i++)
+    {
         window.draw(botoes[i]);
         window.draw(textos[i]);
     }
 }
 
-void Menu::moveUp() {
+void Menu::moveUp()
+{
     std::cout << "Movendo para cima: itemSelecionado antes = " << itemSelecionado << std::endl;
-    if (itemSelecionado - 1 >= 0) {
+    if (itemSelecionado - 1 >= 0)
+    {
         botoes[itemSelecionado].setFillColor(sf::Color::White);
         itemSelecionado--;
         botoes[itemSelecionado].setFillColor(sf::Color::Red);
@@ -76,9 +93,11 @@ void Menu::moveUp() {
     std::cout << "itemSelecionado depois = " << itemSelecionado << std::endl;
 }
 
-void Menu::moveDown() {
+void Menu::moveDown()
+{
     std::cout << "Movendo para baixo: itemSelecionado antes = " << itemSelecionado << std::endl;
-    if (itemSelecionado + 1 < botoes.size()) {
+    if (itemSelecionado + 1 < botoes.size())
+    {
         botoes[itemSelecionado].setFillColor(sf::Color::White);
         itemSelecionado++;
         botoes[itemSelecionado].setFillColor(sf::Color::Red);
@@ -86,22 +105,21 @@ void Menu::moveDown() {
     std::cout << "itemSelecionado depois = " << itemSelecionado << std::endl;
 }
 
-int Menu::getSelectedItemIndex() const {
+int Menu::getSelectedItemIndex() const
+{
     return itemSelecionado;
 }
 
-void Menu::setBotaoTexto(int index, const std::string& texto, const sf::Font& fonte) {
-    if (index >= 0 && index < textos.size()) {
+void Menu::setBotaoTexto(int index, const std::string &texto, const sf::Font &fonte)
+{
+    if (index >= 0 && index < textos.size())
+    {
         textos[index].setFont(fonte);
         textos[index].setString(texto);
     }
 }
 
-void Menu::setFundoTexture(const sf::Texture& texture) {
-    fundo.setTexture(texture);
-    std::cout << "Textura de fundo aplicada." << std::endl;
-}
-
-const sf::Font& Menu::getFonte() const {
+const sf::Font &Menu::getFonte() const
+{
     return fonte;
 }

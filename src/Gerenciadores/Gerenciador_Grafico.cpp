@@ -1,12 +1,20 @@
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
+#include <cstring>
 
-Gerenciador_Grafico::Gerenciador_Grafico() : window(sf::VideoMode(1600, 900), "Meu Jogo")
+Gerenciador_Grafico::Gerenciador_Grafico() : window(sf::VideoMode(1600, 900), "Meu Jogo"), texturesMap()
 {
+  texturesMap.clear();
   clock.restart();
 }
 
 Gerenciador_Grafico::~Gerenciador_Grafico()
 {
+  map<const char *, sf::Texture *>::iterator it = texturesMap.begin();
+  for (it = texturesMap.begin(); it != texturesMap.end(); it++)
+  {
+    delete (it->second);
+  }
+  texturesMap.clear();
 }
 
 void Gerenciador_Grafico::desenharEnte(Ente *pE)
@@ -49,18 +57,50 @@ float Gerenciador_Grafico::getElapsedTime()
   return elapsed_time;
 }
 
-sf::Vector2u Gerenciador_Grafico::getWindowSize() const {
-    return window.getSize();
+sf::Vector2u Gerenciador_Grafico::getWindowSize() const
+{
+  return window.getSize();
 }
 
-bool Gerenciador_Grafico::pollEvent(sf::Event& event) {
-    return window.pollEvent(event);
+bool Gerenciador_Grafico::pollEvent(sf::Event &event)
+{
+  return window.pollEvent(event);
 }
 
-void Gerenciador_Grafico::fecharJanela() {
-    window.close();
+void Gerenciador_Grafico::fecharJanela()
+{
+  window.close();
 }
 
-sf::RenderWindow& Gerenciador_Grafico::getWindow() {
-    return window;
+sf::RenderWindow &Gerenciador_Grafico::getWindow()
+{
+  return window;
+}
+
+// Fonte: https://github.com/MatheusBurda/Desert/blob/master/src/Managers/Graphics.cpp
+sf::Texture *Gerenciador_Grafico::carregaTextura(const char *path)
+{
+  map<const char *, sf::Texture *>::iterator it = texturesMap.begin();
+  for (it = texturesMap.begin(); it != texturesMap.end(); it++)
+  {
+    if (!strcmp(it->first, path))
+      return (it->second);
+  }
+
+  // If not found, then load it.
+  sf::Texture *tex = new sf::Texture();
+
+  if (!tex->loadFromFile(path))
+  {
+    cout << "Error loading file" << path << endl;
+    exit(1);
+  }
+
+  texturesMap.insert(pair<const char *, sf::Texture *>(path, tex));
+  return tex;
+}
+
+void Gerenciador_Grafico::drawSprite(sf::Sprite s)
+{
+  window.draw(s);
 }
