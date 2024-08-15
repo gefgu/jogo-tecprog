@@ -14,5 +14,6 @@ public:
   ~ObjetoEstatico();
   void setPosition(int px, int py);
   void setScale(float sx, float sy);
+  void setTextureRect(sf::IntRect rec);
   void desenhar();
 };

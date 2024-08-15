@@ -23,3 +23,8 @@ void ObjetoEstatico::desenhar()
 {
   Gerenciador_Grafico::getInstance().drawSprite(sprite);
 }
+
+void ObjetoEstatico::setTextureRect(sf::IntRect rec)
+{
+  sprite.setTextureRect(rect);
+}
