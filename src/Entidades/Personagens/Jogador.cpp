@@ -8,10 +8,10 @@ Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas),
                                                   velocidadeY(0), velocidadeX(25), noChao(false),
                                                   animacao(), direcao(1), state(IDLE), velocidadeCorrida(1.5f * velocidadeX)
 {
-    animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 128, 3, 3, "./assets/Gangsters_1/Idle.png"));
-    animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 128, 3, 3, "./assets/Gangsters_1/Run.png"));
-    animacao.addTrilha("walking", new TrilhaAnimacao(9, 10, 128, 128, 3, 3, "./assets/Gangsters_1/Walk.png"));
-    animacao.addTrilha("jump", new TrilhaAnimacao(9, 10, 128, 128, 3, 3, "./assets/Gangsters_1/Jump.png"));
+    animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Idle.png"));
+    animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Run.png"));
+    animacao.addTrilha("walking", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Walk.png"));
+    animacao.addTrilha("jump", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Jump.png"));
     animacao.setPosition(x, y);
     animacao.setScale(3.f, 3.f);
     setAnimationState();
@@ -39,7 +39,6 @@ void Jogador::setAnimationState()
     // Ajusta a escala com base na direção atual
     animacao.setScale(direcao * 3.f, 3.f);
 }
-
 
 void Jogador::atacar()
 {
@@ -134,10 +133,6 @@ void Jogador::executar()
     animacao.update();
     animacao.setPosition(x, y);
 }
-
-
-
-
 
 void Jogador::aplicarGravidade()
 {

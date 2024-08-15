@@ -3,16 +3,15 @@
 
 Gerenciador_Grafico::Gerenciador_Grafico() : window(sf::VideoMode(1200, 900), "Meu Jogo"), texturesMap()
 {
-    texturesMap.clear();
-    clock.restart();
+  texturesMap.clear();
+  clock.restart();
 
-    sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+  sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
 
-    int posX = (desktop.width / 2) - (window.getSize().x / 2);
-    int posY = (desktop.height / 2) - (window.getSize().y / 2);
+  int posX = (desktop.width / 2) - (window.getSize().x / 2);
+  int posY = (desktop.height / 2) - (window.getSize().y / 2);
 
-
-    window.setPosition(sf::Vector2i(posX, posY));
+  window.setPosition(sf::Vector2i(posX, posY));
 }
 
 Gerenciador_Grafico::~Gerenciador_Grafico()
