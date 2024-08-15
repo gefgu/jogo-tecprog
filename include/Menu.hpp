@@ -16,6 +16,7 @@ private:
     int itemSelecionado;
     Gerenciador_Grafico &gerenciadorGrafico;
 
+
 public:
     Menu(float largura, float altura);
     ~Menu();
@@ -24,6 +25,7 @@ public:
     void moveUp();
     void moveDown();
     int getSelectedItemIndex() const;
+    void centralizaTextoNoBotao(sf::Text &texto, const sf::RectangleShape &botao);
     void setBotaoTexto(int index, const std::string &texto, const sf::Font &fonte);
     const sf::Font &getFonte() const;
 };

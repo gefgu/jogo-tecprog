@@ -13,7 +13,7 @@ Menu::Menu(float largura, float altura) : itemSelecionado(0), gerenciadorGrafico
     fundo.setPosition(0, 0);
     fundo.setScale(largura / fundo.getTexture()->getSize().x, altura / fundo.getTexture()->getSize().y);
 
-    sf::Texture *texturaBotao = gerenciadorGrafico.carregaTextura("./assets/images/botoes.png");
+    sf::Texture *texturaBotao = gerenciadorGrafico.carregaTextura("./assets/images/botao.png");
     if (!texturaBotao)
     {
         std::cerr << "Erro ao carregar a textura dos botões!" << std::endl;
@@ -31,7 +31,7 @@ Menu::Menu(float largura, float altura) : itemSelecionado(0), gerenciadorGrafico
     // Criar botões
     for (int i = 0; i < 4; i++)
     {
-        sf::RectangleShape botao(sf::Vector2f(300, 100)); // Tamanho dos botões
+        sf::RectangleShape botao(sf::Vector2f(300, 50)); // Tamanho dos botões
         botao.setPosition(sf::Vector2f((largura / 2) - 150, (altura / (5 + 1) * (i + 1))));
         botao.setTexture(texturaBotao);
         botoes.push_back(botao);
@@ -39,8 +39,8 @@ Menu::Menu(float largura, float altura) : itemSelecionado(0), gerenciadorGrafico
         sf::Text texto;
         texto.setFont(fonte);
         texto.setFillColor(sf::Color::White);
-        texto.setCharacterSize(24);
-        texto.setPosition(botao.getPosition().x + 50, botao.getPosition().y + 25);
+        texto.setCharacterSize(22);
+        centralizaTextoNoBotao(texto, botao);
         textos.push_back(texto);
     }
 
@@ -52,7 +52,8 @@ Menu::Menu(float largura, float altura) : itemSelecionado(0), gerenciadorGrafico
 
     if (!botoes.empty())
     {
-        botoes[itemSelecionado].setFillColor(sf::Color::Red); // Destacar o botão selecionado
+        textos[itemSelecionado].setCharacterSize(26);
+        centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Aumentar o tamanho da fonte do botão selecionado
         std::cout << "Botão " << itemSelecionado << " destacado." << std::endl;
     }
 }
@@ -86,9 +87,12 @@ void Menu::moveUp()
     std::cout << "Movendo para cima: itemSelecionado antes = " << itemSelecionado << std::endl;
     if (itemSelecionado - 1 >= 0)
     {
-        botoes[itemSelecionado].setFillColor(sf::Color::White);
+        textos[itemSelecionado].setCharacterSize(22); // Redefine o tamanho da fonte para o padrão
+        centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Recentraliza o texto
+
         itemSelecionado--;
-        botoes[itemSelecionado].setFillColor(sf::Color::Red);
+        textos[itemSelecionado].setCharacterSize(26); // Aumenta o tamanho da fonte do texto selecionado
+        centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Recentraliza o texto
     }
     std::cout << "itemSelecionado depois = " << itemSelecionado << std::endl;
 }
@@ -98,16 +102,29 @@ void Menu::moveDown()
     std::cout << "Movendo para baixo: itemSelecionado antes = " << itemSelecionado << std::endl;
     if (itemSelecionado + 1 < botoes.size())
     {
-        botoes[itemSelecionado].setFillColor(sf::Color::White);
+        textos[itemSelecionado].setCharacterSize(22); // Redefine o tamanho da fonte para o padrão
+        centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Recentraliza o texto
+
         itemSelecionado++;
-        botoes[itemSelecionado].setFillColor(sf::Color::Red);
+        textos[itemSelecionado].setCharacterSize(26); // Aumenta o tamanho da fonte do texto selecionado
+        centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Recentraliza o texto
     }
     std::cout << "itemSelecionado depois = " << itemSelecionado << std::endl;
 }
 
+
 int Menu::getSelectedItemIndex() const
 {
     return itemSelecionado;
+}
+
+void Menu::centralizaTextoNoBotao(sf::Text &texto, const sf::RectangleShape &botao)
+{
+    float posX = botao.getPosition().x + (botao.getSize().x / 2.f) - (texto.getLocalBounds().width / 2.f);
+    
+    float posY = botao.getPosition().y + (botao.getSize().y / 2.f) - (texto.getLocalBounds().height / 2.f) - texto.getLocalBounds().top;
+    
+    texto.setPosition(posX, posY);
 }
 
 void Menu::setBotaoTexto(int index, const std::string &texto, const sf::Font &fonte)
@@ -116,6 +133,7 @@ void Menu::setBotaoTexto(int index, const std::string &texto, const sf::Font &fo
     {
         textos[index].setFont(fonte);
         textos[index].setString(texto);
+        centralizaTextoNoBotao(textos[index], botoes[index]); // Recentraliza o texto após a atualização
     }
 }
 
