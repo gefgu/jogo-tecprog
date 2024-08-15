@@ -58,6 +58,14 @@ void Animacao::setPosition(int px, int py)
   }
 }
 
+void Animacao::setScale(float sx, float sy)
+{
+  if (trilhaAtual)
+  {
+    trilhaAtual->setScale(sx, sy);
+  }
+}
+
 void Animacao::desenhar()
 {
   if (trilhaAtual)

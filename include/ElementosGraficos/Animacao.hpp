@@ -21,5 +21,6 @@ public:
   void setTrilha(const char *key);
   void update();
   void setPosition(int px, int py);
+  void setScale(float sx, float sy);
   void desenhar();
 };

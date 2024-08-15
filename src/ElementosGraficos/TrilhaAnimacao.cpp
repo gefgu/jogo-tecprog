@@ -1,11 +1,14 @@
 #include "ElementosGraficos/TrilhaAnimacao.hpp"
 
-TrilhaAnimacao::TrilhaAnimacao(int frames, int t, int width, int height, int sx, int sy, const char *path) : animation_index(0), animation_time(0), animation_frames(frames), time_before_update(t), animation_path(path), frame_width(width), frame_height(height), scale_x(sx), scale_y(sy)
+TrilhaAnimacao::TrilhaAnimacao(int frames, int t, int width, int height, int sx, int sy, const char *path)
+    : animation_index(0), animation_time(0), animation_frames(frames), time_before_update(t), 
+      animation_path(path), frame_width(width), frame_height(height), scale_x(sx), scale_y(sy)
 {
-  sf::Texture *tex = Gerenciador_Grafico::getInstance().carregaTextura(animation_path);
-  sprite.setTexture(*tex);
-  sprite.setTextureRect(sf::IntRect(0, 0, width, height));
-  sprite.setScale(scale_x, scale_y);
+    sf::Texture *tex = Gerenciador_Grafico::getInstance().carregaTextura(animation_path);
+    sprite.setTexture(*tex);
+    sprite.setTextureRect(sf::IntRect(0, 0, width, height));
+    sprite.setScale(scale_x, scale_y);
+    sprite.setOrigin(width / 2.f, height / 2.f); // Define a origem no centro da sprite
 }
 
 TrilhaAnimacao::~TrilhaAnimacao() {}
@@ -34,6 +37,11 @@ void TrilhaAnimacao::update()
 void TrilhaAnimacao::setPosition(int px, int py)
 {
   sprite.setPosition(px, py);
+}
+
+void TrilhaAnimacao::setScale(float sx, float sy)
+{
+  sprite.setScale(sx, sy);
 }
 
 void TrilhaAnimacao::desenhar()

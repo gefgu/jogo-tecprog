@@ -8,6 +8,7 @@
 enum estadoJogador
 {
     IDLE = 0,
+    WALK,
     RUN,
     JUMP
 };
@@ -16,7 +17,10 @@ class Jogador : public Personagem
 {
 private:
     float velocidadeY;
+    float velocidadeX;
+    float velocidadeCorrida;
     bool noChao;
+    int direcao;
     Animacao animacao;
     estadoJogador state;
 
