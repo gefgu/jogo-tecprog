@@ -8,3 +8,5 @@ void Personagem::executar()
 {
     // Implementação genérica, pode ser sobrescrita pelas subclasses
 }
+
+void Personagem::desenhar() {}

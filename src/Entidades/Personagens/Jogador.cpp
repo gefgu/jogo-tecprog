@@ -4,19 +4,32 @@
 const float GRAVIDADE = 9.8f;    // Aceleração da gravidade (em unidades por segundo^2)
 const float TEMPO_FRAME = 0.16f; // Duração de cada frame (em segundos) - para 60 FPS
 
-const string IDLE_P1_PATH = "./assets/Gangsters_1/Idle.png";
-
-const int ANIMATION_FRAMES_BEFORE_CHANGE = 24;
-
 Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas),
-                                                  velocidadeY(0), noChao(false), animation_index(0), animation_max_frames(5 * ANIMATION_FRAMES_BEFORE_CHANGE)
+                                                  velocidadeY(0), noChao(false),
+                                                  animacao()
 {
+    animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 128, 3, 3, "./assets/Gangsters_1/Idle.png"));
+    animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 128, 3, 3, "./assets/Gangsters_1/Run.png"));
+    animacao.addTrilha("jump", new TrilhaAnimacao(9, 10, 128, 128, 3, 3, "./assets/Gangsters_1/Jump.png"));
+    state = IDLE;
+    animacao.setPosition(x, y);
+    setAnimationState();
+}
 
-    carregaTextura(IDLE_P1_PATH);
-    sprite.setTexture(textura);
-    sprite.setTextureRect(sf::IntRect(0, 0, 128, 128));
-    sprite.scale(3, 3);
-    // sprite.setColor(sf::Color::Red); // Cor diferente para o jogador
+void Jogador::setAnimationState()
+{
+    if (state == IDLE)
+    {
+        animacao.setTrilha("idle");
+    }
+    else if (state == RUN)
+    {
+        animacao.setTrilha("running");
+    }
+    else if (state == JUMP)
+    {
+        animacao.setTrilha("jump");
+    }
 }
 
 void Jogador::atacar()
@@ -27,29 +40,38 @@ void Jogador::atacar()
 void Jogador::executar()
 {
     aplicarGravidade();
+    estadoJogador newState = IDLE;
 
     float elapsed_time = pGG->getElapsedTime();
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {
         x -= velocidadeX * (elapsed_time / 100.0);
+        newState = RUN;
+    }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
         x += velocidadeX * (elapsed_time / 100.0);
+        newState = RUN;
+    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && noChao)
     {
         velocidadeY = -sqrt(2 * GRAVIDADE * 100); // Cálculo da velocidade inicial para alcançar 150 unidades de altura
         noChao = false;
     }
+    if (!noChao)
+    {
+        newState = JUMP;
+    }
 
-    sprite.setPosition(x, y);
-    if (animation_index < animation_max_frames)
+    if (newState != state)
     {
-        animation_index++;
+        state = newState;
+        setAnimationState();
     }
-    else
-    {
-        animation_index = 0;
-    }
-    sprite.setTextureRect(sf::IntRect(128 * (animation_index / (int)ANIMATION_FRAMES_BEFORE_CHANGE), 0, 128, 128));
+
+    animacao.update();
+    animacao.setPosition(x, y);
 }
 
 void Jogador::aplicarGravidade()
@@ -66,6 +88,9 @@ void Jogador::aplicarGravidade()
         velocidadeY = 0;
         noChao = true;
     }
+}
 
-    shape.setPosition(x, y);
+void Jogador::desenhar()
+{
+    animacao.desenhar();
 }

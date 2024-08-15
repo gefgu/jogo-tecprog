@@ -17,7 +17,7 @@ void Entidade::desenhar()
 {
     if (pGG)
     {
-        pGG->desenharEnte(this);
+        // pGG->desenharEnte(this);
     }
     else
     {

@@ -15,6 +15,7 @@ public:
     virtual ~Personagem();
     virtual void atacar() = 0;
     virtual void executar() override;
+    virtual void desenhar();
 };
 
 #endif // PERSONAGEM_HPP

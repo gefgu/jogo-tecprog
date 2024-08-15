@@ -15,19 +15,15 @@ protected:
   int id;
   static Gerenciador_Grafico *pGG;
   static int cont;
-  sf::Sprite sprite;
-  sf::Texture textura;
-  // Figura *pFig;
 
-  void carregaTextura(string textura_path);
+  // Figura *pFig;
 
 public:
   Ente();
   ~Ente();
   virtual void executar() = 0;
-  void desenhar();
+  virtual void desenhar();
   static void setGerenciadorGrafico(Gerenciador_Grafico *pGerenciador);
-  sf::Sprite getSprite();
 };
 
 #endif // ENTE_HPP
