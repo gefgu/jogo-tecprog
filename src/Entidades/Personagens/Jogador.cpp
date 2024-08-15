@@ -6,11 +6,30 @@ const float TEMPO_FRAME = 0.16f; // Duração de cada frame (em segundos) - para
 
 Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas),
                                                   velocidadeY(0), noChao(false),
-                                                  trilha(5, 15, 128, 128, 3, 3, "./assets/Gangsters_1/Idle.png")
+                                                  animacao()
 {
-    x = px;
-    y = py;
-    trilha.setPosition(x, y);
+    animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 128, 3, 3, "./assets/Gangsters_1/Idle.png"));
+    animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 128, 3, 3, "./assets/Gangsters_1/Run.png"));
+    animacao.addTrilha("jump", new TrilhaAnimacao(9, 10, 128, 128, 3, 3, "./assets/Gangsters_1/Jump.png"));
+    state = IDLE;
+    animacao.setPosition(x, y);
+    setAnimationState();
+}
+
+void Jogador::setAnimationState()
+{
+    if (state == IDLE)
+    {
+        animacao.setTrilha("idle");
+    }
+    else if (state == RUN)
+    {
+        animacao.setTrilha("running");
+    }
+    else if (state == JUMP)
+    {
+        animacao.setTrilha("jump");
+    }
 }
 
 void Jogador::atacar()
@@ -21,21 +40,38 @@ void Jogador::atacar()
 void Jogador::executar()
 {
     aplicarGravidade();
+    estadoJogador newState = IDLE;
 
     float elapsed_time = pGG->getElapsedTime();
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {
         x -= velocidadeX * (elapsed_time / 100.0);
+        newState = RUN;
+    }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
         x += velocidadeX * (elapsed_time / 100.0);
+        newState = RUN;
+    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && noChao)
     {
         velocidadeY = -sqrt(2 * GRAVIDADE * 100); // Cálculo da velocidade inicial para alcançar 150 unidades de altura
         noChao = false;
     }
+    if (!noChao)
+    {
+        newState = JUMP;
+    }
 
-    trilha.update();
-    trilha.setPosition(x, y);
+    if (newState != state)
+    {
+        state = newState;
+        setAnimationState();
+    }
+
+    animacao.update();
+    animacao.setPosition(x, y);
 }
 
 void Jogador::aplicarGravidade()
@@ -52,11 +88,9 @@ void Jogador::aplicarGravidade()
         velocidadeY = 0;
         noChao = true;
     }
-
-    trilha.setPosition(x, y);
 }
 
 void Jogador::desenhar()
 {
-    trilha.desenhar();
+    animacao.desenhar();
 }

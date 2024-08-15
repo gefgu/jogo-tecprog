@@ -2,14 +2,25 @@
 #define JOGADOR_HPP
 
 #include "Entidades/Personagens/Personagem.hpp"
+#include "ElementosGraficos/Animacao.hpp"
 #include "ElementosGraficos/TrilhaAnimacao.hpp"
+
+enum estadoJogador
+{
+    IDLE = 0,
+    RUN,
+    JUMP
+};
 
 class Jogador : public Personagem
 {
 private:
     float velocidadeY;
     bool noChao;
-    TrilhaAnimacao trilha;
+    Animacao animacao;
+    estadoJogador state;
+
+    void setAnimationState();
 
 public:
     Jogador(float px, float py, int vidas);
