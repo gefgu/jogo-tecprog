@@ -11,7 +11,7 @@ protected:
     sf::RectangleShape shape;
 
 public:
-    Entidade(int px, int py);
+    Entidade();
     virtual ~Entidade();
     virtual void executar() = 0;
     void desenhar(sf::RenderWindow &window);

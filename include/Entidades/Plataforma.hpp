@@ -13,4 +13,5 @@ public:
   Plataforma(int px, int py); // posição e escala não mudam
   ~Plataforma();
   void desenhar();
-}
+  void executar();
+};

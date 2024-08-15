@@ -2,6 +2,14 @@
 
 Fase::Fase() : gerenciadorGrafico(Gerenciador_Grafico::getInstance())
 {
+  criarCenario();
+  criarPlataformas();
+}
+
+Fase::~Fase() {}
+
+void Fase::criarCenario()
+{
   int largura = gerenciadorGrafico.getWindowSize().x;
   int altura = gerenciadorGrafico.getWindowSize().y;
   sf::Texture *texturaFundo = gerenciadorGrafico.carregaTextura("./assets/images/fundo_fase_1.png");
@@ -11,9 +19,16 @@ Fase::Fase() : gerenciadorGrafico(Gerenciador_Grafico::getInstance())
                  static_cast<float>(altura) / fundo.getTexture()->getSize().y);
 }
 
-Fase::~Fase() {}
+void Fase::criarPlataformas()
+{
+  for (int i = 0; i < 30; i++)
+  {
+    plataformas.incluir(new Plataforma(66 * i, 1075));
+  }
+}
 
 void Fase::desenhar()
 {
   gerenciadorGrafico.drawSprite(fundo);
+  plataformas.desenhar();
 }

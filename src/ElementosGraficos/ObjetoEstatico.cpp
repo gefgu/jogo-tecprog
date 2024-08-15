@@ -26,5 +26,5 @@ void ObjetoEstatico::desenhar()
 
 void ObjetoEstatico::setTextureRect(sf::IntRect rec)
 {
-  sprite.setTextureRect(rect);
+  sprite.setTextureRect(rec);
 }
