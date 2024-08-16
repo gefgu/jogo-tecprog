@@ -24,3 +24,6 @@ void Entidade::desenhar()
         cout << "Gerenciador Gráfico não encontrado em Entidade" << endl;
     }
 }
+
+sf::Vector2f Entidade::getCenter() {}
+sf::FloatRect Entidade::getSize() {}

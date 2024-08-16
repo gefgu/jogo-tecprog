@@ -18,8 +18,7 @@ class Jogo
 {
 private:
     Gerenciador_Grafico &gerenciadorGrafico;
-    ListaEntidades entidades;
-    Jogador *jogador;
+
     Menu menu;
     sf::Font fonte;
     bool menuAtivo; // Flag para verificar se o menu está ativado

@@ -2,6 +2,9 @@
 
 Fase::Fase() : gerenciadorGrafico(Gerenciador_Grafico::getInstance())
 {
+  jogador = new Jogador(200, 100, 3);
+  entidades.incluir(jogador);
+  gerenciadorColisoes.incluirEntidadeMovel(jogador);
   criarCenario();
   criarPlataformas();
 }
@@ -23,7 +26,9 @@ void Fase::criarPlataformas()
 {
   for (int i = 0; i < 30; i++)
   {
-    plataformas.incluir(new Plataforma(66 * i, 1075));
+    Plataforma *p = new Plataforma(66 * i, 1075);
+    plataformas.incluir(p);
+    gerenciadorColisoes.incluirEntidadeEstatica(p);
   }
 }
 
@@ -31,4 +36,11 @@ void Fase::desenhar()
 {
   gerenciadorGrafico.drawSprite(fundo);
   plataformas.desenhar();
+  entidades.desenhar();
+}
+
+void Fase::executar()
+{
+  gerenciadorColisoes.executar();
+  entidades.executar();
 }

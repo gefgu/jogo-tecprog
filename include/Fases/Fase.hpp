@@ -7,14 +7,17 @@
 #include "Gerenciadores/Gerenciador_Colisoes.hpp"
 #include "Listas/ListaEntidades.hpp"
 #include "Entidades/Plataforma.hpp"
+#include "Entidades/Personagens/Jogador.hpp"
 
 class Fase : public Ente
 {
-private:
+protected:
   sf::Sprite fundo;
   Gerenciador_Grafico &gerenciadorGrafico;
-  // Gerenciador_Colisoes gerenciadorColisoes;
+  Gerenciador_Colisoes gerenciadorColisoes;
   ListaEntidades plataformas;
+  ListaEntidades entidades;
+  Jogador *jogador;
   void criarPlataformas();
   void criarCenario();
 
@@ -22,8 +25,7 @@ public:
   Fase();
   ~Fase();
   void desenhar();
-  virtual void executar() = 0;
-  void gerenciar_colisoes();
+  virtual void executar();
 };
 
 #endif // FASE_HPP

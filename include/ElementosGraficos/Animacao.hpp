@@ -23,4 +23,6 @@ public:
   void setPosition(int px, int py);
   void setScale(float sx, float sy);
   void desenhar();
+  sf::Vector2f getCenter();
+  sf::FloatRect getSize();
 };

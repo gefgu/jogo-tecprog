@@ -23,4 +23,6 @@ public:
   void setScale(float sx, float sy);
   void desenhar();
   void reset();
+  sf::Vector2f getCenter();
+  sf::FloatRect getSize();
 };

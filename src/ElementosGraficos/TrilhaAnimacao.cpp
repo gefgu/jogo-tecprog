@@ -54,3 +54,15 @@ void TrilhaAnimacao::reset()
   animation_index = 0;
   animation_time = 0;
 }
+
+sf::Vector2f TrilhaAnimacao::getCenter()
+{
+  sf::FloatRect size = getSize();
+  sf::Vector2f origin = sprite.getOrigin();
+  return sf::Vector2f(size.left + origin.x, size.top + origin.y);
+}
+
+sf::FloatRect TrilhaAnimacao::getSize()
+{
+  return sprite.getGlobalBounds();
+}

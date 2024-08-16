@@ -45,7 +45,7 @@ void Gerenciador_Grafico::display()
 
   window.display();
   updateElapsedTime();
-  sf::sleep(sf::milliseconds(1000 / 120)); // 120 FPS max
+  sf::sleep(sf::milliseconds(1000 / 20)); // 120 FPS max
 }
 
 bool Gerenciador_Grafico::isWindowOpen()

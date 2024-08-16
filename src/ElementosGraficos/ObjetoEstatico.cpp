@@ -28,3 +28,15 @@ void ObjetoEstatico::setTextureRect(sf::IntRect rec)
 {
   sprite.setTextureRect(rec);
 }
+
+sf::Vector2f ObjetoEstatico::getCenter()
+{
+  sf::FloatRect size = getSize();
+  sf::Vector2f origin = sprite.getOrigin();
+  return sf::Vector2f(size.left + origin.x, size.top + origin.y);
+}
+
+sf::FloatRect ObjetoEstatico::getSize()
+{
+  return sprite.getGlobalBounds();
+}

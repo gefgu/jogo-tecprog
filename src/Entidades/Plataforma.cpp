@@ -21,3 +21,15 @@ void Plataforma::desenhar()
 void Plataforma::executar()
 {
 }
+
+sf::Vector2f Plataforma::getCenter()
+{
+  return visual.getCenter();
+}
+
+sf::FloatRect Plataforma::getSize()
+{
+  return visual.getSize();
+}
+
+void Plataforma::lidarColisao(sf::Vector2f intersecao, Entidade *other) {}

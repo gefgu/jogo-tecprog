@@ -45,6 +45,11 @@ void Jogador::atacar()
     // Implementação do ataque do jogador
 }
 
+void Jogador::setPosition(int px, int py)
+{
+    animacao.setPosition(px, py);
+}
+
 void Jogador::executar()
 {
     aplicarGravidade();
@@ -131,7 +136,7 @@ void Jogador::executar()
     }
 
     animacao.update();
-    animacao.setPosition(x, y);
+    setPosition(x, y);
 }
 
 void Jogador::aplicarGravidade()
@@ -141,16 +146,46 @@ void Jogador::aplicarGravidade()
         velocidadeY += GRAVIDADE * TEMPO_FRAME; // Aceleração devido à gravidade
         y += velocidadeY * TEMPO_FRAME;
     }
-
-    if (y >= 686)
-    { // "Chão" do jogo
-        y = 686;
-        velocidadeY = 0;
-        noChao = true;
-    }
 }
 
 void Jogador::desenhar()
 {
     animacao.desenhar();
+}
+
+sf::Vector2f Jogador::getCenter()
+{
+    return animacao.getCenter();
+}
+
+sf::FloatRect Jogador::getSize()
+{
+    return animacao.getSize();
+}
+
+void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
+{
+    sf::Vector2f otherCenter = other->getCenter();
+    sf::Vector2f position = getCenter();
+    cout << "colisao: " << intersecao.x << ", " << intersecao.y << endl;
+
+    // colisao x
+    if (intersecao.x < 0)
+        if (otherCenter.x > position.x)
+            x += intersecao.x;
+        else
+            x -= intersecao.x;
+
+    // colisao y
+    if (intersecao.y < 0)
+        if (otherCenter.y > position.y)
+        {
+            y -= intersecao.y;
+            velocidadeY = 0;
+            noChao = true;
+        }
+        else
+            y += intersecao.y;
+
+    setPosition(x, y);
 }

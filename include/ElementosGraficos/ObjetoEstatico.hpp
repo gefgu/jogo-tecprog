@@ -16,4 +16,6 @@ public:
   void setScale(float sx, float sy);
   void setTextureRect(sf::IntRect rec);
   void desenhar();
+  sf::Vector2f getCenter();
+  sf::FloatRect getSize();
 };
