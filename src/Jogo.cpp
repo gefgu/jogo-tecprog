@@ -5,8 +5,6 @@ Jogo::Jogo() : gerenciadorGrafico(Gerenciador_Grafico::getInstance()), menu(gere
                menuAtivo(true), fase_primeira_ativa(false)
 {
     Ente::setGerenciadorGrafico(&gerenciadorGrafico);
-    jogador = new Jogador(100, 100, 3);
-    entidades.incluir(jogador);
 }
 
 Jogo::~Jogo()
@@ -82,11 +80,6 @@ void Jogo::executar()
 
             fase1.executar();
             fase1.desenhar();
-
-            // execute all
-            entidades.executar();
-            // render all
-            entidades.desenhar();
 
             gerenciadorGrafico.display();
         }

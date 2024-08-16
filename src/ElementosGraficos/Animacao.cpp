@@ -73,3 +73,13 @@ void Animacao::desenhar()
     trilhaAtual->desenhar();
   }
 }
+
+sf::Vector2f Animacao::getCenter()
+{
+  return trilhaAtual->getCenter();
+}
+
+sf::FloatRect Animacao::getSize()
+{
+  return trilhaAtual->getSize();
+}

@@ -11,6 +11,7 @@ public:
   void executar();
   void criarInimigosFaceis();
   void criarObstaculosDificeis();
+  void desenhar();
 };
 
 #endif // FASE_PRIMEIRA_HPP

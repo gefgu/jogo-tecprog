@@ -12,17 +12,17 @@ private:
   int time_before_update;
   int frame_width;
   int frame_height;
-  int scale_x; // scale
-  int scale_y; // scale
   sf::Sprite sprite;
   const char *animation_path;
 
 public:
-  TrilhaAnimacao(int frames, int t, int width, int height, int sx, int sy, const char *path);
+  TrilhaAnimacao(int frames, int t, int width, int height, float sx, float sy, const char *path);
   ~TrilhaAnimacao();
   void update();
   void setPosition(int px, int py);
   void setScale(float sx, float sy);
   void desenhar();
   void reset();
+  sf::Vector2f getCenter();
+  sf::FloatRect getSize();
 };

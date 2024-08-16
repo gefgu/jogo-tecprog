@@ -23,8 +23,10 @@ private:
     int direcao;
     Animacao animacao;
     estadoJogador state;
+    float tempoDesdeUltimoPulo;
 
     void setAnimationState();
+    void setPosition(int px, int py);
 
 public:
     Jogador(float px, float py, int vidas);
@@ -32,5 +34,8 @@ public:
     void executar();
     void aplicarGravidade();
     void desenhar();
+    sf::Vector2f getCenter();
+    sf::FloatRect getSize();
+    void lidarColisao(sf::Vector2f intersecao, Entidade *other);
 };
 #endif // JOGADOR_HPP
