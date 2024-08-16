@@ -23,6 +23,7 @@ private:
     int direcao;
     Animacao animacao;
     estadoJogador state;
+    float tempoDesdeUltimoPulo;
 
     void setAnimationState();
     void setPosition(int px, int py);

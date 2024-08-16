@@ -3,10 +3,13 @@
 
 const float GRAVIDADE = 9.8f;    // Aceleração da gravidade (em unidades por segundo^2)
 const float TEMPO_FRAME = 0.16f; // Duração de cada frame (em segundos) - para 60 FPS
+const float COOLDOWN_PULO = 800.0f; // Tempo de espera entre pulos (em milissegundos)
+const float VELOCIDADE_CORRIDA = 1.5f; // Velocidade de corrida (em unidades por segundo)
 
 Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas),
                                                   velocidadeY(0), velocidadeX(25), noChao(false),
-                                                  animacao(), direcao(1), state(IDLE), velocidadeCorrida(1.5f * velocidadeX)
+                                                  animacao(), direcao(1), state(IDLE), velocidadeCorrida(VELOCIDADE_CORRIDA * velocidadeX),
+                                                  tempoDesdeUltimoPulo(0.0f) // Inicializa o tempo desde o último pulo
 {
     animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Idle.png"));
     animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Run.png"));
@@ -49,7 +52,6 @@ void Jogador::setPosition(int px, int py)
 {
     animacao.setPosition(px, py);
 }
-
 void Jogador::executar()
 {
     aplicarGravidade();
@@ -57,6 +59,9 @@ void Jogador::executar()
 
     float elapsed_time = pGG->getElapsedTime();
     bool mudouDirecao = false;
+
+    // Atualiza o tempo desde o último pulo
+    tempoDesdeUltimoPulo += elapsed_time;
 
     // Verifica se o Shift está pressionado para correr
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
@@ -77,7 +82,7 @@ void Jogador::executar()
     else
     {
         // Retorna à velocidade normal de caminhada
-        velocidadeX = velocidadeCorrida / 1.5f;
+        velocidadeX = velocidadeCorrida / VELOCIDADE_CORRIDA;
     }
 
     // Verifica se a tecla A (esquerda) está pressionada
@@ -117,10 +122,14 @@ void Jogador::executar()
     }
 
     // Verifica o pulo
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && noChao)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        velocidadeY = -sqrt(2 * GRAVIDADE * 100);
-        noChao = false;
+        if (noChao && tempoDesdeUltimoPulo >= COOLDOWN_PULO)
+        {
+            velocidadeY = -sqrt(2 * GRAVIDADE * 150);
+            noChao = false;
+            tempoDesdeUltimoPulo = 0.0f; // Reseta o tempo desde o último pulo
+        }
     }
 
     if (!noChao)
@@ -165,27 +174,25 @@ sf::FloatRect Jogador::getSize()
 
 void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
 {
-    sf::Vector2f otherCenter = other->getCenter();
-    sf::Vector2f position = getCenter();
-    cout << "colisao: " << intersecao.x << ", " << intersecao.y << endl;
+    sf::FloatRect otherBounds = other->getSize();
+    sf::FloatRect jogadorBounds = getSize();
 
-    // colisao x
-    if (intersecao.x < 0)
-        if (otherCenter.x > position.x)
-            x += intersecao.x;
-        else
-            x -= intersecao.x;
+    // Imprimir a interseção para debug
+    std::cout << "Colisão: x=" << intersecao.x << ", y=" << intersecao.y << std::endl;
 
-    // colisao y
-    if (intersecao.y < 0)
-        if (otherCenter.y > position.y)
-        {
-            y -= intersecao.y;
-            velocidadeY = 0;
-            noChao = true;
+    if (intersecao.y != 0) {
+        // Ajusta a posição do jogador para evitar sobreposição
+        if (other->getCenter().y > getCenter().y) {
+            y -= intersecao.y; // Ajusta a posição do jogador para cima
+
+            // Corrige a altura para garantir que o jogador fique exatamente na plataforma
+            y = otherBounds.top - jogadorBounds.height / 2;
+
+            velocidadeY = 0;   // Zera a velocidade Y para simular estar no chão
+            noChao = true;     // Marca o jogador como estando no chão
+        } else {
+            y += intersecao.y; // Ajusta a posição do jogador para baixo
         }
-        else
-            y += intersecao.y;
-
+    }
     setPosition(x, y);
 }
