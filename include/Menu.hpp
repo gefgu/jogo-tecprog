@@ -5,6 +5,7 @@
 #include <vector>
 #include <string> // Para usar std::string
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
+#include "Gerenciadores/Gerenciador_Estado.hpp"
 
 class Menu
 {
@@ -15,7 +16,7 @@ private:
     sf::Font fonte;
     int itemSelecionado;
     Gerenciador_Grafico &gerenciadorGrafico;
-
+    Gerenciador_Estado &gerenciadorEstado;
 
 public:
     Menu(float largura, float altura);
@@ -28,6 +29,7 @@ public:
     void centralizaTextoNoBotao(sf::Text &texto, const sf::RectangleShape &botao);
     void setBotaoTexto(int index, const std::string &texto, const sf::Font &fonte);
     const sf::Font &getFonte() const;
+    void executar();
 };
 
 #endif // MENU_HPP
