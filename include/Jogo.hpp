@@ -10,14 +10,20 @@
 #include "Entidades/Obstaculos/Obstaculo.hpp"
 #include "Listas/ListaEntidades.hpp"
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
+#include "Gerenciadores/Gerenciador_Colisoes.hpp"
+#include "Gerenciadores/Gerenciador_Threads.hpp"
 #include "Ente.hpp"
-#include "Menu.hpp" // Incluí o Menu
+#include "PerformanceMonitor.hpp"
+#include "Menu.hpp" 
 #include "Fases/Fase_Primeira.hpp"
 
 class Jogo
 {
 private:
     Gerenciador_Grafico &gerenciadorGrafico;
+    Gerenciador_Colisoes gerenciadorColisoes;
+    Gerenciador_Threads gerenciadorThreads;
+    PerformanceMonitor performanceMonitor; 
 
     Menu menu;
     sf::Font fonte;
