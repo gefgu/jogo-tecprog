@@ -17,4 +17,5 @@ void Fase_Primeira::executar()
 {
   gerenciadorColisoes.executar();
   entidades.executar();
+  desenhar();
 }

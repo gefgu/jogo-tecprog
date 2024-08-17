@@ -1,7 +1,7 @@
 #include "Menu.hpp"
 #include <iostream>
 
-Menu::Menu(float largura, float altura) : itemSelecionado(0), gerenciadorGrafico(Gerenciador_Grafico::getInstance())
+Menu::Menu(float largura, float altura) : itemSelecionado(0), gerenciadorGrafico(Gerenciador_Grafico::getInstance()), gerenciadorEstado(Gerenciador_Estado::getInstance())
 {
     sf::Texture *texturaFundo = gerenciadorGrafico.carregaTextura("./assets/images/fundo_menu.png");
     if (!texturaFundo)
@@ -87,11 +87,11 @@ void Menu::moveUp()
     std::cout << "Movendo para cima: itemSelecionado antes = " << itemSelecionado << std::endl;
     if (itemSelecionado - 1 >= 0)
     {
-        textos[itemSelecionado].setCharacterSize(22); // Redefine o tamanho da fonte para o padrão
+        textos[itemSelecionado].setCharacterSize(22);                             // Redefine o tamanho da fonte para o padrão
         centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Recentraliza o texto
 
         itemSelecionado--;
-        textos[itemSelecionado].setCharacterSize(26); // Aumenta o tamanho da fonte do texto selecionado
+        textos[itemSelecionado].setCharacterSize(26);                             // Aumenta o tamanho da fonte do texto selecionado
         centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Recentraliza o texto
     }
     std::cout << "itemSelecionado depois = " << itemSelecionado << std::endl;
@@ -102,16 +102,15 @@ void Menu::moveDown()
     std::cout << "Movendo para baixo: itemSelecionado antes = " << itemSelecionado << std::endl;
     if (itemSelecionado + 1 < botoes.size())
     {
-        textos[itemSelecionado].setCharacterSize(22); // Redefine o tamanho da fonte para o padrão
+        textos[itemSelecionado].setCharacterSize(22);                             // Redefine o tamanho da fonte para o padrão
         centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Recentraliza o texto
 
         itemSelecionado++;
-        textos[itemSelecionado].setCharacterSize(26); // Aumenta o tamanho da fonte do texto selecionado
+        textos[itemSelecionado].setCharacterSize(26);                             // Aumenta o tamanho da fonte do texto selecionado
         centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Recentraliza o texto
     }
     std::cout << "itemSelecionado depois = " << itemSelecionado << std::endl;
 }
-
 
 int Menu::getSelectedItemIndex() const
 {
@@ -121,9 +120,9 @@ int Menu::getSelectedItemIndex() const
 void Menu::centralizaTextoNoBotao(sf::Text &texto, const sf::RectangleShape &botao)
 {
     float posX = botao.getPosition().x + (botao.getSize().x / 2.f) - (texto.getLocalBounds().width / 2.f);
-    
+
     float posY = botao.getPosition().y + (botao.getSize().y / 2.f) - (texto.getLocalBounds().height / 2.f) - texto.getLocalBounds().top;
-    
+
     texto.setPosition(posX, posY);
 }
 
@@ -140,4 +139,50 @@ void Menu::setBotaoTexto(int index, const std::string &texto, const sf::Font &fo
 const sf::Font &Menu::getFonte() const
 {
     return fonte;
+}
+
+void Menu::executar()
+{
+    sf::Event event;
+    while (gerenciadorGrafico.pollEvent(event))
+    {
+        if (event.type == sf::Event::Closed)
+        {
+            gerenciadorGrafico.fecharJanela();
+        }
+        else if (event.type == sf::Event::KeyPressed)
+        {
+            if (event.key.code == sf::Keyboard::Up)
+            {
+                moveUp();
+            }
+            else if (event.key.code == sf::Keyboard::Down)
+            {
+                moveDown();
+            }
+            else if (event.key.code == sf::Keyboard::Enter)
+            {
+                int selectedItem = getSelectedItemIndex();
+                if (selectedItem == 0)
+                {
+                    gerenciadorEstado.setEstadoJogo(estadoJogo::FASE1);
+                }
+                else if (selectedItem == 1)
+                {
+                    // Começar Fase 2
+                    // menuAtivo = false;
+                }
+                else if (selectedItem == 2)
+                {
+                    // Configurações
+                }
+                else if (selectedItem == 3)
+                {
+                    // Carregar jogo salvo
+                }
+            }
+        }
+    }
+
+    draw(gerenciadorGrafico.getWindow());
 }
