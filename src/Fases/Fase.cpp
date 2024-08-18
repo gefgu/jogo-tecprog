@@ -2,7 +2,7 @@
 
 Fase::Fase() : gerenciadorGrafico(Gerenciador_Grafico::getInstance())
 {
-  jogador = new Jogador(200, 100, 3);
+  jogador = new Jogador(200, 100, 5);
   entidades.incluir(jogador);
   gerenciadorColisoes.incluirEntidadeMovel(jogador);
   criarCenario();
@@ -55,4 +55,8 @@ void Fase::executar()
 {
   gerenciadorColisoes.executar();
   entidades.executar();
+}
+
+void Fase::mostraVidaJogador()
+{
 }

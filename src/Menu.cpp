@@ -19,14 +19,7 @@ Menu::Menu(float largura, float altura) : itemSelecionado(0), gerenciadorGrafico
         std::cerr << "Erro ao carregar a textura dos botões!" << std::endl;
     }
 
-    if (!fonte.loadFromFile("./assets/fonts/BACKTO1982.TTF"))
-    {
-        std::cerr << "Erro ao carregar a fonte!" << std::endl;
-    }
-    else
-    {
-        std::cout << "Fonte carregada com sucesso." << std::endl;
-    }
+    sf::Font *fonte = gerenciadorGrafico.carregaFonte("./assets/fonts/BACKTO1982.TTF");
 
     // Criar botões
     for (int i = 0; i < 4; i++)
@@ -37,7 +30,7 @@ Menu::Menu(float largura, float altura) : itemSelecionado(0), gerenciadorGrafico
         botoes.push_back(botao);
 
         sf::Text texto;
-        texto.setFont(fonte);
+        texto.setFont(*fonte);
         texto.setFillColor(sf::Color::White);
         texto.setCharacterSize(22);
         centralizaTextoNoBotao(texto, botao);
@@ -126,19 +119,14 @@ void Menu::centralizaTextoNoBotao(sf::Text &texto, const sf::RectangleShape &bot
     texto.setPosition(posX, posY);
 }
 
-void Menu::setBotaoTexto(int index, const std::string &texto, const sf::Font &fonte)
+void Menu::setBotaoTexto(int index, const std::string &texto, sf::Font *fonte)
 {
     if (index >= 0 && index < textos.size())
     {
-        textos[index].setFont(fonte);
+        textos[index].setFont(*fonte);
         textos[index].setString(texto);
         centralizaTextoNoBotao(textos[index], botoes[index]); // Recentraliza o texto após a atualização
     }
-}
-
-const sf::Font &Menu::getFonte() const
-{
-    return fonte;
 }
 
 void Menu::executar()

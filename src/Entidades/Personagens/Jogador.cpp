@@ -129,7 +129,6 @@ void Jogador::executar()
     // Verifica o pulo
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        cout << "Pressed" << endl;
         if (noChao && tempoDesdeUltimoPulo >= COOLDOWN_PULO)
         {
             velocidadeY = -sqrt(2 * GRAVIDADE * 150);
@@ -191,7 +190,7 @@ bool Jogador::estaNoChao()
     bool isAbovePlatform = y == pisoBounds.top - (jogadorBounds.height / 2);
 
     // Check if the player is within the platform bounds in the X axis
-    bool isWithinPlatformX = abs(getCenter().x - ultimoPiso->getCenter().x) <= 28 * 3;
+    bool isWithinPlatformX = abs(getCenter().x - ultimoPiso->getCenter().x) <= 32 * 3;
     // cout << "dis: " << abs(getCenter().x - ultimoPiso->getCenter().x) << endl;
 
     if (isAbovePlatform && isWithinPlatformX)
@@ -211,7 +210,7 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
 
     if (other->getTipo() == tipoDeEntidade::PLATAFORMA)
     {
-        bool isWithinPlatformX = abs(getCenter().x - other->getCenter().x) <= 28 * 3;
+        bool isWithinPlatformX = abs(getCenter().x - other->getCenter().x) <= 32 * 3;
 
         // Check if the player is above the platform and within 50 pixels on the x-axis
         if (getCenter().y <= pisoBounds.top && isWithinPlatformX)

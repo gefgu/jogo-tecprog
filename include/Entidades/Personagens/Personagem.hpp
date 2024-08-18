@@ -16,6 +16,8 @@ public:
     virtual void atacar() = 0;
     virtual void executar() override;
     virtual void desenhar();
+    int getVidas();
+    void recebeDano(int vidas_perdidas);
 };
 
 #endif // PERSONAGEM_HPP
