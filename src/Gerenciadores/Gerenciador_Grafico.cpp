@@ -26,11 +26,6 @@ Gerenciador_Grafico::~Gerenciador_Grafico()
   texturesMap.clear();
 }
 
-// void Gerenciador_Grafico::desenharEnte(Ente *pE)
-// {
-//   window.draw(pE->getSprite());
-// }
-
 void Gerenciador_Grafico::clear()
 {
   window.clear();
@@ -126,4 +121,9 @@ void Gerenciador_Grafico::handleResize(sf::Event event)
 {
   sf::Vector2f center = window.getView().getCenter();
   window.setView(sf::View(center, sf::Vector2f(event.size.width, event.size.height)));
+}
+
+void Gerenciador_Grafico::centerCamera(sf::Vector2f center)
+{
+  window.setView(sf::View(center, window.getView().getSize()));
 }

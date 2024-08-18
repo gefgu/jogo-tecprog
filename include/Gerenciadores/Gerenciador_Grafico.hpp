@@ -45,6 +45,7 @@ public:
   sf::RenderWindow &getWindow();
   void drawSprite(sf::Sprite s);
   void renderizar();
+  void centerCamera(sf::Vector2f center);
 };
 
 #endif // GERENCIADOR_GRAFICO_HPP
