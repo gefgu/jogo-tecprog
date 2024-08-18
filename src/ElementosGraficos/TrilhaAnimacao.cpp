@@ -1,14 +1,14 @@
 #include "ElementosGraficos/TrilhaAnimacao.hpp"
 
-TrilhaAnimacao::TrilhaAnimacao(int frames, int t, int width, int height, float sx, float sy, const char *path)
+TrilhaAnimacao::TrilhaAnimacao(int frames, int t, int f_width, int f_height, int f_whitespace, float sx, float sy, const char *path)
     : animation_index(0), animation_time(0), animation_frames(frames), time_before_update(t),
-      animation_path(path), frame_width(width), frame_height(height)
+      animation_path(path), frame_width(f_width), frame_height(f_height), frame_whitespace(f_whitespace)
 {
   sf::Texture *tex = Gerenciador_Grafico::getInstance().carregaTextura(animation_path);
   sprite.setTexture(*tex);
-  sprite.setTextureRect(sf::IntRect(0, 0, width, height));
+  sprite.setTextureRect(sf::IntRect(frame_whitespace, 0, (frame_width - frame_whitespace * 2), frame_height));
   sprite.setScale(sx, sy);
-  sprite.setOrigin(width / 2.f, height / 2.f); // Define a origem no centro da sprite
+  sprite.setOrigin((frame_width - frame_whitespace * 2) / 2.f, frame_height / 2.f); // Define a origem no centro da sprite
 }
 
 TrilhaAnimacao::~TrilhaAnimacao() {}
@@ -30,7 +30,7 @@ void TrilhaAnimacao::update()
 
   if (changed)
   {
-    sprite.setTextureRect(sf::IntRect(frame_width * animation_index, 0, frame_width, frame_height));
+    sprite.setTextureRect(sf::IntRect(frame_width * animation_index + frame_whitespace, 0, frame_width - frame_whitespace * 2, frame_height));
   }
 }
 

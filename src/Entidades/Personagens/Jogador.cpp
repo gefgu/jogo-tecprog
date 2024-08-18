@@ -11,10 +11,10 @@ Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas),
                                                   animacao(), direcao(1), state(IDLE), velocidadeCorrida(VELOCIDADE_CORRIDA * velocidadeX),
                                                   tempoDesdeUltimoPulo(0.0f) // Inicializa o tempo desde o último pulo
 {
-    animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Idle.png"));
-    animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Run.png"));
-    animacao.addTrilha("walking", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Walk.png"));
-    animacao.addTrilha("jump", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Jump.png"));
+    animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 79, 40, 3.0, 3.0, "./assets/Gangsters_1/Idle.png"));
+    animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 80, 20, 3.0, 3.0, "./assets/Gangsters_1/Run.png"));
+    animacao.addTrilha("walking", new TrilhaAnimacao(9, 10, 128, 81, 40, 3.0, 3.0, "./assets/Gangsters_1/Walk.png"));
+    animacao.addTrilha("jump", new TrilhaAnimacao(9, 10, 128, 110, 35, 3.0, 3.0, "./assets/Gangsters_1/Jump.png"));
     animacao.setPosition(x, y);
     animacao.setScale(3.f, 3.f);
     setAnimationState();
@@ -151,11 +151,8 @@ void Jogador::executar()
 
 void Jogador::aplicarGravidade()
 {
-    if (!noChao)
-    {
-        velocidadeY += GRAVIDADE * TEMPO_FRAME; // Aceleração devido à gravidade
-        y += velocidadeY * TEMPO_FRAME;
-    }
+    velocidadeY += GRAVIDADE * TEMPO_FRAME; // Aceleração devido à gravidade
+    y += velocidadeY * TEMPO_FRAME;
 }
 
 void Jogador::desenhar()

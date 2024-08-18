@@ -3,7 +3,9 @@
 ObjetoEstatico::ObjetoEstatico(const char *path)
 {
   sf::Texture *tex = Gerenciador_Grafico::getInstance().carregaTextura(path);
+  sf::IntRect textureRect(0, 0, tex->getSize().x, tex->getSize().y);
   sprite.setTexture(*tex);
+  sprite.setTextureRect(textureRect);
   sprite.setOrigin(tex->getSize().x / 2.f, tex->getSize().y / 2.f); // Define a origem no centro da sprite
 }
 

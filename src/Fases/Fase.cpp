@@ -24,11 +24,21 @@ void Fase::criarCenario()
   fundo.setTextureRect(sf::IntRect(0, 0, largura * 10, altura * 10));
 }
 
-void Fase::criarPlataformas()
+void Fase::criarPlataformas(int qty_plt)
 {
-  for (int i = 0; i < 30; i++)
+  int py = 1075;
+  for (int i = 0; i < qty_plt; i += 2)
   {
-    Plataforma *p = new Plataforma(66 * i, 1075);
+    int val = rand() % 3; // 0 keeps the same
+    if (val == 1)
+      py += 48;
+    else if (val == 2)
+      py -= 48;
+
+    // inclui duas no mesmo nível sempre
+    Plataforma *p = new Plataforma(66 * i, py);
+    plataformas.incluir(p);
+    p = new Plataforma(66 * (i + 1), py);
     plataformas.incluir(p);
     gerenciadorColisoes.incluirEntidadeEstatica(p);
   }

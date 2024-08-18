@@ -18,7 +18,7 @@ protected:
   ListaEntidades plataformas;
   ListaEntidades entidades;
   Jogador *jogador;
-  void criarPlataformas();
+  void criarPlataformas(int qty_plt = 100);
   void criarCenario();
 
 public:
