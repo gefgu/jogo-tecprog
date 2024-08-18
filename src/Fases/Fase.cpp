@@ -24,8 +24,8 @@ void Fase::criarCenario()
   sf::Texture *texturaFundo = gerenciadorGrafico.carregaTextura("./assets/images/funda_fase_1_2.png");
   fundo.setTexture(*texturaFundo);
   fundo.setPosition(-largura, -altura);
-  fundo.setScale(static_cast<float>(largura) * 3 / fundo.getTexture()->getSize().x,
-                 static_cast<float>(altura) * 3 / fundo.getTexture()->getSize().y);
+  fundo.setScale(static_cast<float>(largura) * 4 / fundo.getTexture()->getSize().x,
+                 static_cast<float>(altura) * 4 / fundo.getTexture()->getSize().y);
   texturaFundo->setRepeated(true);
   fundo.setTextureRect(sf::IntRect(0, 0, largura * 10, altura * 10));
 }
@@ -33,7 +33,7 @@ void Fase::criarCenario()
 void Fase::criarPlataformas(int qty_plt)
 {
   int py = 1075;
-  for (int i = 0; i < qty_plt; i++)
+  for (int i = -1; i < qty_plt; i++)
   {
     if (i % 3 == 0)
     {

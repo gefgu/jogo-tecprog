@@ -150,6 +150,14 @@ void Jogador::executar()
         setAnimationState();
     }
 
+    if (y > 2000)
+    {
+        recebeDano(1);
+        y = 0;
+        x = 0;
+        velocidadeY = 0;
+    }
+
     animacao.update();
     setPosition(x, y);
 }
