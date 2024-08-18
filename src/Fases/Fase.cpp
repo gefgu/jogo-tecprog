@@ -1,7 +1,8 @@
 #include "Fases/Fase.hpp"
 
-Fase::Fase() : gerenciadorGrafico(Gerenciador_Grafico::getInstance())
+Fase::Fase() : gerenciadorGrafico(Gerenciador_Grafico::getInstance()), pontos(1000)
 {
+  clock.restart();
   jogador = new Jogador(200, 100, 5);
   entidades.incluir(jogador);
   gerenciadorColisoes.incluirEntidadeMovel(jogador);
@@ -13,7 +14,13 @@ Fase::Fase() : gerenciadorGrafico(Gerenciador_Grafico::getInstance())
   vidasJogador.setFont(*fonte);
   vidasJogador.setFillColor(sf::Color::White);
   vidasJogador.setCharacterSize(32);
+
+  pontosText.setFont(*fonte);
+  pontosText.setFillColor(sf::Color::White);
+  pontosText.setCharacterSize(32);
+
   atualizaVidaJogador();
+  atualizaPontos();
 }
 
 Fase::~Fase() {}
@@ -60,6 +67,7 @@ void Fase::desenhar()
   plataformas.desenhar();
   entidades.desenhar();
   gerenciadorGrafico.drawText(vidasJogador);
+  gerenciadorGrafico.drawText(pontosText);
 }
 
 void Fase::executar()
@@ -67,14 +75,7 @@ void Fase::executar()
   gerenciadorColisoes.executar();
   entidades.executar();
   atualizaVidaJogador();
-}
-
-void Fase::atualizaVidaJogador()
-{
-  int vidas = jogador->getVidas();
-  vidasJogador.setString(std::to_string(vidas) + " Vidas");
-  sf::Vector2f pos = gerenciadorGrafico.getTopLeftPosition();
-  vidasJogador.setPosition(pos.x + 25, pos.y + 25);
+  atualizaPontos();
 }
 
 void Fase::criaEspinhos()
@@ -89,4 +90,21 @@ void Fase::criaEspinhos()
     entidades.incluir(e);
     gerenciadorColisoes.incluirEntidadeEstatica(e);
   }
+}
+
+void Fase::atualizaVidaJogador()
+{
+  int vidas = jogador->getVidas();
+  vidasJogador.setString(std::to_string(vidas) + " Vidas");
+  sf::Vector2f pos = gerenciadorGrafico.getTopLeftPosition();
+  vidasJogador.setPosition(pos.x + 25, pos.y + 25);
+}
+
+void Fase::atualizaPontos()
+{
+  int tempo = clock.getElapsedTime().asSeconds();
+  pontos = 1000 - tempo;
+  pontosText.setString(std::to_string(pontos) + " Pontos");
+  sf::Vector2f pos = gerenciadorGrafico.getTopLeftPosition();
+  pontosText.setPosition(pos.x + 25, pos.y + 75);
 }

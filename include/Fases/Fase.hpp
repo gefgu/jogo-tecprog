@@ -19,11 +19,16 @@ protected:
   ListaEntidades plataformas;
   ListaEntidades entidades;
   Jogador *jogador;
+  int pontos;
+  sf::Text vidasJogador;
+  sf::Text pontosText;
+  sf::Clock clock;
+
   void criarPlataformas(int qty_plt = 50);
   void criarCenario();
-  void atualizaVidaJogador();
   void criaEspinhos();
-  sf::Text vidasJogador;
+  void atualizaVidaJogador();
+  void atualizaPontos();
 
 public:
   Fase();

@@ -12,6 +12,7 @@ void Fase_Primeira::desenhar()
   plataformas.desenhar();
   entidades.desenhar();
   gerenciadorGrafico.drawText(vidasJogador);
+  gerenciadorGrafico.drawText(pontosText);
 }
 
 void Fase_Primeira::executar()
@@ -19,5 +20,6 @@ void Fase_Primeira::executar()
   gerenciadorColisoes.executar();
   entidades.executar();
   atualizaVidaJogador();
+  atualizaPontos();
   desenhar();
 }
