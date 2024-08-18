@@ -6,10 +6,13 @@ const float TEMPO_FRAME = 0.16f;       // Duração de cada frame (em segundos) 
 const float COOLDOWN_PULO = 800.0f;    // Tempo de espera entre pulos (em milissegundos)
 const float VELOCIDADE_CORRIDA = 1.5f; // Velocidade de corrida (em unidades por segundo)
 
+const float COOLDOWN_ESPINHO = 2000.0f;
+
 Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas),
                                                   velocidadeY(0), velocidadeX(25), noChao(false),
                                                   animacao(), direcao(1), state(IDLE), velocidadeCorrida(VELOCIDADE_CORRIDA * velocidadeX),
-                                                  tempoDesdeUltimoPulo(0.0f), // Inicializa o tempo desde o último pulo
+                                                  tempoDesdeUltimoPulo(0.0f), // Inicializa o tempo desde o último pulo,
+                                                  tempoDesdeUltimoEspinho(0.0f),
                                                   ultimoPiso(NULL)
 {
     animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Idle.png"));
@@ -57,7 +60,7 @@ void Jogador::setPosition(int px, int py)
 void Jogador::executar()
 {
     // Reset noChao at the start of each frame
-    noChao = tempoDesdeUltimoPulo > 0.1f && estaNoChao();
+    noChao = tempoDesdeUltimoPulo > 100.f && estaNoChao();
 
     aplicarGravidade();
     estadoJogador newState = IDLE;
@@ -67,6 +70,7 @@ void Jogador::executar()
 
     // Atualiza o tempo desde o último pulo
     tempoDesdeUltimoPulo += elapsed_time;
+    tempoDesdeUltimoEspinho += elapsed_time;
 
     // Verifica se o Shift está pressionado para correr
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
@@ -227,6 +231,15 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
             noChao = true;
             velocidadeY = 0;
             ultimoPiso = other;
+        }
+    }
+    else if (other->getTipo() == tipoDeEntidade::ESPINHO)
+    {
+        bool isCloseEnough = abs(getCenter().x - other->getCenter().x) <= 16 * 3;
+        if (isCloseEnough && tempoDesdeUltimoEspinho >= COOLDOWN_ESPINHO)
+        {
+            recebeDano(1);
+            tempoDesdeUltimoEspinho = 0;
         }
     }
 

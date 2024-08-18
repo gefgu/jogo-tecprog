@@ -8,6 +8,7 @@
 #include "Listas/ListaEntidades.hpp"
 #include "Entidades/Plataforma.hpp"
 #include "Entidades/Personagens/Jogador.hpp"
+#include "Entidades/Obstaculos/Espinho.hpp"
 
 class Fase : public Ente
 {
@@ -18,9 +19,10 @@ protected:
   ListaEntidades plataformas;
   ListaEntidades entidades;
   Jogador *jogador;
-  void criarPlataformas(int qty_plt = 100);
+  void criarPlataformas(int qty_plt = 50);
   void criarCenario();
   void atualizaVidaJogador();
+  void criaEspinhos();
   sf::Text vidasJogador;
 
 public:
