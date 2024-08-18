@@ -58,6 +58,7 @@ Menu::~Menu()
 
 void Menu::draw(sf::RenderWindow &window)
 {
+    gerenciadorGrafico.centerCamera(sf::Vector2f(gerenciadorGrafico.getWindowSize().x / 2, gerenciadorGrafico.getWindowSize().y / 2));
     // Verifique se a textura do fundo está carregada corretamente antes de desenhar
     if (fundo.getTexture() != NULL)
     {
