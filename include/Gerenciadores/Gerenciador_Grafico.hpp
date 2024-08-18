@@ -15,6 +15,7 @@ class Gerenciador_Grafico
 private:
   sf::RenderWindow window;
   sf::Clock clock;
+  sf::View camera;
   float elapsed_time; // since last re-render
   map<const char *, sf::Texture *> texturesMap;
 

@@ -1,7 +1,7 @@
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
 #include <cstring>
 
-Gerenciador_Grafico::Gerenciador_Grafico() : window(sf::VideoMode(1200, 900), "Meu Jogo"), texturesMap()
+Gerenciador_Grafico::Gerenciador_Grafico() : window(sf::VideoMode(1200, 900), "Meu Jogo"), texturesMap(), camera(sf::Vector2f(1200 / 2, 900 / 2), sf::Vector2f(1200.f, 900.f))
 {
   texturesMap.clear();
   clock.restart();
@@ -12,6 +12,7 @@ Gerenciador_Grafico::Gerenciador_Grafico() : window(sf::VideoMode(1200, 900), "M
   int posY = (desktop.height / 2) - (window.getSize().y / 2);
 
   window.setPosition(sf::Vector2i(posX, posY));
+  window.setView(camera);
 }
 
 Gerenciador_Grafico::~Gerenciador_Grafico()
@@ -112,7 +113,8 @@ void Gerenciador_Grafico::drawSprite(sf::Sprite s)
   window.draw(s);
 }
 
-void Gerenciador_Grafico::renderizar() {
-    // Adicione a lógica de renderização aqui
-    std::cout << "Renderizando..." << std::endl;
+void Gerenciador_Grafico::renderizar()
+{
+  // Adicione a lógica de renderização aqui
+  std::cout << "Renderizando..." << std::endl;
 }
