@@ -57,21 +57,12 @@ void Jogador::setPosition(int px, int py)
     animacao.setPosition(px, py);
     Gerenciador_Grafico::getInstance().centerCamera(sf::Vector2f(px, py));
 }
-void Jogador::executar()
+
+void Jogador::mover()
 {
-    // Reset noChao at the start of each frame
-    noChao = tempoDesdeUltimoPulo > 100.f && estaNoChao();
-
-    aplicarGravidade();
     estadoJogador newState = IDLE;
-
-    float elapsed_time = pGG->getElapsedTime();
     bool mudouDirecao = false;
-
-    // Atualiza o tempo desde o último pulo
-    tempoDesdeUltimoPulo += elapsed_time;
-    tempoDesdeUltimoEspinho += elapsed_time;
-
+    float elapsed_time = pGG->getElapsedTime();
     // Verifica se o Shift está pressionado para correr
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
     {
@@ -153,6 +144,21 @@ void Jogador::executar()
         state = newState;
         setAnimationState();
     }
+}
+
+void Jogador::executar()
+{
+    // Reset noChao at the start of each frame
+    noChao = tempoDesdeUltimoPulo > 100.f && estaNoChao();
+
+    aplicarGravidade();
+    float elapsed_time = pGG->getElapsedTime();
+
+    // Atualiza o tempo desde o último pulo
+    tempoDesdeUltimoPulo += elapsed_time;
+    tempoDesdeUltimoEspinho += elapsed_time;
+
+    mover();
 
     if (y > 2000)
     {

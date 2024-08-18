@@ -30,6 +30,7 @@ private:
     void setAnimationState();
     void setPosition(int px, int py);
     bool estaNoChao();
+    void mover();
 
 public:
     Jogador(float px, float py, int vidas);
