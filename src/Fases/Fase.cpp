@@ -43,7 +43,7 @@ void Fase::criarPlataformas(int qty_plt)
       else if (val == 2)
         py -= 48;
       if (val == 0 && i > 3)
-        i++;
+        i += 2;
     }
 
     // inclui duas no mesmo nível sempre
