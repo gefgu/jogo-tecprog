@@ -43,6 +43,7 @@ public:
   void fecharJanela();
   sf::RenderWindow &getWindow();
   void drawSprite(sf::Sprite s);
+  void renderizar();
 };
 
 #endif // GERENCIADOR_GRAFICO_HPP

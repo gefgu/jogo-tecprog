@@ -111,3 +111,8 @@ void Gerenciador_Grafico::drawSprite(sf::Sprite s)
 {
   window.draw(s);
 }
+
+void Gerenciador_Grafico::renderizar() {
+    // Adicione a lógica de renderização aqui
+    std::cout << "Renderizando..." << std::endl;
+}
