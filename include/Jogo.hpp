@@ -11,8 +11,10 @@
 #include "Listas/ListaEntidades.hpp"
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
 #include "Gerenciadores/Gerenciador_Estado.hpp"
+#include "Gerenciadores/Gerenciador_Threads.hpp"
 #include "Ente.hpp"
-#include "Menu.hpp" // Incluí o Menu
+#include "PerformanceMonitor.hpp"
+#include "Menu.hpp"
 #include "Fases/Fase_Primeira.hpp"
 
 class Jogo
@@ -20,6 +22,10 @@ class Jogo
 private:
     Gerenciador_Grafico &gerenciadorGrafico;
     Gerenciador_Estado &gerenciadorEstado;
+    Gerenciador_Colisoes gerenciadorColisoes;
+    Gerenciador_Threads gerenciadorThreads;
+    PerformanceMonitor performanceMonitor;
+
     Menu menu;
     sf::Font fonte;
     Fase_Primeira fase1;
