@@ -27,18 +27,18 @@ void Fase::criarCenario()
 void Fase::criarPlataformas(int qty_plt)
 {
   int py = 1075;
-  for (int i = 0; i < qty_plt; i += 2)
+  for (int i = 0; i < qty_plt; i++)
   {
     int val = rand() % 3; // 0 keeps the same
     if (val == 1)
       py += 48;
     else if (val == 2)
       py -= 48;
+    if (val > 0 && i > 3)
+      i++;
 
     // inclui duas no mesmo nível sempre
-    Plataforma *p = new Plataforma(66 * i, py);
-    plataformas.incluir(p);
-    p = new Plataforma(66 * (i + 1), py);
+    Plataforma *p = new Plataforma(32 * 3 * i, py);
     plataformas.incluir(p);
     gerenciadorColisoes.incluirEntidadeEstatica(p);
   }

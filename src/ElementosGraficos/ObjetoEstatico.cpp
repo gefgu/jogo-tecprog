@@ -1,9 +1,10 @@
 #include "ElementosGraficos/ObjetoEstatico.hpp"
 
-ObjetoEstatico::ObjetoEstatico(const char *path)
+ObjetoEstatico::ObjetoEstatico(const char *path, bool repeat)
 {
   sf::Texture *tex = Gerenciador_Grafico::getInstance().carregaTextura(path);
   sf::IntRect textureRect(0, 0, tex->getSize().x, tex->getSize().y);
+  tex->setRepeated(repeat);
   sprite.setTexture(*tex);
   sprite.setTextureRect(textureRect);
   sprite.setOrigin(tex->getSize().x / 2.f, tex->getSize().y / 2.f); // Define a origem no centro da sprite
@@ -34,8 +35,7 @@ void ObjetoEstatico::setTextureRect(sf::IntRect rec)
 sf::Vector2f ObjetoEstatico::getCenter()
 {
   sf::FloatRect size = getSize();
-  sf::Vector2f origin = sprite.getOrigin();
-  return sf::Vector2f(size.left + origin.x, size.top + origin.y);
+  return sf::Vector2f(size.left + size.width / 2.0f, size.top + size.height / 2.0f);
 }
 
 sf::FloatRect ObjetoEstatico::getSize()

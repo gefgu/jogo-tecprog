@@ -9,12 +9,13 @@ const float VELOCIDADE_CORRIDA = 1.5f; // Velocidade de corrida (em unidades por
 Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas),
                                                   velocidadeY(0), velocidadeX(25), noChao(false),
                                                   animacao(), direcao(1), state(IDLE), velocidadeCorrida(VELOCIDADE_CORRIDA * velocidadeX),
-                                                  tempoDesdeUltimoPulo(0.0f) // Inicializa o tempo desde o último pulo
+                                                  tempoDesdeUltimoPulo(0.0f), // Inicializa o tempo desde o último pulo
+                                                  ultimoPiso(NULL)
 {
-    animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 79, 40, 3.0, 3.0, "./assets/Gangsters_1/Idle.png"));
-    animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 80, 20, 3.0, 3.0, "./assets/Gangsters_1/Run.png"));
-    animacao.addTrilha("walking", new TrilhaAnimacao(9, 10, 128, 81, 40, 3.0, 3.0, "./assets/Gangsters_1/Walk.png"));
-    animacao.addTrilha("jump", new TrilhaAnimacao(9, 10, 128, 110, 35, 3.0, 3.0, "./assets/Gangsters_1/Jump.png"));
+    animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Idle.png"));
+    animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Run.png"));
+    animacao.addTrilha("walking", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Walk.png"));
+    animacao.addTrilha("jump", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Jump.png"));
     animacao.setPosition(x, y);
     animacao.setScale(3.f, 3.f);
     setAnimationState();
@@ -55,6 +56,9 @@ void Jogador::setPosition(int px, int py)
 }
 void Jogador::executar()
 {
+    // Reset noChao at the start of each frame
+    noChao = tempoDesdeUltimoPulo > 0.1f && estaNoChao();
+
     aplicarGravidade();
     estadoJogador newState = IDLE;
 
@@ -125,9 +129,11 @@ void Jogador::executar()
     // Verifica o pulo
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
+        cout << "Pressed" << endl;
         if (noChao && tempoDesdeUltimoPulo >= COOLDOWN_PULO)
         {
             velocidadeY = -sqrt(2 * GRAVIDADE * 150);
+            // y -= 10;
             noChao = false;
             tempoDesdeUltimoPulo = 0.0f; // Reseta o tempo desde o último pulo
         }
@@ -151,8 +157,11 @@ void Jogador::executar()
 
 void Jogador::aplicarGravidade()
 {
-    velocidadeY += GRAVIDADE * TEMPO_FRAME; // Aceleração devido à gravidade
-    y += velocidadeY * TEMPO_FRAME;
+    if (!noChao)
+    {
+        velocidadeY += GRAVIDADE * TEMPO_FRAME; // Aceleração devido à gravidade
+        y += velocidadeY * TEMPO_FRAME;
+    }
 }
 
 void Jogador::desenhar()
@@ -170,31 +179,49 @@ sf::FloatRect Jogador::getSize()
     return animacao.getSize();
 }
 
+bool Jogador::estaNoChao()
+{
+    if (!ultimoPiso || ultimoPiso == NULL)
+        return false;
+
+    sf::FloatRect pisoBounds = ultimoPiso->getSize();
+    sf::FloatRect jogadorBounds = getSize();
+
+    // Check if the player is above the platform with 5 pixels of tolerance
+    bool isAbovePlatform = y == pisoBounds.top - (jogadorBounds.height / 2);
+
+    // Check if the player is within the platform bounds in the X axis
+    bool isWithinPlatformX = abs(getCenter().x - ultimoPiso->getCenter().x) <= 28 * 3;
+    // cout << "dis: " << abs(getCenter().x - ultimoPiso->getCenter().x) << endl;
+
+    if (isAbovePlatform && isWithinPlatformX)
+        return true;
+    else
+        ultimoPiso = NULL;
+    return false;
+}
+
 void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
 {
-    sf::FloatRect otherBounds = other->getSize();
+    sf::FloatRect pisoBounds = other->getSize();
     sf::FloatRect jogadorBounds = getSize();
 
     // Imprimir a interseção para debug
-    std::cout << "Colisão: x=" << intersecao.x << ", y=" << intersecao.y << std::endl;
+    std::cout << "Colisão com " << other->getTipo() << ": x = " << intersecao.x << ", y = " << intersecao.y << std::endl;
 
-    if (intersecao.y != 0)
+    if (other->getTipo() == tipoDeEntidade::PLATAFORMA)
     {
-        // Ajusta a posição do jogador para evitar sobreposição
-        if (other->getCenter().y > getCenter().y)
-        {
-            y -= intersecao.y; // Ajusta a posição do jogador para cima
+        bool isWithinPlatformX = abs(getCenter().x - other->getCenter().x) <= 28 * 3;
 
-            // Corrige a altura para garantir que o jogador fique exatamente na plataforma
-            y = otherBounds.top - jogadorBounds.height / 2;
-
-            velocidadeY = 0; // Zera a velocidade Y para simular estar no chão
-            noChao = true;   // Marca o jogador como estando no chão
-        }
-        else
+        // Check if the player is above the platform and within 50 pixels on the x-axis
+        if (getCenter().y <= pisoBounds.top && isWithinPlatformX)
         {
-            y += intersecao.y; // Ajusta a posição do jogador para baixo
+            y = pisoBounds.top - (jogadorBounds.height / 2); // Position the player on top of the platform
+            noChao = true;
+            velocidadeY = 0;
+            ultimoPiso = other;
         }
     }
+
     setPosition(x, y);
 }

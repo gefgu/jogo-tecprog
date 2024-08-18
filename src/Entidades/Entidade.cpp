@@ -1,6 +1,6 @@
 #include "Entidades/Entidade.hpp"
 
-Entidade::Entidade() : Ente()
+Entidade::Entidade(tipoDeEntidade t) : Ente(), tipo(t)
 {
     // shape.setPosition(x, y);
     // shape.setSize(sf::Vector2f(50.0f, 50.0f));
@@ -27,3 +27,8 @@ void Entidade::desenhar()
 
 sf::Vector2f Entidade::getCenter() {}
 sf::FloatRect Entidade::getSize() {}
+
+const tipoDeEntidade Entidade::getTipo() const
+{
+    return tipo;
+}
