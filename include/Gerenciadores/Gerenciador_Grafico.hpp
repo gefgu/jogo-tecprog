@@ -25,6 +25,7 @@ private:
   // Delete copy constructor and assignment operator to prevent copying
   Gerenciador_Grafico(const Gerenciador_Grafico &) = delete;
   Gerenciador_Grafico &operator=(const Gerenciador_Grafico &) = delete;
+  void handleResize(sf::Event);
 
 public:
   static Gerenciador_Grafico &getInstance()
@@ -44,6 +45,7 @@ public:
   sf::RenderWindow &getWindow();
   void drawSprite(sf::Sprite s);
   void renderizar();
+  void centerCamera(sf::Vector2f center);
 };
 
 #endif // GERENCIADOR_GRAFICO_HPP

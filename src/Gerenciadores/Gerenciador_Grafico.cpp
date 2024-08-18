@@ -12,6 +12,8 @@ Gerenciador_Grafico::Gerenciador_Grafico() : window(sf::VideoMode(1200, 900), "M
   int posY = (desktop.height / 2) - (window.getSize().y / 2);
 
   window.setPosition(sf::Vector2i(posX, posY));
+  sf::View view = sf::View(sf::Vector2f(1200 / 2, 900 / 2), sf::Vector2f(1200.f, 900.f));
+  window.setView(view);
 }
 
 Gerenciador_Grafico::~Gerenciador_Grafico()
@@ -23,11 +25,6 @@ Gerenciador_Grafico::~Gerenciador_Grafico()
   }
   texturesMap.clear();
 }
-
-// void Gerenciador_Grafico::desenharEnte(Ente *pE)
-// {
-//   window.draw(pE->getSprite());
-// }
 
 void Gerenciador_Grafico::clear()
 {
@@ -41,6 +38,8 @@ void Gerenciador_Grafico::display()
   {
     if (event.type == sf::Event::Closed)
       window.close();
+    if (event.type == sf::Event::Resized)
+      handleResize(event);
   }
 
   window.display();
@@ -112,7 +111,19 @@ void Gerenciador_Grafico::drawSprite(sf::Sprite s)
   window.draw(s);
 }
 
-void Gerenciador_Grafico::renderizar() {
-    // Adicione a lógica de renderização aqui
-    std::cout << "Renderizando..." << std::endl;
+void Gerenciador_Grafico::renderizar()
+{
+  // Adicione a lógica de renderização aqui
+  std::cout << "Renderizando..." << std::endl;
+}
+
+void Gerenciador_Grafico::handleResize(sf::Event event)
+{
+  sf::Vector2f center = window.getView().getCenter();
+  window.setView(sf::View(center, sf::Vector2f(event.size.width, event.size.height)));
+}
+
+void Gerenciador_Grafico::centerCamera(sf::Vector2f center)
+{
+  window.setView(sf::View(center, window.getView().getSize()));
 }

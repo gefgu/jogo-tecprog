@@ -1,9 +1,9 @@
 #include "Entidades/Personagens/Jogador.hpp"
 #include <cmath> // Para usar std::max
 
-const float GRAVIDADE = 9.8f;    // Aceleração da gravidade (em unidades por segundo^2)
-const float TEMPO_FRAME = 0.16f; // Duração de cada frame (em segundos) - para 60 FPS
-const float COOLDOWN_PULO = 800.0f; // Tempo de espera entre pulos (em milissegundos)
+const float GRAVIDADE = 9.8f;          // Aceleração da gravidade (em unidades por segundo^2)
+const float TEMPO_FRAME = 0.16f;       // Duração de cada frame (em segundos) - para 60 FPS
+const float COOLDOWN_PULO = 800.0f;    // Tempo de espera entre pulos (em milissegundos)
 const float VELOCIDADE_CORRIDA = 1.5f; // Velocidade de corrida (em unidades por segundo)
 
 Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas),
@@ -51,6 +51,7 @@ void Jogador::atacar()
 void Jogador::setPosition(int px, int py)
 {
     animacao.setPosition(px, py);
+    Gerenciador_Grafico::getInstance().centerCamera(sf::Vector2f(px, py));
 }
 void Jogador::executar()
 {
@@ -180,17 +181,21 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
     // Imprimir a interseção para debug
     std::cout << "Colisão: x=" << intersecao.x << ", y=" << intersecao.y << std::endl;
 
-    if (intersecao.y != 0) {
+    if (intersecao.y != 0)
+    {
         // Ajusta a posição do jogador para evitar sobreposição
-        if (other->getCenter().y > getCenter().y) {
+        if (other->getCenter().y > getCenter().y)
+        {
             y -= intersecao.y; // Ajusta a posição do jogador para cima
 
             // Corrige a altura para garantir que o jogador fique exatamente na plataforma
             y = otherBounds.top - jogadorBounds.height / 2;
 
-            velocidadeY = 0;   // Zera a velocidade Y para simular estar no chão
-            noChao = true;     // Marca o jogador como estando no chão
-        } else {
+            velocidadeY = 0; // Zera a velocidade Y para simular estar no chão
+            noChao = true;   // Marca o jogador como estando no chão
+        }
+        else
+        {
             y += intersecao.y; // Ajusta a posição do jogador para baixo
         }
     }
