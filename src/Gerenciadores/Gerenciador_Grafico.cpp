@@ -1,8 +1,9 @@
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
 #include <cstring>
 
-Gerenciador_Grafico::Gerenciador_Grafico() : window(sf::VideoMode(1200, 900), "Meu Jogo"), texturesMap()
+Gerenciador_Grafico::Gerenciador_Grafico() : window(sf::VideoMode(1200, 900), "Meu Jogo"), texturesMap(), fontMap()
 {
+  fontMap.clear();
   texturesMap.clear();
   clock.restart();
 
@@ -18,12 +19,28 @@ Gerenciador_Grafico::Gerenciador_Grafico() : window(sf::VideoMode(1200, 900), "M
 
 Gerenciador_Grafico::~Gerenciador_Grafico()
 {
+  destroyTextures();
+  destroyFonts();
+}
+
+void Gerenciador_Grafico::destroyTextures()
+{
   map<const char *, sf::Texture *>::iterator it = texturesMap.begin();
   for (it = texturesMap.begin(); it != texturesMap.end(); it++)
   {
     delete (it->second);
   }
   texturesMap.clear();
+}
+
+void Gerenciador_Grafico::destroyFonts()
+{
+  map<const char *, sf::Font *>::iterator it = fontMap.begin();
+  for (it = fontMap.begin(); it != fontMap.end(); it++)
+  {
+    delete (it->second);
+  }
+  fontMap.clear();
 }
 
 void Gerenciador_Grafico::clear()
@@ -106,9 +123,36 @@ sf::Texture *Gerenciador_Grafico::carregaTextura(const char *path)
   return tex;
 }
 
+sf::Font *Gerenciador_Grafico::carregaFonte(const char *font_path)
+{
+  map<const char *, sf::Font *>::iterator it = fontMap.begin();
+  for (it = fontMap.begin(); it != fontMap.end(); it++)
+  {
+    if (!strcmp(it->first, font_path))
+      return (it->second);
+  }
+
+  // If not found, then load it.
+  sf::Font *font = new sf::Font();
+
+  if (!font->loadFromFile(font_path))
+  {
+    cout << "Error loading file" << font_path << endl;
+    exit(1);
+  }
+
+  fontMap.insert(pair<const char *, sf::Font *>(font_path, font));
+  return font;
+}
+
 void Gerenciador_Grafico::drawSprite(sf::Sprite s)
 {
   window.draw(s);
+}
+
+void Gerenciador_Grafico::drawText(sf::Text t)
+{
+  window.draw(t);
 }
 
 void Gerenciador_Grafico::renderizar()
@@ -126,4 +170,12 @@ void Gerenciador_Grafico::handleResize(sf::Event event)
 void Gerenciador_Grafico::centerCamera(sf::Vector2f center)
 {
   window.setView(sf::View(center, window.getView().getSize()));
+}
+
+sf::Vector2f Gerenciador_Grafico::getTopLeftPosition()
+{
+  sf::View view = window.getView();
+  int left = view.getCenter().x - (window.getView().getSize().x / 2);
+  int top = view.getCenter().y - (window.getView().getSize().y / 2);
+  return sf::Vector2f(left, top);
 }

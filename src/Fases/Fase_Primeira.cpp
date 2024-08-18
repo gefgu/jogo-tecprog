@@ -11,11 +11,13 @@ void Fase_Primeira::desenhar()
   gerenciadorGrafico.drawSprite(fundo);
   plataformas.desenhar();
   entidades.desenhar();
+  gerenciadorGrafico.drawText(vidasJogador);
 }
 
 void Fase_Primeira::executar()
 {
   gerenciadorColisoes.executar();
   entidades.executar();
+  atualizaVidaJogador();
   desenhar();
 }

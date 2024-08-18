@@ -17,6 +17,7 @@ private:
   sf::Clock clock;
   float elapsed_time; // since last re-render
   map<const char *, sf::Texture *> texturesMap;
+  map<const char *, sf::Font *> fontMap;
 
   void updateElapsedTime(); // it updates on the display
   Gerenciador_Grafico();    // Singleton
@@ -26,9 +27,12 @@ private:
   Gerenciador_Grafico(const Gerenciador_Grafico &) = delete;
   Gerenciador_Grafico &operator=(const Gerenciador_Grafico &) = delete;
   void handleResize(sf::Event);
+  void destroyTextures();
+  void destroyFonts();
 
 public:
-  static Gerenciador_Grafico &getInstance()
+  static Gerenciador_Grafico &
+  getInstance()
   {
     static Gerenciador_Grafico instance;
     return instance;
@@ -38,14 +42,17 @@ public:
   void display();
   bool isWindowOpen();
   sf::Texture *carregaTextura(const char *textura_path);
+  sf::Font *carregaFonte(const char *fonte_path);
   float getElapsedTime();
   sf::Vector2u getWindowSize() const;
   bool pollEvent(sf::Event &event);
   void fecharJanela();
   sf::RenderWindow &getWindow();
   void drawSprite(sf::Sprite s);
+  void drawText(sf::Text t);
   void renderizar();
   void centerCamera(sf::Vector2f center);
+  sf::Vector2f getTopLeftPosition();
 };
 
 #endif // GERENCIADOR_GRAFICO_HPP

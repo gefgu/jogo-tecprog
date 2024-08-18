@@ -2,11 +2,17 @@
 
 Fase::Fase() : gerenciadorGrafico(Gerenciador_Grafico::getInstance())
 {
-  jogador = new Jogador(200, 100, 3);
+  jogador = new Jogador(200, 100, 5);
   entidades.incluir(jogador);
   gerenciadorColisoes.incluirEntidadeMovel(jogador);
   criarCenario();
   criarPlataformas();
+  // sf::Font *fonte = gerenciadorGrafico.carregaFonte("./assets/fonts/INVASION2000.TTF");
+  sf::Font *fonte = gerenciadorGrafico.carregaFonte("./assets/fonts/BACKTO1982.TTF");
+  vidasJogador.setFont(*fonte);
+  vidasJogador.setFillColor(sf::Color::White);
+  vidasJogador.setCharacterSize(32);
+  atualizaVidaJogador();
 }
 
 Fase::~Fase() {}
@@ -18,8 +24,8 @@ void Fase::criarCenario()
   sf::Texture *texturaFundo = gerenciadorGrafico.carregaTextura("./assets/images/funda_fase_1_2.png");
   fundo.setTexture(*texturaFundo);
   fundo.setPosition(-largura, -altura);
-  fundo.setScale(static_cast<float>(largura) * 3 / fundo.getTexture()->getSize().x,
-                 static_cast<float>(altura) * 3 / fundo.getTexture()->getSize().y);
+  fundo.setScale(static_cast<float>(largura) * 4 / fundo.getTexture()->getSize().x,
+                 static_cast<float>(altura) * 4 / fundo.getTexture()->getSize().y);
   texturaFundo->setRepeated(true);
   fundo.setTextureRect(sf::IntRect(0, 0, largura * 10, altura * 10));
 }
@@ -27,15 +33,18 @@ void Fase::criarCenario()
 void Fase::criarPlataformas(int qty_plt)
 {
   int py = 1075;
-  for (int i = 0; i < qty_plt; i++)
+  for (int i = -1; i < qty_plt; i++)
   {
-    int val = rand() % 3; // 0 keeps the same
-    if (val == 1)
-      py += 48;
-    else if (val == 2)
-      py -= 48;
-    if (val > 0 && i > 3)
-      i++;
+    if (i % 3 == 0)
+    {
+      int val = rand() % 3; // 0 keeps the same
+      if (val == 1)
+        py += 48;
+      else if (val == 2)
+        py -= 48;
+      if (val == 0 && i > 3)
+        i++;
+    }
 
     // inclui duas no mesmo nível sempre
     Plataforma *p = new Plataforma(32 * 3 * i, py);
@@ -49,10 +58,20 @@ void Fase::desenhar()
   gerenciadorGrafico.drawSprite(fundo);
   plataformas.desenhar();
   entidades.desenhar();
+  gerenciadorGrafico.drawText(vidasJogador);
 }
 
 void Fase::executar()
 {
   gerenciadorColisoes.executar();
   entidades.executar();
+  atualizaVidaJogador();
+}
+
+void Fase::atualizaVidaJogador()
+{
+  int vidas = jogador->getVidas();
+  vidasJogador.setString(std::to_string(vidas) + " Vidas");
+  sf::Vector2f pos = gerenciadorGrafico.getTopLeftPosition();
+  vidasJogador.setPosition(pos.x + 25, pos.y + 25);
 }

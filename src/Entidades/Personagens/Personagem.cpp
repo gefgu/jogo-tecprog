@@ -10,3 +10,13 @@ void Personagem::executar()
 }
 
 void Personagem::desenhar() {}
+
+int Personagem::getVidas()
+{
+    return num_vidas;
+}
+
+void Personagem::recebeDano(int vidas_perdidas)
+{
+    num_vidas = max(0, num_vidas - vidas_perdidas);
+}
