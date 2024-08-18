@@ -15,7 +15,6 @@ class Gerenciador_Grafico
 private:
   sf::RenderWindow window;
   sf::Clock clock;
-  sf::View camera;
   float elapsed_time; // since last re-render
   map<const char *, sf::Texture *> texturesMap;
 
@@ -26,6 +25,7 @@ private:
   // Delete copy constructor and assignment operator to prevent copying
   Gerenciador_Grafico(const Gerenciador_Grafico &) = delete;
   Gerenciador_Grafico &operator=(const Gerenciador_Grafico &) = delete;
+  void handleResize(sf::Event);
 
 public:
   static Gerenciador_Grafico &getInstance()
