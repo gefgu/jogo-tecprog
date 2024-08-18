@@ -41,7 +41,8 @@ void Fase::criarCenario()
 void Fase::criarPlataformas(int qty_plt)
 {
   int py = 1075;
-  for (int i = -1; i < qty_plt; i++)
+  int i;
+  for (i = -1; i < qty_plt; i++)
   {
     if (i % 3 == 0)
     {
@@ -58,12 +59,8 @@ void Fase::criarPlataformas(int qty_plt)
     Plataforma *p = new Plataforma(32 * 3 * i, py);
     plataformas.incluir(p);
     gerenciadorColisoes.incluirEntidadeEstatica(p);
-
-    if (i == qty_plt - 1)
-    {
-      finalX = 32 * 3 * i;
-    }
   }
+  finalX = 32 * 3 * (i - 1);
 }
 
 void Fase::desenhar()

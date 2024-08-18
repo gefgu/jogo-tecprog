@@ -41,7 +41,7 @@ Menu::Menu(float largura, float altura) : itemSelecionado(0), gerenciadorGrafico
     setBotaoTexto(0, "Stage 1", fonte);
     setBotaoTexto(1, "Stage 2", fonte);
     setBotaoTexto(2, "Load Games", fonte);
-    setBotaoTexto(3, "Settings", fonte);
+    setBotaoTexto(3, "Leaderboard", fonte);
 
     if (!botoes.empty())
     {

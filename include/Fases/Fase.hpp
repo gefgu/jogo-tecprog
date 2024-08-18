@@ -26,7 +26,7 @@ protected:
   sf::Text pontosText;
   sf::Clock clock;
 
-  void criarPlataformas(int qty_plt = 50);
+  void criarPlataformas(int qty_plt = 20);
   void criarCenario();
   void criaEspinhos();
   void atualizaVidaJogador();
