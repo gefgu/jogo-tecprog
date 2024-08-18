@@ -3,7 +3,9 @@
 enum estadoJogo
 {
   MENU = 0,
-  FASE1
+  FASE1,
+  FASE2,
+  GAMEOVER
 };
 
 class Gerenciador_Estado

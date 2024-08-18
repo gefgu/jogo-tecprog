@@ -26,8 +26,8 @@ protected:
   sf::Text pontosText;
   sf::Clock clock;
 
-  void criarPlataformas(int qty_plt = 20);
-  void criarCenario();
+  void criarPlataformas(int qty_plt);
+  virtual void criarCenario() = 0;
   void criaEspinhos();
   void atualizaVidaJogador();
   void atualizaPontos();
@@ -35,7 +35,7 @@ protected:
   void fimDeJogo();
 
 public:
-  Fase();
+  Fase(int qty_plt);
   ~Fase();
   void desenhar();
   virtual void executar();

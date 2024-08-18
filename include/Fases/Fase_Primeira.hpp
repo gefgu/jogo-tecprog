@@ -5,6 +5,8 @@
 
 class Fase_Primeira : public Fase
 {
+private:
+  void criarCenario();
 
 public:
   Fase_Primeira();

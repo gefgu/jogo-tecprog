@@ -1,13 +1,12 @@
 #include "Fases/Fase.hpp"
 
-Fase::Fase() : gerenciadorGrafico(Gerenciador_Grafico::getInstance()), pontos(1000), finalX(10000)
+Fase::Fase(int qty_plt) : gerenciadorGrafico(Gerenciador_Grafico::getInstance()), pontos(1000), finalX(10000)
 {
   clock.restart();
   jogador = new Jogador(200, 100, 5);
   entidades.incluir(jogador);
   gerenciadorColisoes.incluirEntidadeMovel(jogador);
-  criarCenario();
-  criarPlataformas();
+  criarPlataformas(qty_plt);
   criaEspinhos();
   // sf::Font *fonte = gerenciadorGrafico.carregaFonte("./assets/fonts/INVASION2000.TTF");
   sf::Font *fonte = gerenciadorGrafico.carregaFonte("./assets/fonts/BACKTO1982.TTF");
@@ -24,19 +23,6 @@ Fase::Fase() : gerenciadorGrafico(Gerenciador_Grafico::getInstance()), pontos(10
 }
 
 Fase::~Fase() {}
-
-void Fase::criarCenario()
-{
-  int largura = gerenciadorGrafico.getWindowSize().x;
-  int altura = gerenciadorGrafico.getWindowSize().y;
-  sf::Texture *texturaFundo = gerenciadorGrafico.carregaTextura("./assets/images/funda_fase_1_2.png");
-  fundo.setTexture(*texturaFundo);
-  fundo.setPosition(-largura, -altura);
-  fundo.setScale(static_cast<float>(largura) * 4 / fundo.getTexture()->getSize().x,
-                 static_cast<float>(altura) * 4 / fundo.getTexture()->getSize().y);
-  texturaFundo->setRepeated(true);
-  fundo.setTextureRect(sf::IntRect(0, 0, largura * 10, altura * 10));
-}
 
 void Fase::criarPlataformas(int qty_plt)
 {

@@ -159,7 +159,7 @@ void Menu::executar()
                 else if (selectedItem == 1)
                 {
                     // Começar Fase 2
-                    // menuAtivo = false;
+                    gerenciadorEstado.setEstadoJogo(estadoJogo::FASE2);
                 }
                 else if (selectedItem == 2)
                 {
