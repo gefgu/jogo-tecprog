@@ -1,6 +1,6 @@
 #include "Entidades/Obstaculos/Obstaculo.hpp"
 
-Obstaculo::Obstaculo(int px, int py, bool dano) : Entidade(tipoDeEntidade::OBSTACULO), danoso(dano) {}
+Obstaculo::Obstaculo(int px, int py, tipoDeEntidade tipo) : Entidade(tipo) {}
 
 Obstaculo::~Obstaculo() {}
 

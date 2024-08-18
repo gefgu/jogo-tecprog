@@ -15,6 +15,7 @@ public:
   void incluir(Entidade *pE);
   void executar();
   void desenhar();
+  Entidade *getRandom();
 };
 
 #endif // LISTAENTIDADES_HPP

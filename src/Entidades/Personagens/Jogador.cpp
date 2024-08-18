@@ -57,7 +57,7 @@ void Jogador::setPosition(int px, int py)
 void Jogador::executar()
 {
     // Reset noChao at the start of each frame
-    noChao = tempoDesdeUltimoPulo > 0.1f && estaNoChao();
+    noChao = tempoDesdeUltimoPulo > 0.5f && estaNoChao();
 
     aplicarGravidade();
     estadoJogador newState = IDLE;
