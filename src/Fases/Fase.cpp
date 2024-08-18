@@ -7,6 +7,12 @@ Fase::Fase() : gerenciadorGrafico(Gerenciador_Grafico::getInstance())
   gerenciadorColisoes.incluirEntidadeMovel(jogador);
   criarCenario();
   criarPlataformas();
+  // sf::Font *fonte = gerenciadorGrafico.carregaFonte("./assets/fonts/INVASION2000.TTF");
+  sf::Font *fonte = gerenciadorGrafico.carregaFonte("./assets/fonts/BACKTO1982.TTF");
+  vidasJogador.setFont(*fonte);
+  vidasJogador.setFillColor(sf::Color::White);
+  vidasJogador.setCharacterSize(32);
+  atualizaVidaJogador();
 }
 
 Fase::~Fase() {}
@@ -29,13 +35,16 @@ void Fase::criarPlataformas(int qty_plt)
   int py = 1075;
   for (int i = 0; i < qty_plt; i++)
   {
-    int val = rand() % 3; // 0 keeps the same
-    if (val == 1)
-      py += 48;
-    else if (val == 2)
-      py -= 48;
-    if (val > 0 && i > 3)
-      i++;
+    if (i % 3 == 0)
+    {
+      int val = rand() % 3; // 0 keeps the same
+      if (val == 1)
+        py += 48;
+      else if (val == 2)
+        py -= 48;
+      if (val == 0 && i > 3)
+        i++;
+    }
 
     // inclui duas no mesmo nível sempre
     Plataforma *p = new Plataforma(32 * 3 * i, py);
@@ -49,14 +58,20 @@ void Fase::desenhar()
   gerenciadorGrafico.drawSprite(fundo);
   plataformas.desenhar();
   entidades.desenhar();
+  gerenciadorGrafico.drawText(vidasJogador);
 }
 
 void Fase::executar()
 {
   gerenciadorColisoes.executar();
   entidades.executar();
+  atualizaVidaJogador();
 }
 
-void Fase::mostraVidaJogador()
+void Fase::atualizaVidaJogador()
 {
+  int vidas = jogador->getVidas();
+  vidasJogador.setString(std::to_string(vidas) + " Vidas");
+  sf::Vector2f pos = gerenciadorGrafico.getTopLeftPosition();
+  vidasJogador.setPosition(pos.x + 25, pos.y + 25);
 }

@@ -150,6 +150,11 @@ void Gerenciador_Grafico::drawSprite(sf::Sprite s)
   window.draw(s);
 }
 
+void Gerenciador_Grafico::drawText(sf::Text t)
+{
+  window.draw(t);
+}
+
 void Gerenciador_Grafico::renderizar()
 {
   // Adicione a lógica de renderização aqui
@@ -165,4 +170,12 @@ void Gerenciador_Grafico::handleResize(sf::Event event)
 void Gerenciador_Grafico::centerCamera(sf::Vector2f center)
 {
   window.setView(sf::View(center, window.getView().getSize()));
+}
+
+sf::Vector2f Gerenciador_Grafico::getTopLeftPosition()
+{
+  sf::View view = window.getView();
+  int left = view.getCenter().x - (window.getView().getSize().x / 2);
+  int top = view.getCenter().y - (window.getView().getSize().y / 2);
+  return sf::Vector2f(left, top);
 }

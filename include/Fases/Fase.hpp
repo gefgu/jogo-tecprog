@@ -20,7 +20,8 @@ protected:
   Jogador *jogador;
   void criarPlataformas(int qty_plt = 100);
   void criarCenario();
-  void mostraVidaJogador();
+  void atualizaVidaJogador();
+  sf::Text vidasJogador;
 
 public:
   Fase();

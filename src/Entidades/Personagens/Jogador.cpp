@@ -206,7 +206,7 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
     sf::FloatRect jogadorBounds = getSize();
 
     // Imprimir a interseção para debug
-    std::cout << "Colisão com " << other->getTipo() << ": x = " << intersecao.x << ", y = " << intersecao.y << std::endl;
+    // std::cout << "Colisão com " << other->getTipo() << ": x = " << intersecao.x << ", y = " << intersecao.y << std::endl;
 
     if (other->getTipo() == tipoDeEntidade::PLATAFORMA)
     {

@@ -49,8 +49,10 @@ public:
   void fecharJanela();
   sf::RenderWindow &getWindow();
   void drawSprite(sf::Sprite s);
+  void drawText(sf::Text t);
   void renderizar();
   void centerCamera(sf::Vector2f center);
+  sf::Vector2f getTopLeftPosition();
 };
 
 #endif // GERENCIADOR_GRAFICO_HPP
