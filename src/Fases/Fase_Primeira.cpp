@@ -21,5 +21,6 @@ void Fase_Primeira::executar()
   entidades.executar();
   atualizaVidaJogador();
   atualizaPontos();
+  verificaFim();
   desenhar();
 }

@@ -1,6 +1,6 @@
 #include "Fases/Fase.hpp"
 
-Fase::Fase() : gerenciadorGrafico(Gerenciador_Grafico::getInstance()), pontos(1000)
+Fase::Fase() : gerenciadorGrafico(Gerenciador_Grafico::getInstance()), pontos(1000), finalX(10000)
 {
   clock.restart();
   jogador = new Jogador(200, 100, 5);
@@ -58,6 +58,11 @@ void Fase::criarPlataformas(int qty_plt)
     Plataforma *p = new Plataforma(32 * 3 * i, py);
     plataformas.incluir(p);
     gerenciadorColisoes.incluirEntidadeEstatica(p);
+
+    if (i == qty_plt - 1)
+    {
+      finalX = 32 * 3 * i;
+    }
   }
 }
 
@@ -76,6 +81,8 @@ void Fase::executar()
   entidades.executar();
   atualizaVidaJogador();
   atualizaPontos();
+  verificaFim();
+  desenhar();
 }
 
 void Fase::criaEspinhos()
@@ -107,4 +114,17 @@ void Fase::atualizaPontos()
   pontosText.setString(std::to_string(pontos) + " Pontos");
   sf::Vector2f pos = gerenciadorGrafico.getTopLeftPosition();
   pontosText.setPosition(pos.x + 25, pos.y + 75);
+}
+
+void Fase::verificaFim()
+{
+  if (jogador->getVidas() <= 0 || jogador->getCenter().x >= finalX)
+  {
+    fimDeJogo();
+  }
+}
+
+void Fase::fimDeJogo()
+{
+  Gerenciador_Estado::getInstance().setEstadoJogo(estadoJogo::MENU);
 }

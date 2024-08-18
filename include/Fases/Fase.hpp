@@ -9,6 +9,7 @@
 #include "Entidades/Plataforma.hpp"
 #include "Entidades/Personagens/Jogador.hpp"
 #include "Entidades/Obstaculos/Espinho.hpp"
+#include "Gerenciadores/Gerenciador_Estado.hpp"
 
 class Fase : public Ente
 {
@@ -20,6 +21,7 @@ protected:
   ListaEntidades entidades;
   Jogador *jogador;
   int pontos;
+  int finalX;
   sf::Text vidasJogador;
   sf::Text pontosText;
   sf::Clock clock;
@@ -29,6 +31,8 @@ protected:
   void criaEspinhos();
   void atualizaVidaJogador();
   void atualizaPontos();
+  void verificaFim();
+  void fimDeJogo();
 
 public:
   Fase();
