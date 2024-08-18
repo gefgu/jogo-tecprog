@@ -24,6 +24,7 @@ private:
     Animacao animacao;
     estadoJogador state;
     float tempoDesdeUltimoPulo;
+    float tempoDesdeUltimoEspinho;
     Entidade *ultimoPiso;
 
     void setAnimationState();
