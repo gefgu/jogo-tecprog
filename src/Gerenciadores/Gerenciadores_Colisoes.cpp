@@ -30,11 +30,30 @@ bool Gerenciador_Colisoes::verificaColisao(sf::FloatRect size1, sf::FloatRect si
 
 sf::Vector2f Gerenciador_Colisoes::getIntersection(sf::Vector2f origem1, sf::FloatRect size1, sf::Vector2f origem2, sf::FloatRect size2)
 {
-  float x_dis = fabs(origem1.x - origem2.x);
-  float x_intersect = x_dis - ((size1.width / 2.0) + (size2.width / 2.0));
-  float y_dis = fabs(origem1.y - origem2.y);
-  float y_intersect = y_dis - ((size1.height / 2.0) + (size2.height / 2.0));
-  return sf::Vector2f(x_intersect, y_intersect);
+  float overlapX = std::min(origem1.x + size1.width, origem2.x + size2.width) - std::max(origem1.x, origem2.x);
+  float overlapY = std::min(origem1.y + size1.height, origem2.y + size2.height) - std::max(origem1.y, origem2.y);
+
+  sf::Vector2f movement(0.0f, 0.0f);
+
+  if (origem1.x < origem2.x)
+  {
+    movement.x = -overlapX; // Move left
+  }
+  else
+  {
+    movement.x = overlapX; // Move right
+  }
+
+  if (origem1.y < origem2.y)
+  {
+    movement.y = -overlapY; // Move up
+  }
+  else
+  {
+    movement.y = overlapY; // Move down
+  }
+
+  return movement;
 }
 
 void Gerenciador_Colisoes::executar()

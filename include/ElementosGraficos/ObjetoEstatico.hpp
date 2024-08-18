@@ -10,7 +10,7 @@ private:
   const char *image_path;
 
 public:
-  ObjetoEstatico(const char *path);
+  ObjetoEstatico(const char *path, bool repeat = false);
   ~ObjetoEstatico();
   void setPosition(int px, int py);
   void setScale(float sx, float sy);

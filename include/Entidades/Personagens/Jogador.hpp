@@ -24,9 +24,11 @@ private:
     Animacao animacao;
     estadoJogador state;
     float tempoDesdeUltimoPulo;
+    Entidade *ultimoPiso;
 
     void setAnimationState();
     void setPosition(int px, int py);
+    bool estaNoChao();
 
 public:
     Jogador(float px, float py, int vidas);

@@ -16,7 +16,7 @@ private:
   const char *animation_path;
 
 public:
-  TrilhaAnimacao(int frames, int t, int width, int height, float sx, float sy, const char *path);
+  TrilhaAnimacao(int frames, int t, int f_width, int f_height, float sx, float sy, const char *path);
   ~TrilhaAnimacao();
   void update();
   void setPosition(int px, int py);

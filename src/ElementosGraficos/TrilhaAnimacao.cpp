@@ -1,14 +1,14 @@
 #include "ElementosGraficos/TrilhaAnimacao.hpp"
 
-TrilhaAnimacao::TrilhaAnimacao(int frames, int t, int width, int height, float sx, float sy, const char *path)
+TrilhaAnimacao::TrilhaAnimacao(int frames, int t, int f_width, int f_height, float sx, float sy, const char *path)
     : animation_index(0), animation_time(0), animation_frames(frames), time_before_update(t),
-      animation_path(path), frame_width(width), frame_height(height)
+      animation_path(path), frame_width(f_width), frame_height(f_height)
 {
   sf::Texture *tex = Gerenciador_Grafico::getInstance().carregaTextura(animation_path);
   sprite.setTexture(*tex);
-  sprite.setTextureRect(sf::IntRect(0, 0, width, height));
+  sprite.setTextureRect(sf::IntRect(0, 0, frame_width, frame_height));
   sprite.setScale(sx, sy);
-  sprite.setOrigin(width / 2.f, height / 2.f); // Define a origem no centro da sprite
+  sprite.setOrigin(frame_width / 2.f, frame_height / 2.f); // Define a origem no centro da sprite
 }
 
 TrilhaAnimacao::~TrilhaAnimacao() {}
@@ -58,8 +58,7 @@ void TrilhaAnimacao::reset()
 sf::Vector2f TrilhaAnimacao::getCenter()
 {
   sf::FloatRect size = getSize();
-  sf::Vector2f origin = sprite.getOrigin();
-  return sf::Vector2f(size.left + origin.x, size.top + origin.y);
+  return sf::Vector2f(size.left + size.width / 2.0f, size.top + size.height / 2.0f);
 }
 
 sf::FloatRect TrilhaAnimacao::getSize()
