@@ -39,6 +39,7 @@ public:
   ~Fase();
   void desenhar();
   virtual void executar();
+  int getPontos();
 };
 
 #endif // FASE_HPP

@@ -11,7 +11,7 @@ void Fase_Primeira::criarCenario()
 {
   int largura = gerenciadorGrafico.getWindowSize().x;
   int altura = gerenciadorGrafico.getWindowSize().y;
-  sf::Texture *texturaFundo = gerenciadorGrafico.carregaTextura("./assets/images/funda_fase_1.png");
+  sf::Texture *texturaFundo = gerenciadorGrafico.carregaTextura("./assets/images/fundo_fase_1.png");
   fundo.setTexture(*texturaFundo);
   fundo.setPosition(-largura, -altura);
   fundo.setScale(static_cast<float>(largura) * 4 / fundo.getTexture()->getSize().x,

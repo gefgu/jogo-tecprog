@@ -109,5 +109,10 @@ void Fase::verificaFim()
 
 void Fase::fimDeJogo()
 {
-  Gerenciador_Estado::getInstance().setEstadoJogo(estadoJogo::MENU);
+  Gerenciador_Estado::getInstance().setEstadoJogo(estadoJogo::GAMEOVER);
+}
+
+int Fase::getPontos()
+{
+  return pontos;
 }

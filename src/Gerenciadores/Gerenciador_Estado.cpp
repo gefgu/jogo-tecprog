@@ -13,7 +13,13 @@ const estadoJogo Gerenciador_Estado::getEstadoJogo() const
   return estado;
 }
 
+const estadoJogo Gerenciador_Estado::getUltimoEstadoJogo() const
+{
+  return ultimoEstado;
+}
+
 void Gerenciador_Estado::setEstadoJogo(estadoJogo e)
 {
+  ultimoEstado = estado;
   estado = e;
 }

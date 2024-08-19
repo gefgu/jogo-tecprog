@@ -5,13 +5,15 @@ enum estadoJogo
   MENU = 0,
   FASE1,
   FASE2,
-  GAMEOVER
+  GAMEOVER,
+  MENUGAMEOVER
 };
 
 class Gerenciador_Estado
 {
 private:
   estadoJogo estado;
+  estadoJogo ultimoEstado;
   Gerenciador_Estado();  // Singleton
   ~Gerenciador_Estado(); // Singleton
 
@@ -27,5 +29,6 @@ public:
   }
 
   const estadoJogo getEstadoJogo() const;
+  const estadoJogo getUltimoEstadoJogo() const;
   void setEstadoJogo(estadoJogo e);
 };
