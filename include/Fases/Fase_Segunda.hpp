@@ -5,9 +5,16 @@
 
 class Fase_Segunda : public Fase
 {
+private:
+  void criarCenario();
+
 public:
-  void criarInimigosDificeis();
-  void criarObstaculosFaceis();
+  Fase_Segunda();
+  ~Fase_Segunda();
+  void executar();
+  void criarInimigosFaceis();
+  void criarObstaculosDificeis();
+  void desenhar();
 };
 
 #endif // FASE_SEGUNDA_HPP

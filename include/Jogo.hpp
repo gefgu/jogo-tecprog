@@ -14,8 +14,10 @@
 #include "Gerenciadores/Gerenciador_Threads.hpp"
 #include "Ente.hpp"
 #include "PerformanceMonitor.hpp"
-#include "Menu.hpp"
+#include "Menus/Menu.hpp"
+#include "Menus/MenuFimDeJogo.hpp"
 #include "Fases/Fase_Primeira.hpp"
+#include "Fases/Fase_Segunda.hpp"
 
 class Jogo
 {
@@ -28,7 +30,9 @@ private:
 
     Menu menu;
     sf::Font fonte;
-    Fase_Primeira fase1;
+    Fase_Primeira *fase1;
+    Fase_Segunda *fase2;
+    MenuFimDeJogo *menuFimDeJogo;
 
 public:
     Jogo();

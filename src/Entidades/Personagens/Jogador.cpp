@@ -12,7 +12,7 @@ Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas),
                                                   velocidadeY(0), velocidadeX(25), noChao(false),
                                                   animacao(), direcao(1), state(IDLE), velocidadeCorrida(VELOCIDADE_CORRIDA * velocidadeX),
                                                   tempoDesdeUltimoPulo(0.0f), // Inicializa o tempo desde o último pulo,
-                                                  tempoDesdeUltimoEspinho(0.0f),
+                                                  tempoDesdeUltimoEspinho(COOLDOWN_ESPINHO),
                                                   ultimoPiso(NULL)
 {
     animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Idle.png"));

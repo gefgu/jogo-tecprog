@@ -1,4 +1,4 @@
-#include "Menu.hpp"
+#include "Menus/Menu.hpp"
 #include <iostream>
 
 Menu::Menu(float largura, float altura) : itemSelecionado(0), gerenciadorGrafico(Gerenciador_Grafico::getInstance()), gerenciadorEstado(Gerenciador_Estado::getInstance())
@@ -41,7 +41,7 @@ Menu::Menu(float largura, float altura) : itemSelecionado(0), gerenciadorGrafico
     setBotaoTexto(0, "Stage 1", fonte);
     setBotaoTexto(1, "Stage 2", fonte);
     setBotaoTexto(2, "Load Games", fonte);
-    setBotaoTexto(3, "Settings", fonte);
+    setBotaoTexto(3, "Leaderboard", fonte);
 
     if (!botoes.empty())
     {
@@ -58,6 +58,7 @@ Menu::~Menu()
 
 void Menu::draw(sf::RenderWindow &window)
 {
+    gerenciadorGrafico.centerCamera(sf::Vector2f(gerenciadorGrafico.getWindowSize().x / 2, gerenciadorGrafico.getWindowSize().y / 2));
     // Verifique se a textura do fundo está carregada corretamente antes de desenhar
     if (fundo.getTexture() != NULL)
     {
@@ -158,7 +159,7 @@ void Menu::executar()
                 else if (selectedItem == 1)
                 {
                     // Começar Fase 2
-                    // menuAtivo = false;
+                    gerenciadorEstado.setEstadoJogo(estadoJogo::FASE2);
                 }
                 else if (selectedItem == 2)
                 {
