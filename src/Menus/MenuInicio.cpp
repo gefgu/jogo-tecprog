@@ -143,7 +143,6 @@ void MenuInicio::executar()
 void MenuInicio::desenhar()
 {
   pGG->centerCamera(sf::Vector2f(pGG->getWindowSize().x / 2, pGG->getWindowSize().y / 2));
-  // Verifique se a textura do fundo está carregada corretamente antes de desenhar
   pGG->draw(fundo);
 
   for (size_t i = 0; i < botoes.size(); i++)
