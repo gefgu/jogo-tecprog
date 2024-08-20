@@ -9,6 +9,7 @@ protected:
     int num_vidas;
     float velocidadeX; // em unidades por segundo
     float velocidadeY; // em unidades por segundo
+    sf::RectangleShape colisionBox;
 
 public:
     Personagem(int px, int py, float vx, float vy, int vidas);
@@ -19,6 +20,8 @@ public:
     virtual void setPosition(int px, int py) = 0;
     int getVidas();
     void recebeDano(int vidas_perdidas);
+    void setColisionBoxSize(sf::Vector2f s);
+    void setColisionBoxPosition(int px, int py);
 };
 
 #endif // PERSONAGEM_HPP

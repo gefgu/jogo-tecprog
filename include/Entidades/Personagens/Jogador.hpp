@@ -23,11 +23,11 @@ private:
     estadoJogador state;
     float tempoDesdeUltimoPulo;
     float tempoDesdeUltimoEspinho;
-    Entidade *ultimoPiso;
+    float tempoDesdeUltimoPiso;
 
     void setAnimationState();
     void setPosition(int px, int py);
-    bool estaNoChao();
+    // bool estaNoChao();
     void mover();
 
 public:
