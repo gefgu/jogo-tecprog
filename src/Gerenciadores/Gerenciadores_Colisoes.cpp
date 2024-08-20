@@ -61,6 +61,7 @@ void Gerenciador_Colisoes::executar()
       {
         sf::Vector2f intersection = getIntersection(entidades_moveis[i]->getCenter(), entidades_moveis[i]->getSize(), entidades_estaticas[j]->getCenter(), entidades_estaticas[j]->getSize());
         entidades_moveis[i]->lidarColisao(intersection, entidades_estaticas[j]);
+        entidades_estaticas[j]->lidarColisao(intersection, entidades_moveis[i]);
       }
     }
   }

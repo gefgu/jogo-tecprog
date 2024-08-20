@@ -24,6 +24,8 @@ private:
     float tempoDesdeUltimoPulo;
     float tempoDesdeUltimoEspinho;
     float tempoDesdeUltimoPiso;
+    float tempoDesdeUltimoLixo;
+    float slowness;
 
     void setAnimationState();
     void setPosition(int px, int py);
@@ -39,5 +41,6 @@ public:
     sf::Vector2f getCenter();
     sf::FloatRect getSize();
     void lidarColisao(sf::Vector2f intersecao, Entidade *other);
+    void reduzirVelocidade(float fator);
 };
 #endif // JOGADOR_HPP
