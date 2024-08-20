@@ -5,11 +5,12 @@
 #include <SFML/Graphics.hpp>
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
 #include "Gerenciadores/Gerenciador_Colisoes.hpp"
+#include "Gerenciadores/Gerenciador_Estado.hpp"
 #include "Listas/ListaEntidades.hpp"
 #include "Entidades/Plataforma.hpp"
 #include "Entidades/Personagens/Jogador.hpp"
 #include "Entidades/Obstaculos/Espinho.hpp"
-#include "Gerenciadores/Gerenciador_Estado.hpp"
+#include "Entidades/Obstaculos/Lixo.hpp"
 
 class Fase : public Ente
 {
@@ -29,6 +30,7 @@ protected:
   void criarPlataformas(int qty_plt);
   virtual void criarCenario() = 0;
   void criaEspinhos();
+  void criaLixos();
   void atualizaVidaJogador();
   void atualizaPontos();
   void verificaFim();
