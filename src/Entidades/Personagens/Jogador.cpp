@@ -8,6 +8,8 @@ const float VELOCIDADE_CORRIDA = 1.5f; // Velocidade de corrida (em unidades por
 
 const float COOLDOWN_ESPINHO = 500.0f;
 
+const float SCALING_FACTOR = 3.f;
+
 Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, 25, 0, vidas),
                                               noChao(false),
                                               animacao(), direcao(1), state(IDLE), velocidadeCorrida(VELOCIDADE_CORRIDA * velocidadeX),
@@ -20,7 +22,8 @@ Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, 25, 0, vidas),
     animacao.addTrilha("walking", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Walk.png"));
     animacao.addTrilha("jump", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Jump.png"));
     animacao.setPosition(px, py);
-    animacao.setScale(3.f, 3.f);
+    animacao.setScale(SCALING_FACTOR, SCALING_FACTOR);
+    setColisionBoxSize(sf::Vector2f(40 * SCALING_FACTOR, 128 * SCALING_FACTOR));
     setAnimationState();
 }
 
@@ -44,7 +47,7 @@ void Jogador::setAnimationState()
     }
 
     // Ajusta a escala com base na direção atual
-    animacao.setScale(direcao * 3.f, 3.f);
+    animacao.setScale(direcao * SCALING_FACTOR, SCALING_FACTOR);
 }
 
 void Jogador::atacar()
@@ -55,6 +58,7 @@ void Jogador::atacar()
 void Jogador::setPosition(int px, int py)
 {
     animacao.setPosition(px, py);
+    colisionBox.setPosition(px, py);
     pGG->centerCamera(sf::Vector2f(px, py));
 }
 
@@ -184,16 +188,18 @@ void Jogador::aplicarGravidade()
 void Jogador::desenhar()
 {
     animacao.desenhar();
+    pGG->draw(colisionBox);
 }
 
 sf::Vector2f Jogador::getCenter()
 {
-    return animacao.getCenter();
+    sf::FloatRect size = getSize();
+    return sf::Vector2f(size.left + size.width / 2.0f, size.top + size.height / 2.0f);
 }
 
 sf::FloatRect Jogador::getSize()
 {
-    return animacao.getSize();
+    return colisionBox.getGlobalBounds();
 }
 
 bool Jogador::estaNoChao()
@@ -208,7 +214,7 @@ bool Jogador::estaNoChao()
     bool isAbovePlatform = y == pisoBounds.top - (jogadorBounds.height / 2);
 
     // Check if the player is within the platform bounds in the X axis
-    bool isWithinPlatformX = abs(getCenter().x - ultimoPiso->getCenter().x) <= 32 * 3;
+    bool isWithinPlatformX = abs(getCenter().x - ultimoPiso->getCenter().x) <= 32 * SCALING_FACTOR;
     // cout << "dis: " << abs(getCenter().x - ultimoPiso->getCenter().x) << endl;
 
     if (isAbovePlatform && isWithinPlatformX)
@@ -228,7 +234,7 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
 
     if (other->getTipo() == tipoDeEntidade::PLATAFORMA)
     {
-        bool isWithinPlatformX = abs(getCenter().x - other->getCenter().x) <= 32 * 3;
+        bool isWithinPlatformX = abs(getCenter().x - other->getCenter().x) <= 32 * SCALING_FACTOR;
 
         // Check if the player is above the platform and within 50 pixels on the x-axis
         if (getCenter().y <= pisoBounds.top && isWithinPlatformX)
@@ -241,7 +247,7 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
     }
     else if (other->getTipo() == tipoDeEntidade::ESPINHO)
     {
-        bool isCloseEnough = abs(getCenter().x - other->getCenter().x) <= 16 * 3;
+        bool isCloseEnough = abs(getCenter().x - other->getCenter().x) <= 16 * SCALING_FACTOR;
         if (isCloseEnough && tempoDesdeUltimoEspinho >= COOLDOWN_ESPINHO)
         {
             recebeDano(1);
