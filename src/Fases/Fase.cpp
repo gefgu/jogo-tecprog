@@ -1,6 +1,6 @@
 #include "Fases/Fase.hpp"
 
-Fase::Fase(int qty_plt) : pontos(1000), finalX(10000)
+Fase::Fase(int qty_plt) : pontos(1000), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png")
 {
   clock.restart();
   jogador = new Jogador(200, 100, 5);
@@ -18,6 +18,8 @@ Fase::Fase(int qty_plt) : pontos(1000), finalX(10000)
   pontosText.setFillColor(sf::Color::White);
   pontosText.setCharacterSize(32);
 
+  caixaDeCorreio.setScale(3, 3);
+
   atualizaVidaJogador();
   atualizaPontos();
 }
@@ -34,9 +36,9 @@ void Fase::criarPlataformas(int qty_plt)
     {
       int val = rand() % 3; // 0 keeps the same
       if (val == 1)
-        py += 48;
+        py += 64;
       else if (val == 2)
-        py -= 48;
+        py -= 64;
       if (val == 0 && i > 3)
         i += 2;
     }
@@ -47,6 +49,7 @@ void Fase::criarPlataformas(int qty_plt)
     gerenciadorColisoes.incluirEntidadeEstatica(p);
   }
   finalX = PLATAFORMA_WIDTH * 3 * (i - 1);
+  caixaDeCorreio.setPosition(finalX, py - ((PLATAFORMA_HEIGHT * 3) / 2) + caixaDeCorreio.getSize().height / 2);
 }
 
 void Fase::desenhar()

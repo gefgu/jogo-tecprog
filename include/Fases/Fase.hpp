@@ -24,6 +24,7 @@ protected:
   sf::Text vidasJogador;
   sf::Text pontosText;
   sf::Clock clock;
+  ObjetoEstatico caixaDeCorreio;
 
   void criarPlataformas(int qty_plt);
   virtual void criarCenario() = 0;

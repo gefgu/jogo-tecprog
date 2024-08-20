@@ -24,6 +24,7 @@ void Fase_Segunda::desenhar()
 {
   pGG->draw(fundo);
   plataformas.desenhar();
+  caixaDeCorreio.desenhar();
   entidades.desenhar();
   pGG->draw(vidasJogador);
   pGG->draw(pontosText);
