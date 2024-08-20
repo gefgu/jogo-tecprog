@@ -9,7 +9,8 @@ enum tipoDeEntidade
     PLATAFORMA = 0,
     JOGADOR,
     OBSTACULO,
-    ESPINHO
+    ESPINHO,
+    LIXO
 };
 
 class Entidade : public Ente
