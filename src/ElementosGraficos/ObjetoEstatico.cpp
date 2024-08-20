@@ -24,7 +24,7 @@ void ObjetoEstatico::setScale(float sx, float sy)
 
 void ObjetoEstatico::desenhar()
 {
-  Gerenciador_Grafico::getInstance().drawSprite(sprite);
+  Gerenciador_Grafico::getInstance().draw(sprite);
 }
 
 void ObjetoEstatico::setTextureRect(sf::IntRect rec)

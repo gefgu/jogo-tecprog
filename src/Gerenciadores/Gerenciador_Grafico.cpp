@@ -145,14 +145,19 @@ sf::Font *Gerenciador_Grafico::carregaFonte(const char *font_path)
   return font;
 }
 
-void Gerenciador_Grafico::drawSprite(sf::Sprite s)
+void Gerenciador_Grafico::draw(sf::Sprite s)
 {
   window.draw(s);
 }
 
-void Gerenciador_Grafico::drawText(sf::Text t)
+void Gerenciador_Grafico::draw(sf::Text t)
 {
   window.draw(t);
+}
+
+void Gerenciador_Grafico::draw(sf::RectangleShape r)
+{
+  window.draw(r);
 }
 
 void Gerenciador_Grafico::renderizar()

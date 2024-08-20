@@ -51,11 +51,11 @@ void Fase::criarPlataformas(int qty_plt)
 
 void Fase::desenhar()
 {
-  gerenciadorGrafico.drawSprite(fundo);
+  gerenciadorGrafico.draw(fundo);
   plataformas.desenhar();
   entidades.desenhar();
-  gerenciadorGrafico.drawText(vidasJogador);
-  gerenciadorGrafico.drawText(pontosText);
+  gerenciadorGrafico.draw(vidasJogador);
+  gerenciadorGrafico.draw(pontosText);
 }
 
 void Fase::executar()

@@ -14,7 +14,7 @@
 #include "Gerenciadores/Gerenciador_Threads.hpp"
 #include "Ente.hpp"
 #include "PerformanceMonitor.hpp"
-#include "Menus/Menu.hpp"
+#include "Menus/MenuInicio.hpp"
 #include "Menus/MenuFimDeJogo.hpp"
 #include "Fases/Fase_Primeira.hpp"
 #include "Fases/Fase_Segunda.hpp"
@@ -28,8 +28,7 @@ private:
     Gerenciador_Threads gerenciadorThreads;
     PerformanceMonitor performanceMonitor;
 
-    Menu menu;
-    sf::Font fonte;
+    MenuInicio *menuInicio;
     Fase_Primeira *fase1;
     Fase_Segunda *fase2;
     MenuFimDeJogo *menuFimDeJogo;
@@ -38,7 +37,6 @@ public:
     Jogo();
     ~Jogo();
     void executar();
-    void processarMenu(); // Função para processar o menu
 };
 
 #endif // JOGO_HPP

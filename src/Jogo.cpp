@@ -2,8 +2,8 @@
 #include <unistd.h>
 #include <iostream>
 
-Jogo::Jogo() : gerenciadorGrafico(Gerenciador_Grafico::getInstance()), menu(gerenciadorGrafico.getWindowSize().x, gerenciadorGrafico.getWindowSize().y),
-               gerenciadorEstado(Gerenciador_Estado::getInstance()), fase1(NULL), fase2(NULL), menuFimDeJogo(NULL)
+Jogo::Jogo() : gerenciadorGrafico(Gerenciador_Grafico::getInstance()),
+               gerenciadorEstado(Gerenciador_Estado::getInstance()), menuInicio(NULL), fase1(NULL), fase2(NULL), menuFimDeJogo(NULL)
 {
     Ente::setGerenciadorGrafico(&gerenciadorGrafico);
     gerenciadorThreads.iniciarThreadColisoes(&gerenciadorColisoes);
@@ -23,9 +23,11 @@ void Jogo::executar()
         gerenciadorGrafico.clear();
         estadoJogo estado = gerenciadorEstado.getEstadoJogo();
         estadoJogo ultimoEstado = gerenciadorEstado.getUltimoEstadoJogo();
-        if (estado == estadoJogo::MENU)
+        if (estado == estadoJogo::MENUINICIO)
         {
-            menu.executar();
+            if (menuInicio == NULL)
+                menuInicio = new MenuInicio();
+            menuInicio->executar();
         }
         else if (estado == estadoJogo::FASE1)
         {
@@ -62,7 +64,7 @@ void Jogo::executar()
         else if (estado == estadoJogo::MENUGAMEOVER)
         {
             if (menuFimDeJogo == NULL)
-                gerenciadorEstado.setEstadoJogo(estadoJogo::MENU);
+                gerenciadorEstado.setEstadoJogo(estadoJogo::MENUINICIO);
             else
                 menuFimDeJogo->executar();
         }

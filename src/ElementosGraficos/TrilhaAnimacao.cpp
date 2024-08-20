@@ -46,7 +46,7 @@ void TrilhaAnimacao::setScale(float sx, float sy)
 
 void TrilhaAnimacao::desenhar()
 {
-  Gerenciador_Grafico::getInstance().drawSprite(sprite);
+  Gerenciador_Grafico::getInstance().draw(sprite);
 }
 
 void TrilhaAnimacao::reset()

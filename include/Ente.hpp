@@ -16,13 +16,11 @@ protected:
   static Gerenciador_Grafico *pGG;
   static int cont;
 
-  // Figura *pFig;
-
 public:
   Ente();
   ~Ente();
   virtual void executar() = 0;
-  virtual void desenhar();
+  virtual void desenhar() = 0;
   static void setGerenciadorGrafico(Gerenciador_Grafico *pGerenciador);
 };
 
