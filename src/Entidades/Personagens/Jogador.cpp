@@ -8,6 +8,8 @@ const float VELOCIDADE_CORRIDA = 1.5f; // Velocidade de corrida (em unidades por
 
 const float COOLDOWN_ESPINHO = 500.0f;
 
+const float COOLDOWN_PISO = 50.f;
+
 const float SCALING_FACTOR = 3.f;
 
 Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, 25, 0, vidas),
@@ -15,7 +17,8 @@ Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, 25, 0, vidas),
                                               animacao(), direcao(1), state(IDLE), velocidadeCorrida(VELOCIDADE_CORRIDA * velocidadeX),
                                               tempoDesdeUltimoPulo(0.0f),
                                               tempoDesdeUltimoEspinho(COOLDOWN_ESPINHO),
-                                              ultimoPiso(NULL)
+                                              tempoDesdeUltimoPiso(COOLDOWN_PISO)
+
 {
     animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Idle.png"));
     animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Run.png"));
@@ -131,7 +134,7 @@ void Jogador::mover()
         if (noChao && tempoDesdeUltimoPulo >= COOLDOWN_PULO)
         {
             velocidadeY = -sqrt(2 * GRAVIDADE * 150);
-            // y -= 10;
+            y -= 10;
             noChao = false;
             tempoDesdeUltimoPulo = 0.0f; // Reseta o tempo desde o último pulo
         }
@@ -153,7 +156,7 @@ void Jogador::mover()
 void Jogador::executar()
 {
     // Reset noChao at the start of each frame
-    noChao = tempoDesdeUltimoPulo > 100.f && estaNoChao();
+    noChao = tempoDesdeUltimoPiso <= COOLDOWN_PISO;
 
     aplicarGravidade();
     float elapsed_time = pGG->getElapsedTime();
@@ -161,6 +164,7 @@ void Jogador::executar()
     // Atualiza o tempo desde o último pulo
     tempoDesdeUltimoPulo += elapsed_time;
     tempoDesdeUltimoEspinho += elapsed_time;
+    tempoDesdeUltimoPiso += elapsed_time;
 
     mover();
 
@@ -188,7 +192,7 @@ void Jogador::aplicarGravidade()
 void Jogador::desenhar()
 {
     animacao.desenhar();
-    pGG->draw(colisionBox);
+    // pGG->draw(colisionBox);
 }
 
 sf::Vector2f Jogador::getCenter()
@@ -202,47 +206,22 @@ sf::FloatRect Jogador::getSize()
     return colisionBox.getGlobalBounds();
 }
 
-bool Jogador::estaNoChao()
-{
-    if (!ultimoPiso || ultimoPiso == NULL)
-        return false;
-
-    sf::FloatRect pisoBounds = ultimoPiso->getSize();
-    sf::FloatRect jogadorBounds = getSize();
-
-    // Check if the player is above the platform with 5 pixels of tolerance
-    bool isAbovePlatform = y == pisoBounds.top - (jogadorBounds.height / 2);
-
-    // Check if the player is within the platform bounds in the X axis
-    bool isWithinPlatformX = abs(getCenter().x - ultimoPiso->getCenter().x) <= 32 * SCALING_FACTOR;
-    // cout << "dis: " << abs(getCenter().x - ultimoPiso->getCenter().x) << endl;
-
-    if (isAbovePlatform && isWithinPlatformX)
-        return true;
-    else
-        ultimoPiso = NULL;
-    return false;
-}
-
 void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
 {
     sf::FloatRect pisoBounds = other->getSize();
     sf::FloatRect jogadorBounds = getSize();
 
     // Imprimir a interseção para debug
-    // std::cout << "Colisão com " << other->getTipo() << ": x = " << intersecao.x << ", y = " << intersecao.y << std::endl;
+    std::cout << "Colisão com " << other->getTipo() << ": x = " << intersecao.x << ", y = " << (intersecao.y + pisoBounds.height) << std::endl;
 
     if (other->getTipo() == tipoDeEntidade::PLATAFORMA)
     {
-        bool isWithinPlatformX = abs(getCenter().x - other->getCenter().x) <= 32 * SCALING_FACTOR;
-
-        // Check if the player is above the platform and within 50 pixels on the x-axis
-        if (getCenter().y <= pisoBounds.top && isWithinPlatformX)
+        if (jogadorBounds.top + jogadorBounds.height - 10 <= pisoBounds.top)
         {
-            y = pisoBounds.top - (jogadorBounds.height / 2); // Position the player on top of the platform
-            noChao = true;
+            y -= intersecao.y + pisoBounds.height;
+            // y = pisoBounds.top - (jogadorBounds.height / 2); // Position the player on top of the platform
+            tempoDesdeUltimoPiso = 0.0f;
             velocidadeY = 0;
-            ultimoPiso = other;
         }
     }
     else if (other->getTipo() == tipoDeEntidade::ESPINHO)
