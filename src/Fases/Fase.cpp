@@ -30,7 +30,7 @@ void Fase::criarPlataformas(int qty_plt)
   int i;
   for (i = -1; i < qty_plt; i++)
   {
-    if (i % 3 == 0)
+    if (i % 5 == 0)
     {
       int val = rand() % 3; // 0 keeps the same
       if (val == 1)

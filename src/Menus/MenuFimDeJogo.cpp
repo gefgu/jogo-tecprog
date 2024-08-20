@@ -5,11 +5,11 @@ MenuFimDeJogo::MenuFimDeJogo(int p) : Menu(), gerenciadorEstado(Gerenciador_Esta
 {
   sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
   textoFinal.setFont(*fonte);
-  textoFinal.setFillColor(sf::Color::White);
+  textoFinal.setFillColor(sf::Color::Black);
   textoFinal.setCharacterSize(48);
   textoFinal.setString("Vc fez " + to_string(pontos) + " Pontos!!");
   sf::Vector2f pos = pGG->getTopLeftPosition();
-  textoFinal.setPosition(pos.x + 250, pos.y + 75);
+  textoFinal.setPosition(250, 75);
   cout << "Criando MENU FIM" << endl;
 }
 
