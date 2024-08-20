@@ -2,7 +2,7 @@
 
 ObjetoEstatico::ObjetoEstatico(const char *path, bool repeat)
 {
-  sf::Texture *tex = Gerenciador_Grafico::getInstance().carregaTextura(path);
+  sf::Texture *tex = pGG->carregaTextura(path);
   sf::IntRect textureRect(0, 0, tex->getSize().x, tex->getSize().y);
   tex->setRepeated(repeat);
   sprite.setTexture(*tex);
@@ -24,7 +24,7 @@ void ObjetoEstatico::setScale(float sx, float sy)
 
 void ObjetoEstatico::desenhar()
 {
-  Gerenciador_Grafico::getInstance().draw(sprite);
+  pGG->draw(sprite);
 }
 
 void ObjetoEstatico::setTextureRect(sf::IntRect rec)
@@ -42,3 +42,5 @@ sf::FloatRect ObjetoEstatico::getSize()
 {
   return sprite.getGlobalBounds();
 }
+
+void ObjetoEstatico::executar() {}

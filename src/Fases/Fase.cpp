@@ -42,11 +42,11 @@ void Fase::criarPlataformas(int qty_plt)
     }
 
     // inclui duas no mesmo nível sempre
-    Plataforma *p = new Plataforma(32 * 3 * i, py);
+    Plataforma *p = new Plataforma(PLATAFORMA_WIDTH * 3 * i, py);
     plataformas.incluir(p);
     gerenciadorColisoes.incluirEntidadeEstatica(p);
   }
-  finalX = 32 * 3 * (i - 1);
+  finalX = PLATAFORMA_WIDTH * 3 * (i - 1);
 }
 
 void Fase::desenhar()
@@ -74,8 +74,8 @@ void Fase::criaEspinhos()
   for (int i = 0; i < total_espinhos; i++)
   {
     Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
-    int px = p->getCenter().x + (16 * 3);
-    int py = p->getCenter().y - (p->getSize().height);
+    int px = p->getCenter().x;
+    int py = p->getCenter().y - (p->getSize().height / 2.f) - (ESPINHO_HEIGHT * 3) / 2;
     Espinho *e = new Espinho(px, py);
     entidades.incluir(e);
     gerenciadorColisoes.incluirEntidadeEstatica(e);

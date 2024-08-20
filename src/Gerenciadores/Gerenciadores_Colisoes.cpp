@@ -30,30 +30,23 @@ bool Gerenciador_Colisoes::verificaColisao(sf::FloatRect size1, sf::FloatRect si
 
 sf::Vector2f Gerenciador_Colisoes::getIntersection(sf::Vector2f origem1, sf::FloatRect size1, sf::Vector2f origem2, sf::FloatRect size2)
 {
-  float overlapX = std::min(origem1.x + size1.width, origem2.x + size2.width) - std::max(origem1.x, origem2.x);
-  float overlapY = std::min(origem1.y + size1.height, origem2.y + size2.height) - std::max(origem1.y, origem2.y);
+  float minX1 = origem1.x - size1.width / 2.f;
+  float maxX1 = origem1.x + size1.width / 2.f;
+  float minY1 = origem1.y - size1.height / 2.f;
+  float maxY1 = origem1.y + size1.height / 2.f;
 
-  sf::Vector2f movement(0.0f, 0.0f);
+  float minX2 = origem2.x - size2.width / 2.f;
+  float maxX2 = origem2.x + size2.width / 2.f;
+  float minY2 = origem2.y - size2.height / 2.f;
+  float maxY2 = origem2.y + size2.height / 2.f;
 
-  if (origem1.x < origem2.x)
-  {
-    movement.x = -overlapX; // Move left
-  }
-  else
-  {
-    movement.x = overlapX; // Move right
-  }
+  // Calculate the overlap on the X axis
+  float intersectX = std::max(0.f, std::min(maxX1, maxX2) - std::max(minX1, minX2));
 
-  if (origem1.y < origem2.y)
-  {
-    movement.y = -overlapY; // Move up
-  }
-  else
-  {
-    movement.y = overlapY; // Move down
-  }
+  // Calculate the overlap on the Y axis
+  float intersectY = std::max(0.f, std::min(maxY1, maxY2) - std::max(minY1, minY2));
 
-  return movement;
+  return sf::Vector2f(intersectX, intersectY);
 }
 
 void Gerenciador_Colisoes::executar()

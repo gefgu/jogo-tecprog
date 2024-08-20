@@ -1,11 +1,12 @@
 #include "Entidades/Plataforma.hpp"
 
-const char *PLATAFORMA_PATH = "./assets/tiles/plataforma.png";
+const char *PLATAFORMA_PATH = "./assets/tiles/plataforma_2.png";
 
-Plataforma::Plataforma(int px, int py) : Entidade(px, py, tipoDeEntidade::PLATAFORMA), visual(PLATAFORMA_PATH, true)
+Plataforma::Plataforma(int px, int py) : Entidade(px, py, tipoDeEntidade::PLATAFORMA),
+                                         visual(PLATAFORMA_PATH, true)
 {
   visual.setPosition(px, py);
-  visual.setTextureRect(sf::IntRect(0, 0, 32, 16));
+  visual.setTextureRect(sf::IntRect(0, 0, 80, 64 * 2));
   visual.setScale(3, 3);
 }
 

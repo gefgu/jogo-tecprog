@@ -4,6 +4,8 @@
 #include "Entidades/Entidade.hpp"
 #include "ElementosGraficos/ObjetoEstatico.hpp"
 
+const int PLATAFORMA_WIDTH = 80;
+
 class Plataforma : public Entidade
 {
 private:

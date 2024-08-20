@@ -5,6 +5,8 @@
 #include "Entidades/Personagens/Jogador.hpp"
 #include "ElementosGraficos/ObjetoEstatico.hpp"
 
+const int ESPINHO_HEIGHT = 16;
+
 class Espinho : public Obstaculo
 {
 private:

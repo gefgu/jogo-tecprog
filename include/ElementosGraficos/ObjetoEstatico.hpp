@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
 
-class ObjetoEstatico
+class ObjetoEstatico : public Ente
 {
 private:
   sf::Sprite sprite;
@@ -16,6 +16,7 @@ public:
   void setScale(float sx, float sy);
   void setTextureRect(sf::IntRect rec);
   void desenhar();
+  void executar();
   sf::Vector2f getCenter();
   sf::FloatRect getSize();
 };

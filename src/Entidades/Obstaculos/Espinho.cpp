@@ -5,7 +5,7 @@ const char *ESPINHO_PATH = "./assets/tiles/espinho.png";
 Espinho::Espinho(int px, int py) : Obstaculo(px, py, tipoDeEntidade::ESPINHO), visual(ESPINHO_PATH)
 {
   visual.setPosition(px, py);
-  visual.setTextureRect(sf::IntRect(0, 0, 16, 16));
+  visual.setTextureRect(sf::IntRect(0, 0, 16, ESPINHO_HEIGHT));
   visual.setScale(3, 3);
 }
 

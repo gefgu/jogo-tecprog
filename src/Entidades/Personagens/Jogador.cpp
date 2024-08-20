@@ -8,7 +8,7 @@ const float VELOCIDADE_CORRIDA = 1.5f; // Velocidade de corrida (em unidades por
 
 const float COOLDOWN_ESPINHO = 500.0f;
 
-const float COOLDOWN_PISO = 50.f;
+const float COOLDOWN_PISO = 75.f;
 
 const float SCALING_FACTOR = 3.f;
 
@@ -212,13 +212,13 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
     sf::FloatRect jogadorBounds = getSize();
 
     // Imprimir a interseção para debug
-    std::cout << "Colisão com " << other->getTipo() << ": x = " << intersecao.x << ", y = " << (intersecao.y + pisoBounds.height) << std::endl;
+    std::cout << "Colisão com " << other->getTipo() << ": x = " << intersecao.x << ", y = " << (intersecao.y) << std::endl;
 
     if (other->getTipo() == tipoDeEntidade::PLATAFORMA)
     {
-        if (jogadorBounds.top + jogadorBounds.height - 10 <= pisoBounds.top)
+        if (intersecao.y > 0)
         {
-            y -= intersecao.y + pisoBounds.height;
+            y -= intersecao.y - 1;
             // y = pisoBounds.top - (jogadorBounds.height / 2); // Position the player on top of the platform
             tempoDesdeUltimoPiso = 0.0f;
             velocidadeY = 0;
