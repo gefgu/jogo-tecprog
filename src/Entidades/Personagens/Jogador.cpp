@@ -1,23 +1,27 @@
 #include "Entidades/Personagens/Jogador.hpp"
 #include <cmath> // Para usar std::max
 
+const float VELOCIDADEINICIAL = 25;
+
 const float GRAVIDADE = 9.8f;          // Aceleração da gravidade (em unidades por segundo^2)
 const float TEMPO_FRAME = 0.16f;       // Duração de cada frame (em segundos) - para 60 FPS
 const float COOLDOWN_PULO = 800.0f;    // Tempo de espera entre pulos (em milissegundos)
 const float VELOCIDADE_CORRIDA = 1.5f; // Velocidade de corrida (em unidades por segundo)
 
 const float COOLDOWN_ESPINHO = 500.0f;
+const float COOLDOWN_LIXO = 250.0f;
 
-const float COOLDOWN_PISO = 50.f;
+const float COOLDOWN_PISO = 75.f;
 
 const float SCALING_FACTOR = 3.f;
 
-Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, 25, 0, vidas),
+Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, VELOCIDADEINICIAL, 0, vidas),
                                               noChao(false),
                                               animacao(), direcao(1), state(IDLE), velocidadeCorrida(VELOCIDADE_CORRIDA * velocidadeX),
                                               tempoDesdeUltimoPulo(0.0f),
                                               tempoDesdeUltimoEspinho(COOLDOWN_ESPINHO),
-                                              tempoDesdeUltimoPiso(COOLDOWN_PISO)
+                                              tempoDesdeUltimoPiso(COOLDOWN_PISO), tempoDesdeUltimoLixo(COOLDOWN_LIXO),
+                                              slowness(1)
 
 {
     animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Idle.png"));
@@ -73,7 +77,7 @@ void Jogador::mover()
     // Verifica se o Shift está pressionado para correr
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
     {
-        velocidadeX = velocidadeCorrida; // Velocidade de corrida
+        velocidadeX = velocidadeCorrida / slowness; // Velocidade de corrida
         newState = RUN;
 
         // Executa a corrida na direção atual
@@ -89,7 +93,7 @@ void Jogador::mover()
     else
     {
         // Retorna à velocidade normal de caminhada
-        velocidadeX = velocidadeCorrida / VELOCIDADE_CORRIDA;
+        velocidadeX = (velocidadeCorrida / slowness) / VELOCIDADE_CORRIDA;
     }
 
     // Verifica se a tecla A (esquerda) está pressionada
@@ -117,7 +121,7 @@ void Jogador::mover()
 
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
     {
-        velocidadeX = velocidadeCorrida; // Velocidade de corrida
+        velocidadeX = velocidadeCorrida / slowness; // Velocidade de corrida
         if (direcao == -1)
         {
             x -= velocidadeX * (elapsed_time / 100.0);
@@ -157,6 +161,8 @@ void Jogador::executar()
 {
     // Reset noChao at the start of each frame
     noChao = tempoDesdeUltimoPiso <= COOLDOWN_PISO;
+    if (tempoDesdeUltimoLixo >= COOLDOWN_LIXO)
+        slowness = 1;
 
     aplicarGravidade();
     float elapsed_time = pGG->getElapsedTime();
@@ -165,6 +171,7 @@ void Jogador::executar()
     tempoDesdeUltimoPulo += elapsed_time;
     tempoDesdeUltimoEspinho += elapsed_time;
     tempoDesdeUltimoPiso += elapsed_time;
+    tempoDesdeUltimoLixo += elapsed_time;
 
     mover();
 
@@ -212,13 +219,13 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
     sf::FloatRect jogadorBounds = getSize();
 
     // Imprimir a interseção para debug
-    std::cout << "Colisão com " << other->getTipo() << ": x = " << intersecao.x << ", y = " << (intersecao.y + pisoBounds.height) << std::endl;
+    std::cout << "Colisão com " << other->getTipo() << ": x = " << intersecao.x << ", y = " << (intersecao.y) << std::endl;
 
     if (other->getTipo() == tipoDeEntidade::PLATAFORMA)
     {
-        if (jogadorBounds.top + jogadorBounds.height - 10 <= pisoBounds.top)
+        if (intersecao.y > 0)
         {
-            y -= intersecao.y + pisoBounds.height;
+            y -= intersecao.y - 1;
             // y = pisoBounds.top - (jogadorBounds.height / 2); // Position the player on top of the platform
             tempoDesdeUltimoPiso = 0.0f;
             velocidadeY = 0;
@@ -235,4 +242,10 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
     }
 
     setPosition(x, y);
+}
+
+void Jogador::reduzirVelocidade(float fator)
+{
+    tempoDesdeUltimoLixo = 0.0f;
+    slowness = fator;
 }

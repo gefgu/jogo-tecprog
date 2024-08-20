@@ -1,19 +1,19 @@
-#ifndef OBSTACULO_FACIL_HPP
-#define OBSTACULO_FACIL_HPP
+#pragma once
 
 #include "Obstaculo.hpp"
 #include "Entidades/Personagens/Jogador.hpp"
 #include "ElementosGraficos/ObjetoEstatico.hpp"
 
-const int ESPINHO_HEIGHT = 16;
+const int LIXO_HEIGHT = 26;
 
-class Espinho : public Obstaculo
+class Lixo : public Obstaculo
 {
+private:
+  float fator_de_impedimento;
+
 public:
-  Espinho(int px, int py);
-  ~Espinho();
+  Lixo(int px, int py);
+  ~Lixo();
   void executar();
   void lidarColisao(sf::Vector2f intersecao, Entidade *other);
 };
-
-#endif // OBSTACULO_FACIL_HPP

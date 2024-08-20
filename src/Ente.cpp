@@ -13,15 +13,3 @@ Ente::Ente() : id(cont++)
 }
 
 Ente::~Ente() {}
-
-void Ente::desenhar()
-{
-  if (pGG)
-  {
-    // pGG->desenharEnte(this);
-  }
-  else
-  {
-    cout << "Gerenciador Gráfico não encontrado em Ente" << endl;
-  }
-}

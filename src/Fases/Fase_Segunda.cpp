@@ -1,6 +1,6 @@
 #include "Fases/Fase_Segunda.hpp"
 
-Fase_Segunda::Fase_Segunda() : Fase(100)
+Fase_Segunda::Fase_Segunda() : Fase(50)
 {
   criarCenario();
 }
@@ -24,6 +24,7 @@ void Fase_Segunda::desenhar()
 {
   pGG->draw(fundo);
   plataformas.desenhar();
+  caixaDeCorreio.desenhar();
   entidades.desenhar();
   pGG->draw(vidasJogador);
   pGG->draw(pontosText);

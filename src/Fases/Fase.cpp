@@ -1,6 +1,6 @@
 #include "Fases/Fase.hpp"
 
-Fase::Fase(int qty_plt) : pontos(1000), finalX(10000)
+Fase::Fase(int qty_plt) : pontos(1000), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png")
 {
   clock.restart();
   jogador = new Jogador(200, 100, 5);
@@ -8,6 +8,7 @@ Fase::Fase(int qty_plt) : pontos(1000), finalX(10000)
   gerenciadorColisoes.incluirEntidadeMovel(jogador);
   criarPlataformas(qty_plt);
   criaEspinhos();
+  criaLixos();
   // sf::Font *fonte = pGG->carregaFonte("./assets/fonts/INVASION2000.TTF");
   sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
   vidasJogador.setFont(*fonte);
@@ -17,6 +18,8 @@ Fase::Fase(int qty_plt) : pontos(1000), finalX(10000)
   pontosText.setFont(*fonte);
   pontosText.setFillColor(sf::Color::White);
   pontosText.setCharacterSize(32);
+
+  caixaDeCorreio.setScale(3, 3);
 
   atualizaVidaJogador();
   atualizaPontos();
@@ -34,19 +37,20 @@ void Fase::criarPlataformas(int qty_plt)
     {
       int val = rand() % 3; // 0 keeps the same
       if (val == 1)
-        py += 48;
+        py += 64;
       else if (val == 2)
-        py -= 48;
+        py -= 64;
       if (val == 0 && i > 3)
         i += 2;
     }
 
     // inclui duas no mesmo nível sempre
-    Plataforma *p = new Plataforma(32 * 3 * i, py);
+    Plataforma *p = new Plataforma(PLATAFORMA_WIDTH * 3 * i, py);
     plataformas.incluir(p);
     gerenciadorColisoes.incluirEntidadeEstatica(p);
   }
-  finalX = 32 * 3 * (i - 1);
+  finalX = PLATAFORMA_WIDTH * 3 * (i - 1);
+  caixaDeCorreio.setPosition(finalX, py - ((PLATAFORMA_HEIGHT * 3) / 2) + caixaDeCorreio.getSize().height / 2);
 }
 
 void Fase::desenhar()
@@ -74,11 +78,25 @@ void Fase::criaEspinhos()
   for (int i = 0; i < total_espinhos; i++)
   {
     Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
-    int px = p->getCenter().x + (16 * 3);
-    int py = p->getCenter().y - (p->getSize().height);
+    int px = p->getCenter().x;
+    int py = p->getCenter().y - (p->getSize().height / 2.f) - (ESPINHO_HEIGHT * 3) / 2;
     Espinho *e = new Espinho(px, py);
     entidades.incluir(e);
     gerenciadorColisoes.incluirEntidadeEstatica(e);
+  }
+}
+
+void Fase::criaLixos()
+{
+  int total_lixos = 3 + (rand() % 5);
+  for (int i = 0; i < total_lixos; i++)
+  {
+    Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
+    int px = p->getCenter().x;
+    int py = p->getCenter().y - (p->getSize().height / 2.f) - (LIXO_HEIGHT * 3) / 2;
+    Lixo *l = new Lixo(px, py);
+    entidades.incluir(l);
+    gerenciadorColisoes.incluirEntidadeEstatica(l);
   }
 }
 

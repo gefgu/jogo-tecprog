@@ -1,6 +1,6 @@
 #include "Fases/Fase_Primeira.hpp"
 
-Fase_Primeira::Fase_Primeira() : Fase(100)
+Fase_Primeira::Fase_Primeira() : Fase(40)
 {
   criarCenario();
 }
@@ -28,6 +28,7 @@ void Fase_Primeira::desenhar()
   entidades.desenhar();
   pGG->draw(vidasJogador);
   pGG->draw(pontosText);
+  caixaDeCorreio.desenhar();
 }
 
 void Fase_Primeira::executar()

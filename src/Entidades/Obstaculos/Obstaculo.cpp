@@ -1,10 +1,20 @@
 #include "Entidades/Obstaculos/Obstaculo.hpp"
 
-Obstaculo::Obstaculo(int px, int py, tipoDeEntidade tipo) : Entidade(px, py, tipo) {}
+Obstaculo::Obstaculo(int px, int py, const char *img_path, tipoDeEntidade tipo) : Entidade(px, py, tipo), visual(img_path) {}
 
 Obstaculo::~Obstaculo() {}
 
-void Obstaculo::executar()
+sf::Vector2f Obstaculo::getCenter()
 {
-    // Implementação genérica, pode ser sobrescrita pelas subclasses
+    return visual.getCenter();
+}
+
+sf::FloatRect Obstaculo::getSize()
+{
+    return visual.getSize();
+}
+
+void Obstaculo::desenhar()
+{
+    visual.desenhar();
 }
