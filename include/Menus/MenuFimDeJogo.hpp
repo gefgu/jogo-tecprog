@@ -5,15 +5,14 @@
 #include <string> // Para usar std::string
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
 #include "Gerenciadores/Gerenciador_Estado.hpp"
+#include "Menus/Menu.hpp"
 
 using namespace std;
 
-class MenuFimDeJogo
+class MenuFimDeJogo : public Menu
 {
 private:
-  sf::Sprite fundo; // Fundo do menu
   int pontos;
-  Gerenciador_Grafico &gerenciadorGrafico;
   Gerenciador_Estado &gerenciadorEstado;
   sf::Text textoFinal;
 

@@ -22,11 +22,11 @@ void Fase_Segunda::criarCenario()
 
 void Fase_Segunda::desenhar()
 {
-  gerenciadorGrafico.drawSprite(fundo);
+  gerenciadorGrafico.draw(fundo);
   plataformas.desenhar();
   entidades.desenhar();
-  gerenciadorGrafico.drawText(vidasJogador);
-  gerenciadorGrafico.drawText(pontosText);
+  gerenciadorGrafico.draw(vidasJogador);
+  gerenciadorGrafico.draw(pontosText);
 }
 
 void Fase_Segunda::executar()

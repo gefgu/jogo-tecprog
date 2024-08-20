@@ -2,7 +2,7 @@
 
 enum estadoJogo
 {
-  MENU = 0,
+  MENUINICIO = 0,
   FASE1,
   FASE2,
   GAMEOVER,

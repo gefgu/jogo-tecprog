@@ -48,8 +48,9 @@ public:
   bool pollEvent(sf::Event &event);
   void fecharJanela();
   sf::RenderWindow &getWindow();
-  void drawSprite(sf::Sprite s);
-  void drawText(sf::Text t);
+  void draw(sf::Sprite s);
+  void draw(sf::RectangleShape t);
+  void draw(sf::Text t);
   void renderizar();
   void centerCamera(sf::Vector2f center);
   sf::Vector2f getTopLeftPosition();

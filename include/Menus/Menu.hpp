@@ -6,29 +6,22 @@
 #include <string> // Para usar std::string
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
 #include "Gerenciadores/Gerenciador_Estado.hpp"
+#include "Ente.hpp"
 
-class Menu
+class Menu : public Ente
 {
-private:
-    sf::Sprite fundo;                       // Fundo do menu
-    std::vector<sf::RectangleShape> botoes; // Botões
-    std::vector<sf::Text> textos;           // Textos nos botões
-    int itemSelecionado;
-    Gerenciador_Grafico &gerenciadorGrafico;
+protected:
+    sf::Sprite fundo; // Fundo do menu
     Gerenciador_Estado &gerenciadorEstado;
 
     void setBotaoTexto(int index, const std::string &texto, sf::Font *fonte);
 
 public:
-    Menu(float largura, float altura);
+    Menu();
     ~Menu();
 
-    void draw(sf::RenderWindow &window);
-    void moveUp();
-    void moveDown();
-    int getSelectedItemIndex() const;
-    void centralizaTextoNoBotao(sf::Text &texto, const sf::RectangleShape &botao);
-    void executar();
+    virtual void desenhar() = 0;
+    virtual void executar() = 0;
 };
 
 #endif // MENU_HPP

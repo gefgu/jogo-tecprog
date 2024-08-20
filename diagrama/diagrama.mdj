@@ -7590,7 +7590,7 @@
 											"top": 367,
 											"width": 256.87890625,
 											"height": 11,
-											"text": "+drawSprite(s: Sprite)",
+											"text": "+draw(s: Sprite)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -7609,7 +7609,7 @@
 											"top": 380,
 											"width": 256.87890625,
 											"height": 11,
-											"text": "+drawText(t: Text)",
+											"text": "+draw(t: Text)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -23062,7 +23062,7 @@
 							"_parent": {
 								"$ref": "Bpx+ok2YEUa/BXA19tWAowAA"
 							},
-							"name": "drawSprite",
+							"name": "draw",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -23081,7 +23081,7 @@
 							"_parent": {
 								"$ref": "Bpx+ok2YEUa/BXA19tWAowAA"
 							},
-							"name": "drawText",
+							"name": "draw",
 							"parameters": [
 								{
 									"_type": "UMLParameter",

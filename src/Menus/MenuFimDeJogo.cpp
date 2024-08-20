@@ -1,29 +1,15 @@
 #include "Menus/MenuFimDeJogo.hpp"
 #include <iostream>
 
-MenuFimDeJogo::MenuFimDeJogo(int p) : gerenciadorGrafico(Gerenciador_Grafico::getInstance()), gerenciadorEstado(Gerenciador_Estado::getInstance()), pontos(p)
+MenuFimDeJogo::MenuFimDeJogo(int p) : Menu(), gerenciadorEstado(Gerenciador_Estado::getInstance()), pontos(p)
 {
-  int largura = gerenciadorGrafico.getWindowSize().x;
-  int altura = gerenciadorGrafico.getWindowSize().y;
-  gerenciadorGrafico.centerCamera(sf::Vector2f(largura / 2, altura));
-  sf::Texture *texturaFundo = gerenciadorGrafico.carregaTextura("./assets/images/fundo_fase_1.png");
-  fundo.setTexture(*texturaFundo);
-  fundo.setPosition(0, 0);
-  fundo.setScale(largura / fundo.getTexture()->getSize().x, altura / fundo.getTexture()->getSize().y);
-
-  // sf::Texture *texturaBotao = gerenciadorGrafico.carregaTextura("./assets/images/botao.png");
-  // if (!texturaBotao)
-  // {
-  //   std::cerr << "Erro ao carregar a textura dos botões!" << std::endl;
-  // }
-
-  sf::Font *fonte = gerenciadorGrafico.carregaFonte("./assets/fonts/BACKTO1982.TTF");
+  sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
   textoFinal.setFont(*fonte);
   textoFinal.setFillColor(sf::Color::White);
   textoFinal.setCharacterSize(48);
   textoFinal.setString("Vc fez " + to_string(pontos) + " Pontos!!");
-  sf::Vector2f pos = gerenciadorGrafico.getTopLeftPosition();
-  textoFinal.setPosition(pos.x + largura / 2, pos.y + 75);
+  sf::Vector2f pos = pGG->getTopLeftPosition();
+  textoFinal.setPosition(pos.x + 250, pos.y + 75);
   cout << "Criando MENU FIM" << endl;
 }
 
@@ -34,25 +20,25 @@ MenuFimDeJogo::~MenuFimDeJogo()
 
 void MenuFimDeJogo::desenhar()
 {
-  gerenciadorGrafico.centerCamera(sf::Vector2f(gerenciadorGrafico.getWindowSize().x / 2, gerenciadorGrafico.getWindowSize().y / 2));
-  gerenciadorGrafico.drawSprite(fundo);
-  gerenciadorGrafico.drawText(textoFinal);
+  pGG->centerCamera(sf::Vector2f(pGG->getWindowSize().x / 2, pGG->getWindowSize().y / 2));
+  pGG->draw(fundo);
+  pGG->draw(textoFinal);
 }
 
 void MenuFimDeJogo::executar()
 {
   sf::Event event;
-  while (gerenciadorGrafico.pollEvent(event))
+  while (pGG->pollEvent(event))
   {
     if (event.type == sf::Event::Closed)
     {
-      gerenciadorGrafico.fecharJanela();
+      pGG->fecharJanela();
     }
     else if (event.type == sf::Event::KeyPressed)
     {
       if (event.key.code == sf::Keyboard::Escape)
       {
-        gerenciadorEstado.setEstadoJogo(estadoJogo::MENU);
+        gerenciadorEstado.setEstadoJogo(estadoJogo::MENUINICIO);
       }
     }
   }

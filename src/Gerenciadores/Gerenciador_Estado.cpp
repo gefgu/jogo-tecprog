@@ -1,6 +1,6 @@
 #include "Gerenciadores/Gerenciador_Estado.hpp"
 
-Gerenciador_Estado::Gerenciador_Estado() : estado(MENU)
+Gerenciador_Estado::Gerenciador_Estado() : estado(MENUINICIO)
 {
 }
 
