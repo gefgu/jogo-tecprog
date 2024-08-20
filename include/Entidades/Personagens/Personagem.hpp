@@ -11,11 +11,12 @@ protected:
     float velocidadeY; // em unidades por segundo
 
 public:
-    Personagem(float px, float py, int vidas);
+    Personagem(int px, int py, float vx, float vy, int vidas);
     virtual ~Personagem();
     virtual void atacar() = 0;
-    virtual void executar() override;
-    virtual void desenhar();
+    virtual void executar() = 0;
+    virtual void desenhar() = 0;
+    virtual void setPosition(int px, int py) = 0;
     int getVidas();
     void recebeDano(int vidas_perdidas);
 };

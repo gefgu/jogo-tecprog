@@ -1,6 +1,6 @@
 #include "Fases/Fase.hpp"
 
-Fase::Fase(int qty_plt) : gerenciadorGrafico(Gerenciador_Grafico::getInstance()), pontos(1000), finalX(10000)
+Fase::Fase(int qty_plt) : pontos(1000), finalX(10000)
 {
   clock.restart();
   jogador = new Jogador(200, 100, 5);
@@ -8,8 +8,8 @@ Fase::Fase(int qty_plt) : gerenciadorGrafico(Gerenciador_Grafico::getInstance())
   gerenciadorColisoes.incluirEntidadeMovel(jogador);
   criarPlataformas(qty_plt);
   criaEspinhos();
-  // sf::Font *fonte = gerenciadorGrafico.carregaFonte("./assets/fonts/INVASION2000.TTF");
-  sf::Font *fonte = gerenciadorGrafico.carregaFonte("./assets/fonts/BACKTO1982.TTF");
+  // sf::Font *fonte = pGG->carregaFonte("./assets/fonts/INVASION2000.TTF");
+  sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
   vidasJogador.setFont(*fonte);
   vidasJogador.setFillColor(sf::Color::White);
   vidasJogador.setCharacterSize(32);
@@ -51,11 +51,11 @@ void Fase::criarPlataformas(int qty_plt)
 
 void Fase::desenhar()
 {
-  gerenciadorGrafico.draw(fundo);
+  pGG->draw(fundo);
   plataformas.desenhar();
   entidades.desenhar();
-  gerenciadorGrafico.draw(vidasJogador);
-  gerenciadorGrafico.draw(pontosText);
+  pGG->draw(vidasJogador);
+  pGG->draw(pontosText);
 }
 
 void Fase::executar()
@@ -74,7 +74,7 @@ void Fase::criaEspinhos()
   for (int i = 0; i < total_espinhos; i++)
   {
     Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
-    int px = p->getCenter().x - (16 * 3);
+    int px = p->getCenter().x + (16 * 3);
     int py = p->getCenter().y - (p->getSize().height);
     Espinho *e = new Espinho(px, py);
     entidades.incluir(e);
@@ -86,7 +86,7 @@ void Fase::atualizaVidaJogador()
 {
   int vidas = jogador->getVidas();
   vidasJogador.setString(std::to_string(vidas) + " Vidas");
-  sf::Vector2f pos = gerenciadorGrafico.getTopLeftPosition();
+  sf::Vector2f pos = pGG->getTopLeftPosition();
   vidasJogador.setPosition(pos.x + 25, pos.y + 25);
 }
 
@@ -95,7 +95,7 @@ void Fase::atualizaPontos()
   int tempo = clock.getElapsedTime().asSeconds();
   pontos = 1000 - tempo;
   pontosText.setString(std::to_string(pontos) + " Pontos");
-  sf::Vector2f pos = gerenciadorGrafico.getTopLeftPosition();
+  sf::Vector2f pos = pGG->getTopLeftPosition();
   pontosText.setPosition(pos.x + 25, pos.y + 75);
 }
 

@@ -6,20 +6,20 @@ const float TEMPO_FRAME = 0.16f;       // Duração de cada frame (em segundos) 
 const float COOLDOWN_PULO = 800.0f;    // Tempo de espera entre pulos (em milissegundos)
 const float VELOCIDADE_CORRIDA = 1.5f; // Velocidade de corrida (em unidades por segundo)
 
-const float COOLDOWN_ESPINHO = 2000.0f;
+const float COOLDOWN_ESPINHO = 500.0f;
 
-Jogador::Jogador(float px, float py, int vidas) : Personagem(px, py, vidas),
-                                                  velocidadeY(0), velocidadeX(25), noChao(false),
-                                                  animacao(), direcao(1), state(IDLE), velocidadeCorrida(VELOCIDADE_CORRIDA * velocidadeX),
-                                                  tempoDesdeUltimoPulo(0.0f), // Inicializa o tempo desde o último pulo,
-                                                  tempoDesdeUltimoEspinho(COOLDOWN_ESPINHO),
-                                                  ultimoPiso(NULL)
+Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, 25, 0, vidas),
+                                              noChao(false),
+                                              animacao(), direcao(1), state(IDLE), velocidadeCorrida(VELOCIDADE_CORRIDA * velocidadeX),
+                                              tempoDesdeUltimoPulo(0.0f),
+                                              tempoDesdeUltimoEspinho(COOLDOWN_ESPINHO),
+                                              ultimoPiso(NULL)
 {
     animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Idle.png"));
     animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Run.png"));
     animacao.addTrilha("walking", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Walk.png"));
     animacao.addTrilha("jump", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Jump.png"));
-    animacao.setPosition(x, y);
+    animacao.setPosition(px, py);
     animacao.setScale(3.f, 3.f);
     setAnimationState();
 }
@@ -55,7 +55,7 @@ void Jogador::atacar()
 void Jogador::setPosition(int px, int py)
 {
     animacao.setPosition(px, py);
-    Gerenciador_Grafico::getInstance().centerCamera(sf::Vector2f(px, py));
+    pGG->centerCamera(sf::Vector2f(px, py));
 }
 
 void Jogador::mover()

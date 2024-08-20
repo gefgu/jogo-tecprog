@@ -16,17 +16,15 @@ class Entidade : public Ente
 {
 protected:
     int x, y;
-    sf::RectangleShape shape;
     tipoDeEntidade tipo;
 
 public:
-    Entidade(tipoDeEntidade t);
+    Entidade(int px, int py, tipoDeEntidade t);
     virtual ~Entidade();
     virtual void executar() = 0;
-    void desenhar(sf::RenderWindow &window);
-    virtual void desenhar();
-    virtual sf::Vector2f getCenter();
-    virtual sf::FloatRect getSize();
+    virtual void desenhar() = 0;
+    virtual sf::Vector2f getCenter() = 0;
+    virtual sf::FloatRect getSize() = 0;
     virtual void lidarColisao(sf::Vector2f intersecao, Entidade *other) = 0;
     const tipoDeEntidade getTipo() const;
 };

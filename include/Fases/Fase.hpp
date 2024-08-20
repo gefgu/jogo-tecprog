@@ -15,7 +15,6 @@ class Fase : public Ente
 {
 protected:
   sf::Sprite fundo;
-  Gerenciador_Grafico &gerenciadorGrafico;
   Gerenciador_Colisoes gerenciadorColisoes;
   ListaEntidades plataformas;
   ListaEntidades entidades;

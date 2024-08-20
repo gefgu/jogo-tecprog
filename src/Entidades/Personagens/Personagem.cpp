@@ -1,6 +1,6 @@
 #include "Entidades/Personagens/Personagem.hpp"
 
-Personagem::Personagem(float px, float py, int vidas) : Entidade(tipoDeEntidade::JOGADOR), num_vidas(vidas), velocidadeX(50.0) {}
+Personagem::Personagem(int px, int py, float vx, float vy, int vidas) : Entidade(px, py, tipoDeEntidade::JOGADOR), num_vidas(vidas), velocidadeX(vx), velocidadeY(vy) {}
 
 Personagem::~Personagem() {}
 

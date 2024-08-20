@@ -16,8 +16,6 @@ enum estadoJogador
 class Jogador : public Personagem
 {
 private:
-    float velocidadeY;
-    float velocidadeX;
     float velocidadeCorrida;
     bool noChao;
     int direcao;
@@ -33,7 +31,7 @@ private:
     void mover();
 
 public:
-    Jogador(float px, float py, int vidas);
+    Jogador(int px, int py, int vidas);
     void atacar() override;
     void executar();
     void aplicarGravidade();

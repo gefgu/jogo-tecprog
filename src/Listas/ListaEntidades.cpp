@@ -38,4 +38,5 @@ Entidade *ListaEntidades::getRandom()
     if (it->getProximo() == NULL)
       it = LEs.getPrimeiro();
   }
+  return LEs.getPrimeiro()->getInfo();
 }

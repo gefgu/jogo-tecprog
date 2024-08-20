@@ -3,7 +3,8 @@
 
 #include "Personagem.hpp"
 
-class Inimigo : public Personagem {
+class Inimigo : public Personagem
+{
 protected:
     float ataque;
 

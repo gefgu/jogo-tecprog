@@ -9,9 +9,9 @@ Fase_Primeira::~Fase_Primeira() {}
 
 void Fase_Primeira::criarCenario()
 {
-  int largura = gerenciadorGrafico.getWindowSize().x;
-  int altura = gerenciadorGrafico.getWindowSize().y;
-  sf::Texture *texturaFundo = gerenciadorGrafico.carregaTextura("./assets/images/fundo_fase_1.png");
+  int largura = pGG->getWindowSize().x;
+  int altura = pGG->getWindowSize().y;
+  sf::Texture *texturaFundo = pGG->carregaTextura("./assets/images/fundo_fase_1.png");
   fundo.setTexture(*texturaFundo);
   fundo.setPosition(-largura, -altura);
   float scaleX = static_cast<float>(largura) * 4 / fundo.getTexture()->getSize().x;
@@ -23,11 +23,11 @@ void Fase_Primeira::criarCenario()
 
 void Fase_Primeira::desenhar()
 {
-  gerenciadorGrafico.draw(fundo);
+  pGG->draw(fundo);
   plataformas.desenhar();
   entidades.desenhar();
-  gerenciadorGrafico.draw(vidasJogador);
-  gerenciadorGrafico.draw(pontosText);
+  pGG->draw(vidasJogador);
+  pGG->draw(pontosText);
 }
 
 void Fase_Primeira::executar()
