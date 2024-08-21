@@ -32,7 +32,7 @@ Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, VELOCIDADEINICI
 
 void Jogador::atacar()
 {
-    pFase->addProjetil(x, y, direcao);
+    pFase->addProjetil(x, y + getSize().height / 6, direcao);
 }
 
 void Jogador::mover()
