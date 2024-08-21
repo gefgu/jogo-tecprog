@@ -111,7 +111,8 @@ void Fase::criaFighters()
     int py = p->getCenter().y - (p->getSize().height / 2.f) - (FIGHTER_HEIGHT / 2.f);
     Fighter *f = new Fighter(px, py, 2);
     entidades.incluir(f);
-    gerenciadorColisoes.incluirEntidadeEstatica(f);
+    gerenciadorColisoes.incluirEntidadeMovel(f);
+    gerenciadorColisoes.incluirEntidadeMovel(f->getCampoDeVisao());
   }
 }
 

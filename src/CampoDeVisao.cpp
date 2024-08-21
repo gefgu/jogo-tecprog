@@ -1,7 +1,11 @@
 #include "CampoDeVisao.hpp"
 
-CampoDeVisao::CampoDeVisao() : pJogador(NULL), visao(sf::Vector2f(500, 300))
+const int WIDTH = 500;
+const int HEIGHT = 300;
+
+CampoDeVisao::CampoDeVisao() : Entidade(0, 0, tipoDeEntidade::VISAO), pJogador(NULL), visao(sf::Vector2f(WIDTH, HEIGHT))
 {
+  visao.setOrigin(WIDTH / 2.f, HEIGHT / 2.f);
 }
 
 CampoDeVisao::~CampoDeVisao()
@@ -22,7 +26,11 @@ sf::FloatRect CampoDeVisao::getSize()
 
 void CampoDeVisao::setPosition(int px, int py)
 {
-  visao.setPosition(px, py);
+  x = px;
+  y = py;
+  // cout << x << ", " << y << endl;
+  // cout << getCenter().x << ", " << getCenter().y << endl;
+  visao.setPosition(x, y);
 }
 
 Jogador *CampoDeVisao::getJogador()
@@ -34,10 +42,15 @@ void CampoDeVisao::lidarColisao(sf::Vector2f intersecao, Entidade *other)
 {
   if (other->getTipo() == tipoDeEntidade::JOGADOR)
   {
+    cout << "JOGADOR AVISTADO: (" << intersecao.x << ", " << intersecao.y << ")" << endl;
     pJogador = static_cast<Jogador *>(other);
   }
 }
 
 void CampoDeVisao::executar() {}
 
-void CampoDeVisao::desenhar() {}
+void CampoDeVisao::desenhar()
+{
+  visao.setFillColor(sf::Color::Red);
+  pGG->draw(visao);
+}

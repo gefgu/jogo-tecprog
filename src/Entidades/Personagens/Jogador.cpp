@@ -11,7 +11,7 @@ const float COOLDOWN_LIXO = 250.0f;
 
 const float SCALING_FACTOR = 3.f;
 
-Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, VELOCIDADEINICIAL, 0, vidas),
+Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, VELOCIDADEINICIAL, 0, vidas, tipoDeEntidade::JOGADOR),
 
                                               tempoDesdeUltimoPulo(0.0f),
                                               tempoDesdeUltimoEspinho(COOLDOWN_ESPINHO),
@@ -159,7 +159,7 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
     sf::FloatRect jogadorBounds = getSize();
 
     // Imprimir a interseção para debug
-    std::cout << "Colisão com " << other->getTipo() << ": x = " << intersecao.x << ", y = " << (intersecao.y) << std::endl;
+    // std::cout << "Colisão com " << other->getTipo() << ": x = " << intersecao.x << ", y = " << (intersecao.y) << std::endl;
 
     if (other->getTipo() == tipoDeEntidade::PLATAFORMA)
     {

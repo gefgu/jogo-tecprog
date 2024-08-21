@@ -31,7 +31,7 @@ protected:
     void aplicarGravidade();
 
 public:
-    Personagem(int px, int py, float vx, float vy, int vidas);
+    Personagem(int px, int py, float vx, float vy, int vidas, tipoDeEntidade tipo);
     virtual ~Personagem();
     virtual void atacar() = 0;
     virtual void executar() = 0;

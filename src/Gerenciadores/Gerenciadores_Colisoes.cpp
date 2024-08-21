@@ -65,4 +65,18 @@ void Gerenciador_Colisoes::executar()
       }
     }
   }
+
+  // colisão entre moveis e moveis
+  for (i = 0; i < entidades_moveis.size(); i++)
+  {
+    for (j = i + 1; j < entidades_moveis.size(); j++)
+    {
+      if (verificaColisao(entidades_moveis[i]->getSize(), entidades_moveis[j]->getSize()))
+      {
+        sf::Vector2f intersection = getIntersection(entidades_moveis[i]->getCenter(), entidades_moveis[i]->getSize(), entidades_moveis[j]->getCenter(), entidades_moveis[j]->getSize());
+        entidades_moveis[i]->lidarColisao(intersection, entidades_moveis[j]);
+        entidades_moveis[j]->lidarColisao(intersection, entidades_moveis[i]);
+      }
+    }
+  }
 }

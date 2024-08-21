@@ -2,7 +2,7 @@
 
 const float SCALING_FACTOR = 3;
 
-Fighter::Fighter(int px, int py, int vidas) : Inimigo(px, py, vidas), dano_soco(1)
+Fighter::Fighter(int px, int py, int vidas) : Inimigo(px, py, vidas, tipoDeEntidade::FIGHTER), dano_soco(1)
 {
   animacao.addTrilha("idle", new TrilhaAnimacao(6, 15, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Idle.png"));
   animacao.addTrilha("running", new TrilhaAnimacao(10, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Run.png"));
@@ -11,6 +11,7 @@ Fighter::Fighter(int px, int py, int vidas) : Inimigo(px, py, vidas), dano_soco(
   animacao.setPosition(px, py);
   animacao.setScale(SCALING_FACTOR, SCALING_FACTOR);
   setColisionBoxSize(sf::Vector2f(40 * SCALING_FACTOR, 128 * SCALING_FACTOR));
+  visao.setPosition(px, py);
   setAnimationState();
 }
 
@@ -21,8 +22,10 @@ void Fighter::executar()
   // aplicarGravidade();
   animacao.setPosition(x, y);
   colisionBox.setPosition(x, y);
+  visao.setPosition(x, y);
   animacao.update();
   desenhar();
+  visao.desenhar();
 }
 
 void Fighter::atacar() {}

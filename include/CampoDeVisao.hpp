@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Ente.hpp"
+#include "Entidades/Entidade.hpp"
 #include "Entidades/Personagens/Jogador.hpp"
 
-class CampoDeVisao : public Ente
+class CampoDeVisao : public Entidade
 {
 private:
   Jogador *pJogador;
