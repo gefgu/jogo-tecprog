@@ -151,3 +151,10 @@ int Fase::getPontos()
 {
   return pontos;
 }
+
+void Fase::addProjetil(int px, int py, int direcao)
+{
+  Projetil *p = new Projetil(px, py, direcao);
+  entidades.incluir(p);
+  gerenciadorColisoes.incluirEntidadeMovel(p);
+}

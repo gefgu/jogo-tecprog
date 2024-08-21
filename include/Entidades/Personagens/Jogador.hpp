@@ -1,5 +1,4 @@
-#ifndef JOGADOR_HPP
-#define JOGADOR_HPP
+#pragma once
 
 #include "Entidades/Personagens/Personagem.hpp"
 
@@ -19,4 +18,3 @@ public:
     void lidarColisao(sf::Vector2f intersecao, Entidade *other);
     void reduzirVelocidade(float fator);
 };
-#endif // JOGADOR_HPP

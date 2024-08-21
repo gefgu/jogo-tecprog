@@ -12,6 +12,7 @@
 #include "Entidades/Obstaculos/Espinho.hpp"
 #include "Entidades/Obstaculos/Lixo.hpp"
 #include "Entidades/Personagens/Fighter.hpp"
+#include "Entidades/Projetil.hpp"
 
 class Fase : public Ente
 {
@@ -44,6 +45,7 @@ public:
   void desenhar();
   virtual void executar();
   int getPontos();
+  void addProjetil(int px, int py, int direcao);
 };
 
 #endif // FASE_HPP

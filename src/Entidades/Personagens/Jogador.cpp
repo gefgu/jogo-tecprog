@@ -1,5 +1,6 @@
 #include "Entidades/Personagens/Jogador.hpp"
-#include <cmath> // Para usar std::max
+#include "Fases/Fase.hpp" // Full definition
+#include <cmath>          // Para usar std::max
 
 const float VELOCIDADEINICIAL = 25;
 const float GRAVIDADE = 9.8f; // Aceleração da gravidade (em unidades por segundo^2)
@@ -31,7 +32,7 @@ Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, VELOCIDADEINICI
 
 void Jogador::atacar()
 {
-    // Implementação do ataque do jogador
+    pFase->addProjetil(x, y, direcao);
 }
 
 void Jogador::mover()
@@ -102,6 +103,11 @@ void Jogador::mover()
             noChao = false;
             tempoDesdeUltimoPulo = 0.0f; // Reseta o tempo desde o último pulo
         }
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+    {
+        atacar();
     }
 
     if (!noChao)
