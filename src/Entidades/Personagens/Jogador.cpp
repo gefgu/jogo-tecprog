@@ -47,14 +47,8 @@ void Jogador::mover()
         newState = RUN;
 
         // Executa a corrida na direção atual
-        if (direcao == -1) // Esquerda
-        {
-            x -= velocidadeX * (elapsed_time / 100.0);
-        }
-        else if (direcao == 1) // Direita
-        {
-            x += velocidadeX * (elapsed_time / 100.0);
-        }
+
+        x += direcao * velocidadeX * (elapsed_time / 100.0);
     }
     else
     {
@@ -166,19 +160,14 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
         if (intersecao.y > 0)
         {
             y -= intersecao.y - 1;
-            // y = pisoBounds.top - (jogadorBounds.height / 2); // Position the player on top of the platform
             tempoDesdeUltimoPiso = 0.0f;
             velocidadeY = 0;
         }
     }
-    else if (other->getTipo() == tipoDeEntidade::ESPINHO)
+    else if (other->getTipo() == tipoDeEntidade::ESPINHO && tempoDesdeUltimoEspinho >= COOLDOWN_ESPINHO)
     {
-        bool isCloseEnough = abs(getCenter().x - other->getCenter().x) <= 16 * SCALING_FACTOR;
-        if (isCloseEnough && tempoDesdeUltimoEspinho >= COOLDOWN_ESPINHO)
-        {
-            recebeDano(1);
-            tempoDesdeUltimoEspinho = 0;
-        }
+        recebeDano(1);
+        tempoDesdeUltimoEspinho = 0;
     }
 
     setPosition(x, y);
