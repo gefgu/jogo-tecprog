@@ -51,7 +51,7 @@ void Fighter::perseguir()
   else if (abs(distance) > 50)
   {
     newState = WALK;
-    x += direcao * velocidadeX * VELOCIDADE_CORRIDA * (elapsed_time / 100.0);
+    x += direcao * velocidadeX * (elapsed_time / 100.0);
   }
   else
   {
