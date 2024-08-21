@@ -15,7 +15,7 @@ Fighter::Fighter(int px, int py, int vidas) : Inimigo(px, py, vidas, tipoDeEntid
   animacao.addTrilha("jump", new TrilhaAnimacao(10, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Jump.png"));
   animacao.setPosition(px, py);
   animacao.setScale(SCALING_FACTOR, SCALING_FACTOR);
-  setColisionBoxSize(sf::Vector2f(40 * SCALING_FACTOR, 128 * SCALING_FACTOR));
+  setColisionBoxSize(sf::Vector2f(30 * SCALING_FACTOR, 128 * SCALING_FACTOR));
   visao.setPosition(px, py);
   setAnimationState();
 }
@@ -49,7 +49,7 @@ void Fighter::perseguir()
     newState = RUN;
     x += direcao * velocidadeX * VELOCIDADE_CORRIDA * (elapsed_time / 100.0);
   }
-  else if (abs(distance) > 50)
+  else if (abs(distance) > 30 * 3)
   {
     newState = WALK;
     x += direcao * velocidadeX * (elapsed_time / 100.0);
