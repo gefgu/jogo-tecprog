@@ -17,4 +17,6 @@ public:
   void setPosition(int px, int py);
   Jogador *getJogador();
   void lidarColisao(sf::Vector2f intersecao, Entidade *other);
+  void desenhar();
+  void executar();
 };

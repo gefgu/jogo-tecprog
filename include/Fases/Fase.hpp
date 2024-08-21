@@ -11,6 +11,7 @@
 #include "Entidades/Personagens/Jogador.hpp"
 #include "Entidades/Obstaculos/Espinho.hpp"
 #include "Entidades/Obstaculos/Lixo.hpp"
+#include "Entidades/Personagens/Fighter.hpp"
 
 class Fase : public Ente
 {
@@ -31,6 +32,7 @@ protected:
   virtual void criarCenario() = 0;
   void criaEspinhos();
   void criaLixos();
+  void criaFighters();
   void atualizaVidaJogador();
   void atualizaPontos();
   void verificaFim();

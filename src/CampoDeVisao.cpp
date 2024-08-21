@@ -37,3 +37,7 @@ void CampoDeVisao::lidarColisao(sf::Vector2f intersecao, Entidade *other)
     pJogador = static_cast<Jogador *>(other);
   }
 }
+
+void CampoDeVisao::executar() {}
+
+void CampoDeVisao::desenhar() {}
