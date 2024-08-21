@@ -12,19 +12,27 @@ enum estadoPersonagem
     WALK,
     RUN,
     JUMP,
-    ATTACK
+    ATTACK,
+    HURT,
+    DEAD,
+    SHOT
 };
 
 class Personagem : public Entidade
 {
 protected:
     estadoPersonagem state;
+    estadoPersonagem newState;
     int num_vidas;
     float velocidadeX; // em unidades por segundo
     float velocidadeY; // em unidades por segundo
     bool noChao;
     int direcao;
     float tempoDesdeUltimoPiso;
+    float tempoDesdeUltimoDano;
+    float tempoDesdeMorte;
+    bool mudouDirecao;
+    bool morto;
     sf::RectangleShape colisionBox;
     Animacao animacao;
     void setAnimationState();
@@ -44,6 +52,7 @@ public:
     void setColisionBoxPosition(int px, int py);
     sf::Vector2f getCenter();
     sf::FloatRect getSize();
+    bool getMorto();
 };
 
 #endif // PERSONAGEM_HPP

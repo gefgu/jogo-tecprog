@@ -13,6 +13,7 @@ public:
   ListaEntidades();
   ~ListaEntidades();
   void incluir(Entidade *pE);
+  void remover(Entidade *pE);
   void executar();
   void desenhar();
   Entidade *getRandom();

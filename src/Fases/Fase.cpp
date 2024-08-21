@@ -1,8 +1,9 @@
 #include "Fases/Fase.hpp"
 
-Fase::Fase(int qty_plt) : pontos(1000), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png")
+Fase::Fase(int qty_plt) : pontos(1000), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0)
 {
   clock.restart();
+  Entidade::setFase(this);
   jogador = new Jogador(200, 100, 5);
   entidades.incluir(jogador);
   gerenciadorColisoes.incluirEntidadeMovel(jogador);
@@ -109,7 +110,7 @@ void Fase::criaFighters()
     Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
     int px = p->getCenter().x;
     int py = p->getCenter().y - (p->getSize().height / 2.f) - (FIGHTER_HEIGHT / 2.f);
-    Fighter *f = new Fighter(px, py, 2);
+    Fighter *f = new Fighter(px, py, 3 + (rand() % 4));
     entidades.incluir(f);
     gerenciadorColisoes.incluirEntidadeMovel(f);
     gerenciadorColisoes.incluirEntidadeMovel(f->getCampoDeVisao());
@@ -126,8 +127,6 @@ void Fase::atualizaVidaJogador()
 
 void Fase::atualizaPontos()
 {
-  int tempo = clock.getElapsedTime().asSeconds();
-  pontos = 1000 - tempo;
   pontosText.setString(std::to_string(pontos) + " Pontos");
   sf::Vector2f pos = pGG->getTopLeftPosition();
   pontosText.setPosition(pos.x + 25, pos.y + 75);
@@ -135,7 +134,7 @@ void Fase::atualizaPontos()
 
 void Fase::verificaFim()
 {
-  if (jogador->getVidas() <= 0 || jogador->getCenter().x >= finalX)
+  if (jogador->getMorto() || jogador->getCenter().x >= finalX)
   {
     fimDeJogo();
   }
@@ -149,4 +148,16 @@ void Fase::fimDeJogo()
 int Fase::getPontos()
 {
   return pontos;
+}
+
+void Fase::addProjetil(int px, int py, int direcao)
+{
+  Projetil *p = new Projetil(px, py, direcao);
+  entidades.incluir(p);
+  gerenciadorColisoes.incluirEntidadeMovel(p);
+}
+
+void Fase::alteraPontos(int soma)
+{
+  pontos += soma;
 }

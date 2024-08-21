@@ -1,8 +1,12 @@
 #include "Entidades/Personagens/Fighter.hpp"
+#include "Fases/Fase.hpp" // Full definition
 
 const float SCALING_FACTOR = 3;
 
 const float VELOCIDADE_CORRIDA = 1.5f; // Velocidade de corrida (em unidades por
+
+const float HURT_ANIMATION_TIME = 150.0f;
+const float DEATH_ANIMATION_TIME = 750.0f;
 
 using namespace std;
 
@@ -13,6 +17,8 @@ Fighter::Fighter(int px, int py, int vidas) : Inimigo(px, py, vidas, tipoDeEntid
   animacao.addTrilha("walking", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Walk.png"));
   animacao.addTrilha("attack", new TrilhaAnimacao(5, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Attack_1.png"));
   animacao.addTrilha("jump", new TrilhaAnimacao(10, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Jump.png"));
+  animacao.addTrilha("hurt", new TrilhaAnimacao(3, 7, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Hurt.png"));
+  animacao.addTrilha("dead", new TrilhaAnimacao(4, 20, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Dead.png", false));
   animacao.setPosition(px, py);
   animacao.setScale(SCALING_FACTOR, SCALING_FACTOR);
   setColisionBoxSize(sf::Vector2f(30 * SCALING_FACTOR, 128 * SCALING_FACTOR));
@@ -27,8 +33,8 @@ void Fighter::perseguir()
   Jogador *pJ = visao.getJogador();
   if (pJ == NULL)
     return;
-  estadoPersonagem newState = IDLE;
-  bool mudouDirecao = false;
+  newState = IDLE;
+  mudouDirecao = false;
   float elapsed_time = pGG->getElapsedTime();
 
   int distance = pJ->getCenter().x - getCenter().x;
@@ -59,39 +65,67 @@ void Fighter::perseguir()
     atacar();
     newState = ATTACK;
   }
-
-  if (mudouDirecao || newState != state)
-  {
-    state = newState;
-    setAnimationState();
-  }
 }
 
 void Fighter::executar()
 {
-  float elapsed_time = pGG->getElapsedTime();
-  aplicarGravidade();
-  if (state == ATTACK)
+  if (!morto)
   {
-    tempoContato += elapsed_time;
-  }
-  else
-  {
-    tempoContato = 0;
-  }
-  if (visao.getJogador())
-  {
-    perseguir();
-  }
+    float elapsed_time = pGG->getElapsedTime();
+    newState = IDLE;
+    aplicarGravidade();
+    if (state == ATTACK)
+    {
+      tempoContato += elapsed_time;
+    }
+    else
+    {
+      tempoContato = 0;
+    }
+    if (visao.getJogador())
+    {
+      perseguir();
+    }
 
-  tempoDesdeUltimoPiso += elapsed_time;
+    tempoDesdeUltimoPiso += elapsed_time;
+    tempoDesdeUltimoDano += elapsed_time;
+    if (getVidas() <= 0)
+    {
+      tempoDesdeMorte += elapsed_time;
+    }
+
+    // if (!noChao)
+    // {
+    //   newState = JUMP;
+    // }
+
+    if (tempoDesdeUltimoDano < HURT_ANIMATION_TIME)
+    {
+      newState = HURT;
+    }
+
+    if (tempoDesdeMorte > 0.0f && tempoDesdeMorte <= DEATH_ANIMATION_TIME)
+    {
+      newState = DEAD;
+    }
+    else if (tempoDesdeMorte > DEATH_ANIMATION_TIME)
+    {
+      morto = true;
+      pFase->alteraPontos(200);
+    }
+
+    if (!morto && (mudouDirecao || newState != state))
+    {
+      state = newState;
+      setAnimationState();
+    }
+  }
 
   animacao.setPosition(x, y);
   colisionBox.setPosition(x, y);
   visao.setPosition(x, y);
   animacao.update();
   desenhar();
-  visao.desenhar();
 }
 
 void Fighter::atacar()

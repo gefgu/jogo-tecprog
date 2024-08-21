@@ -14,7 +14,8 @@ void ListaEntidades::executar()
   Elemento<Entidade> *it;
   for (it = LEs.getPrimeiro(); it != NULL; it = it->getProximo())
   {
-    it->getInfo()->executar();
+    if (it->getInfo()->getAtivo())
+      it->getInfo()->executar();
   }
 }
 
@@ -23,7 +24,8 @@ void ListaEntidades::desenhar()
   Elemento<Entidade> *it;
   for (it = LEs.getPrimeiro(); it != NULL; it = it->getProximo())
   {
-    it->getInfo()->desenhar();
+    if (it->getInfo()->getAtivo())
+      it->getInfo()->desenhar();
   }
 }
 
@@ -39,4 +41,9 @@ Entidade *ListaEntidades::getRandom()
       it = LEs.getPrimeiro();
   }
   return LEs.getPrimeiro()->getInfo();
+}
+
+void ListaEntidades::remover(Entidade *pE)
+{
+  LEs.remover(pE);
 }

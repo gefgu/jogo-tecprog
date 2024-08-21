@@ -14,6 +14,7 @@ public:
   Lista();
   ~Lista();
   void incluir(TL *elem);
+  void remover(TL *elem);
   Elemento<TL> *getPrimeiro();
   Elemento<TL> *getUltimo();
 };
@@ -60,6 +61,44 @@ void Lista<TL>::incluir(TL *elem)
   {
     cout << "Ponteiro inválido em Lista.incluir()" << endl;
   }
+}
+
+template <class TL>
+void Lista<TL>::remover(TL *elem)
+{
+  if (!elem)
+  {
+    cout << "Ponteiro inválido em Lista.remover()" << endl;
+    return;
+  }
+
+  Elemento<TL> *anterior = NULL;
+  Elemento<TL> *atual = pPrimeiro;
+
+  while (atual != NULL)
+  {
+    if (atual->getInfo() == elem)
+    {
+      if (anterior == NULL) // Element to remove is the first element
+      {
+        pPrimeiro = atual->getProximo();
+      }
+      else // Element to remove is in the middle or end
+      {
+        anterior->setProximo(atual->getProximo());
+      }
+
+      // Delete the element and free memory
+      delete atual;
+      return;
+    }
+
+    anterior = atual;
+    atual = atual->getProximo();
+  }
+
+  // Element was not found
+  cout << "Elemento não encontrado na lista." << endl;
 }
 
 template <class TL>

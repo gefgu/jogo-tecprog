@@ -22,6 +22,12 @@ void Fase_Segunda::criarCenario()
 
 void Fase_Segunda::desenhar()
 {
+  int tempo = clock.getElapsedTime().asSeconds();
+  if (tempo > segundosDesdeInicio)
+  {
+    segundosDesdeInicio++;
+    pontos--;
+  }
   pGG->draw(fundo);
   plataformas.desenhar();
   caixaDeCorreio.desenhar();

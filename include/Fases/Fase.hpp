@@ -12,6 +12,7 @@
 #include "Entidades/Obstaculos/Espinho.hpp"
 #include "Entidades/Obstaculos/Lixo.hpp"
 #include "Entidades/Personagens/Fighter.hpp"
+#include "Entidades/Projetil.hpp"
 
 class Fase : public Ente
 {
@@ -26,6 +27,7 @@ protected:
   sf::Text vidasJogador;
   sf::Text pontosText;
   sf::Clock clock;
+  int segundosDesdeInicio;
   ObjetoEstatico caixaDeCorreio;
 
   void criarPlataformas(int qty_plt);
@@ -44,6 +46,8 @@ public:
   void desenhar();
   virtual void executar();
   int getPontos();
+  void addProjetil(int px, int py, int direcao);
+  void alteraPontos(int soma);
 };
 
 #endif // FASE_HPP

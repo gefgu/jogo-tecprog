@@ -3,6 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 #include "Ente.hpp"
+// #include "Fases/Fase.hpp"
+
+class Fase;
 
 enum tipoDeEntidade
 {
@@ -12,7 +15,8 @@ enum tipoDeEntidade
     OBSTACULO,
     ESPINHO,
     LIXO,
-    VISAO
+    VISAO,
+    PROJETIL
 };
 
 class Entidade : public Ente
@@ -20,6 +24,8 @@ class Entidade : public Ente
 protected:
     int x, y;
     tipoDeEntidade tipo;
+    bool ativo;
+    static Fase *pFase;
 
 public:
     Entidade(int px, int py, tipoDeEntidade t);
@@ -30,6 +36,8 @@ public:
     virtual sf::FloatRect getSize() = 0;
     virtual void lidarColisao(sf::Vector2f intersecao, Entidade *other) = 0;
     const tipoDeEntidade getTipo() const;
+    static void setFase(Fase *pF);
+    const bool getAtivo() const;
 };
 
 #endif // ENTIDADE_HPP

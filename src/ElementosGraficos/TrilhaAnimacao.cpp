@@ -1,8 +1,8 @@
 #include "ElementosGraficos/TrilhaAnimacao.hpp"
 
-TrilhaAnimacao::TrilhaAnimacao(int frames, int t, int f_width, int f_height, float sx, float sy, const char *path)
+TrilhaAnimacao::TrilhaAnimacao(int frames, int t, int f_width, int f_height, float sx, float sy, const char *path, bool repeat)
     : animation_index(0), animation_time(0), animation_frames(frames), time_before_update(t),
-      animation_path(path), frame_width(f_width), frame_height(f_height)
+      animation_path(path), frame_width(f_width), frame_height(f_height), should_repeat(repeat)
 {
   sf::Texture *tex = Gerenciador_Grafico::getInstance().carregaTextura(animation_path);
   sprite.setTexture(*tex);
@@ -20,7 +20,14 @@ void TrilhaAnimacao::update()
   if ((animation_time / (int)time_before_update) > animation_index)
   {
     animation_index++;
-    changed = true;
+    if (animation_index > animation_frames && !should_repeat)
+    {
+      animation_index = animation_frames;
+    }
+    else
+    {
+      changed = true;
+    }
   }
 
   if (animation_index > animation_frames)

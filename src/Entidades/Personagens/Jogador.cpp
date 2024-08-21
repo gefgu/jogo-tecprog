@@ -1,5 +1,6 @@
 #include "Entidades/Personagens/Jogador.hpp"
-#include <cmath> // Para usar std::max
+#include "Fases/Fase.hpp" // Full definition
+#include <cmath>          // Para usar std::max
 
 const float VELOCIDADEINICIAL = 25;
 const float GRAVIDADE = 9.8f; // Aceleração da gravidade (em unidades por segundo^2)
@@ -8,14 +9,20 @@ const float COOLDOWN_PULO = 800.0f;    // Tempo de espera entre pulos (em miliss
 const float VELOCIDADE_CORRIDA = 1.5f; // Velocidade de corrida (em unidades por segundo)
 const float COOLDOWN_ESPINHO = 500.0f;
 const float COOLDOWN_LIXO = 250.0f;
+const float COOLDOWN_TIRO = 500.0f;
 
 const float SCALING_FACTOR = 3.f;
+
+const float SHOT_ANIMATION_TIME = 150.0f;
+const float HURT_ANIMATION_TIME = 250.0f;
+const float DEATH_ANIMATION_TIME = 1200.0f;
 
 Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, VELOCIDADEINICIAL, 0, vidas, tipoDeEntidade::JOGADOR),
 
                                               tempoDesdeUltimoPulo(0.0f),
                                               tempoDesdeUltimoEspinho(COOLDOWN_ESPINHO),
                                               tempoDesdeUltimoLixo(COOLDOWN_LIXO),
+                                              tempoDesdeUltimoTiro(COOLDOWN_TIRO),
                                               slowness(1)
 
 {
@@ -23,6 +30,9 @@ Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, VELOCIDADEINICI
     animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Run.png"));
     animacao.addTrilha("walking", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Walk.png"));
     animacao.addTrilha("jump", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Jump.png"));
+    animacao.addTrilha("hurt", new TrilhaAnimacao(4, 5, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Hurt.png"));
+    animacao.addTrilha("dead", new TrilhaAnimacao(4, 20, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Dead.png", false));
+    animacao.addTrilha("shot", new TrilhaAnimacao(3, 5, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Shot.png", false));
     animacao.setPosition(px, py);
     animacao.setScale(SCALING_FACTOR, SCALING_FACTOR);
     setColisionBoxSize(sf::Vector2f(30 * SCALING_FACTOR, 128 * SCALING_FACTOR));
@@ -31,13 +41,17 @@ Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, VELOCIDADEINICI
 
 void Jogador::atacar()
 {
-    // Implementação do ataque do jogador
+    if (tempoDesdeUltimoTiro >= COOLDOWN_TIRO)
+    {
+        pFase->addProjetil(x + 60, y + (getSize().height / 5), direcao);
+        tempoDesdeUltimoTiro = 0;
+    }
 }
 
 void Jogador::mover()
 {
-    estadoPersonagem newState = IDLE;
-    bool mudouDirecao = false;
+    newState = IDLE;
+    mudouDirecao = false;
     float elapsed_time = pGG->getElapsedTime();
     float velocidadeCorrida = VELOCIDADEINICIAL * VELOCIDADE_CORRIDA;
     // Verifica se o Shift está pressionado para correr
@@ -104,16 +118,9 @@ void Jogador::mover()
         }
     }
 
-    if (!noChao)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
     {
-        newState = JUMP;
-    }
-
-    // Atualiza a animação se a direção ou o estado mudar
-    if (mudouDirecao || newState != state)
-    {
-        state = newState;
-        setAnimationState();
+        atacar();
     }
 }
 
@@ -132,6 +139,12 @@ void Jogador::executar()
     tempoDesdeUltimoEspinho += elapsed_time;
     tempoDesdeUltimoPiso += elapsed_time;
     tempoDesdeUltimoLixo += elapsed_time;
+    tempoDesdeUltimoTiro += elapsed_time;
+    tempoDesdeUltimoDano += elapsed_time;
+    if (getVidas() <= 0)
+    {
+        tempoDesdeMorte += elapsed_time;
+    }
 
     mover();
 
@@ -141,6 +154,36 @@ void Jogador::executar()
         y = 0;
         x = 0;
         velocidadeY = 0;
+    }
+
+    if (!noChao)
+    {
+        newState = JUMP;
+    }
+
+    if (tempoDesdeUltimoTiro <= SHOT_ANIMATION_TIME)
+    {
+        newState = SHOT;
+    }
+
+    if (tempoDesdeUltimoDano < HURT_ANIMATION_TIME)
+    {
+        newState = HURT;
+    }
+
+    if (tempoDesdeMorte > 0.0f && tempoDesdeMorte <= DEATH_ANIMATION_TIME)
+    {
+        newState = DEAD;
+    }
+    else if (tempoDesdeMorte > DEATH_ANIMATION_TIME)
+    {
+        morto = true;
+    }
+
+    if (mudouDirecao || newState != state)
+    {
+        state = newState;
+        setAnimationState();
     }
 
     animacao.update();
@@ -164,7 +207,7 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
             velocidadeY = 0;
         }
     }
-    if (other->getTipo() == tipoDeEntidade::FIGHTER)
+    if (other->getTipo() == tipoDeEntidade::FIGHTER && !static_cast<Fighter *>(other)->getMorto())
     {
         if (intersecao.x > 0)
         {

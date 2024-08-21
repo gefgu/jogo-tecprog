@@ -1,12 +1,28 @@
-#ifndef PROJETIL_HPP
-#define PROJETIL_HPP
+#pragma once
 
-#include "Entidade.hpp"
+#include <SFML/Graphics.hpp>
+#include "Entidades/Entidade.hpp"
+#include "ElementosGraficos/ObjetoEstatico.hpp"
+#include "Entidades/Personagens/Fighter.hpp"
 
+const int PROJETIL_WIDTH = 80;
+const int PROJETIL_HEIGHT = 64 * 2;
 class Projetil : public Entidade
 {
-public:
-  void executar();
-};
+private:
+  ObjetoEstatico visual;
+  int dano;
+  int direcao;
+  float velocidadeY;
 
-#endif // PROJETIL_HPP
+  void aplicarGravidade();
+
+public:
+  Projetil(int px, int py, int direcao); // posição e escala não mudam
+  ~Projetil();
+  void desenhar();
+  void executar();
+  sf::Vector2f getCenter();
+  sf::FloatRect getSize();
+  void lidarColisao(sf::Vector2f intersecao, Entidade *other);
+};
