@@ -4,8 +4,8 @@ const float SCALING_FACTOR = 3;
 
 const float VELOCIDADE_CORRIDA = 1.5f; // Velocidade de corrida (em unidades por
 
-const float HURT_ANIMATION_TIME = 200.0f;
-const float DEATH_ANIMATION_TIME = 900.0f;
+const float HURT_ANIMATION_TIME = 150.0f;
+const float DEATH_ANIMATION_TIME = 750.0f;
 
 using namespace std;
 
@@ -16,8 +16,8 @@ Fighter::Fighter(int px, int py, int vidas) : Inimigo(px, py, vidas, tipoDeEntid
   animacao.addTrilha("walking", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Walk.png"));
   animacao.addTrilha("attack", new TrilhaAnimacao(5, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Attack_1.png"));
   animacao.addTrilha("jump", new TrilhaAnimacao(10, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Jump.png"));
-  animacao.addTrilha("hurt", new TrilhaAnimacao(3, 5, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Hurt.png"));
-  animacao.addTrilha("dead", new TrilhaAnimacao(4, 20, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Dead.png"));
+  animacao.addTrilha("hurt", new TrilhaAnimacao(3, 7, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Hurt.png"));
+  animacao.addTrilha("dead", new TrilhaAnimacao(4, 20, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Dead.png", false));
   animacao.setPosition(px, py);
   animacao.setScale(SCALING_FACTOR, SCALING_FACTOR);
   setColisionBoxSize(sf::Vector2f(30 * SCALING_FACTOR, 128 * SCALING_FACTOR));
@@ -71,6 +71,7 @@ void Fighter::executar()
   if (!morto)
   {
     float elapsed_time = pGG->getElapsedTime();
+    newState = IDLE;
     aplicarGravidade();
     if (state == ATTACK)
     {

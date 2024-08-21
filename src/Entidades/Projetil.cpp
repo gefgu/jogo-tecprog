@@ -38,7 +38,7 @@ sf::FloatRect Projetil::getSize()
 
 void Projetil::lidarColisao(sf::Vector2f intersecao, Entidade *other)
 {
-  if (other->getTipo() == tipoDeEntidade::FIGHTER)
+  if (other->getTipo() == tipoDeEntidade::FIGHTER && !static_cast<Fighter *>(other)->getMorto())
   {
     static_cast<Fighter *>(other)->recebeDano(dano);
     ativo = false;
