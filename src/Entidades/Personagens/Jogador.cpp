@@ -14,7 +14,7 @@ const float COOLDOWN_TIRO = 500.0f;
 const float SCALING_FACTOR = 3.f;
 
 const float HURT_ANIMATION_TIME = 250.0f;
-const float DEATH_ANIMATION_TIME = 900.0f;
+const float DEATH_ANIMATION_TIME = 850.0f;
 
 Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, VELOCIDADEINICIAL, 0, vidas, tipoDeEntidade::JOGADOR),
 
@@ -170,7 +170,6 @@ void Jogador::executar()
     }
     else if (tempoDesdeMorte > DEATH_ANIMATION_TIME)
     {
-        cout << "HERE" << endl;
         morto = true;
     }
 
@@ -201,7 +200,7 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
             velocidadeY = 0;
         }
     }
-    if (other->getTipo() == tipoDeEntidade::FIGHTER)
+    if (other->getTipo() == tipoDeEntidade::FIGHTER && !static_cast<Fighter *>(other)->getMorto())
     {
         if (intersecao.x > 0)
         {
