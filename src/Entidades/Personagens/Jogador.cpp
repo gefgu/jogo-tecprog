@@ -178,15 +178,15 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
             velocidadeY = 0;
         }
     }
-    // if (other->getTipo() == tipoDeEntidade::FIGHTER)
-    // {
-    //     if (intersecao.x > 0)
-    //     {
-    //         x -= intersecao.x - 1;
-    //         tempoDesdeUltimoPiso = 0.0f;
-    //         velocidadeY = 0;
-    //     }
-    // }
+    if (other->getTipo() == tipoDeEntidade::FIGHTER)
+    {
+        if (intersecao.x > 0)
+        {
+            x -= intersecao.x - 1;
+            tempoDesdeUltimoPiso = 0.0f;
+            velocidadeY = 0;
+        }
+    }
     else if (other->getTipo() == tipoDeEntidade::ESPINHO && tempoDesdeUltimoEspinho >= COOLDOWN_ESPINHO)
     {
         recebeDano(1);
