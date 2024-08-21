@@ -3,6 +3,7 @@
 Fase::Fase(int qty_plt) : pontos(1000), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png")
 {
   clock.restart();
+  Entidade::setFase(this);
   jogador = new Jogador(200, 100, 5);
   entidades.incluir(jogador);
   gerenciadorColisoes.incluirEntidadeMovel(jogador);
