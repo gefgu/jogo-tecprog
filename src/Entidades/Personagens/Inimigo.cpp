@@ -1,15 +1,12 @@
 #include "Entidades/Personagens/Inimigo.hpp"
 
-Inimigo::Inimigo(int px, int py, int vidas, float atk) : Personagem(px, py, 0, 0, vidas), ataque(atk) {}
+Inimigo::Inimigo(int px, int py, int vidas, tipoDeEntidade tipo) : Personagem(px, py, 25, 0, vidas, tipo)
+{
+}
 
 Inimigo::~Inimigo() {}
 
-void Inimigo::atacar()
+CampoDeVisao *Inimigo::getCampoDeVisao()
 {
-    // Lógica de ataque do inimigo
-}
-
-void Inimigo::executar()
-{
-    // Lógica específica para o inimigo
+  return &visao;
 }

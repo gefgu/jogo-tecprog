@@ -8,9 +8,11 @@ enum tipoDeEntidade
 {
     PLATAFORMA = 0,
     JOGADOR,
+    FIGHTER,
     OBSTACULO,
     ESPINHO,
-    LIXO
+    LIXO,
+    VISAO
 };
 
 class Entidade : public Ente

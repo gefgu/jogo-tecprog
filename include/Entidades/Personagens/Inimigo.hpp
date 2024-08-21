@@ -1,18 +1,22 @@
 #ifndef INIMIGO_HPP
 #define INIMIGO_HPP
 
-#include "Personagem.hpp"
+#include "Entidades/Personagens/Personagem.hpp"
+#include "CampoDeVisao.hpp"
 
 class Inimigo : public Personagem
 {
 protected:
-    float ataque;
+    CampoDeVisao visao;
 
 public:
-    Inimigo(int px, int py, int vidas, float ataque);
-    virtual ~Inimigo();
-    void atacar() override;
-    void executar() override;
+    Inimigo(int px, int py, int vidas, tipoDeEntidade tipo);
+    ~Inimigo();
+    virtual void atacar() = 0;
+    virtual void executar() = 0;
+    virtual void perseguir() = 0;
+    virtual void lidarColisao(sf::Vector2f intersecao, Entidade *other) = 0;
+    CampoDeVisao *getCampoDeVisao();
 };
 
 #endif // INIMIGO_HPP

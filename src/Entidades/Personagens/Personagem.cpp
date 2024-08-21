@@ -1,6 +1,10 @@
 #include "Entidades/Personagens/Personagem.hpp"
 
-Personagem::Personagem(int px, int py, float vx, float vy, int vidas) : Entidade(px, py, tipoDeEntidade::JOGADOR), num_vidas(vidas), velocidadeX(vx), velocidadeY(vy), colisionBox()
+const float GRAVIDADE = 9.8f;    // Aceleração da gravidade (em unidades por segundo^2)
+const float TEMPO_FRAME = 0.16f; // Duração de cada frame (em segundos) - para 60 FPS
+const float SCALING_FACTOR = 3.f;
+
+Personagem::Personagem(int px, int py, float vx, float vy, int vidas, tipoDeEntidade tipo) : Entidade(px, py, tipo), num_vidas(vidas), velocidadeX(vx), velocidadeY(vy), colisionBox(), noChao(false), direcao(1), tempoDesdeUltimoPiso(COOLDOWN_PISO), state(IDLE)
 {
 }
 
@@ -10,8 +14,6 @@ void Personagem::executar()
 {
     // Implementação genérica, pode ser sobrescrita pelas subclasses
 }
-
-void Personagem::desenhar() {}
 
 int Personagem::getVidas()
 {
@@ -30,7 +32,68 @@ void Personagem::setColisionBoxSize(sf::Vector2f s)
     sf::FloatRect size = colisionBox.getGlobalBounds();
     colisionBox.setOrigin(sf::Vector2f(size.width / 2.0f, size.height / 2.0f));
 }
+
 void Personagem::setColisionBoxPosition(int px, int py)
 {
     colisionBox.setPosition(px, py);
+}
+
+void Personagem::aplicarGravidade()
+{
+    if (!noChao)
+    {
+        velocidadeY += GRAVIDADE * TEMPO_FRAME; // Aceleração devido à gravidade
+        y += velocidadeY * TEMPO_FRAME;
+    }
+}
+
+void Personagem::setAnimationState()
+{
+    if (state == IDLE)
+    {
+        animacao.setTrilha("idle");
+    }
+    else if (state == WALK)
+    {
+        animacao.setTrilha("walking");
+    }
+    else if (state == RUN)
+    {
+        animacao.setTrilha("running");
+    }
+    else if (state == JUMP)
+    {
+        animacao.setTrilha("jump");
+    }
+    else if (state == ATTACK)
+    {
+        animacao.setTrilha("attack");
+    }
+
+    // Ajusta a escala com base na direção atual
+    animacao.setScale(direcao * SCALING_FACTOR, SCALING_FACTOR);
+}
+
+void Personagem::setPosition(int px, int py)
+{
+    animacao.setPosition(px, py);
+    colisionBox.setPosition(px, py);
+    pGG->centerCamera(sf::Vector2f(px, py));
+}
+
+void Personagem::desenhar()
+{
+    animacao.desenhar();
+    // pGG->draw(colisionBox);
+}
+
+sf::Vector2f Personagem ::getCenter()
+{
+    sf::FloatRect size = getSize();
+    return sf::Vector2f(size.left + size.width / 2.0f, size.top + size.height / 2.0f);
+}
+
+sf::FloatRect Personagem ::getSize()
+{
+    return colisionBox.getGlobalBounds();
 }

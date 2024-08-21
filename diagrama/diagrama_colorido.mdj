@@ -10481,7 +10481,7 @@
 											"top": 1465,
 											"width": 300.52685546875,
 											"height": 13,
-											"text": "-state: estadoJogador",
+											"text": "-state: estadoPersonagem",
 											"horizontalAlignment": 0
 										},
 										{
@@ -18537,7 +18537,7 @@
 											"top": 1427,
 											"width": 87.015625,
 											"height": 12,
-											"text": "estadoJogador"
+											"text": "estadoPersonagem"
 										},
 										{
 											"_type": "LabelView",
@@ -28467,7 +28467,7 @@
 					"_parent": {
 						"$ref": "IoH8RzmxEE6xOc9zvj2jawAA"
 					},
-					"name": "estadoJogador",
+					"name": "estadoPersonagem",
 					"literals": [
 						{
 							"_type": "UMLEnumerationLiteral",
