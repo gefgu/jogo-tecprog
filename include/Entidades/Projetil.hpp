@@ -13,6 +13,9 @@ private:
   ObjetoEstatico visual;
   int dano;
   int direcao;
+  float velocidadeY;
+
+  void aplicarGravidade();
 
 public:
   Projetil(int px, int py, int direcao); // posição e escala não mudam

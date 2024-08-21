@@ -43,7 +43,7 @@ void Jogador::atacar()
 {
     if (tempoDesdeUltimoTiro >= COOLDOWN_TIRO)
     {
-        pFase->addProjetil(x + 40, y + (getSize().height / 5), direcao);
+        pFase->addProjetil(x + 60, y + (getSize().height / 5), direcao);
         tempoDesdeUltimoTiro = 0;
     }
 }
