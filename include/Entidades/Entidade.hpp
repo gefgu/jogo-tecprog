@@ -24,6 +24,7 @@ class Entidade : public Ente
 protected:
     int x, y;
     tipoDeEntidade tipo;
+    bool ativo;
     static Fase *pFase;
 
 public:
@@ -36,6 +37,7 @@ public:
     virtual void lidarColisao(sf::Vector2f intersecao, Entidade *other) = 0;
     const tipoDeEntidade getTipo() const;
     static void setFase(Fase *pF);
+    const bool getAtivo() const;
 };
 
 #endif // ENTIDADE_HPP
