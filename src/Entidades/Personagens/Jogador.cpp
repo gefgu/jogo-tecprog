@@ -9,6 +9,7 @@ const float COOLDOWN_PULO = 800.0f;    // Tempo de espera entre pulos (em miliss
 const float VELOCIDADE_CORRIDA = 1.5f; // Velocidade de corrida (em unidades por segundo)
 const float COOLDOWN_ESPINHO = 500.0f;
 const float COOLDOWN_LIXO = 250.0f;
+const float COOLDOWN_TIRO = 500.0f;
 
 const float SCALING_FACTOR = 3.f;
 
@@ -17,6 +18,7 @@ Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, VELOCIDADEINICI
                                               tempoDesdeUltimoPulo(0.0f),
                                               tempoDesdeUltimoEspinho(COOLDOWN_ESPINHO),
                                               tempoDesdeUltimoLixo(COOLDOWN_LIXO),
+                                              tempoDesdeUltimoTiro(COOLDOWN_TIRO),
                                               slowness(1)
 
 {
@@ -32,7 +34,11 @@ Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, VELOCIDADEINICI
 
 void Jogador::atacar()
 {
-    pFase->addProjetil(x, y + getSize().height / 6, direcao);
+    if (tempoDesdeUltimoTiro >= COOLDOWN_TIRO)
+    {
+        pFase->addProjetil(x + 40, y + getSize().height / 6, direcao);
+        tempoDesdeUltimoTiro = 0;
+    }
 }
 
 void Jogador::mover()
@@ -138,6 +144,7 @@ void Jogador::executar()
     tempoDesdeUltimoEspinho += elapsed_time;
     tempoDesdeUltimoPiso += elapsed_time;
     tempoDesdeUltimoLixo += elapsed_time;
+    tempoDesdeUltimoTiro += elapsed_time;
 
     mover();
 
