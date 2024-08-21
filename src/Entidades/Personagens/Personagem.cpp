@@ -1,4 +1,5 @@
 #include "Entidades/Personagens/Personagem.hpp"
+#include "Fases/Fase.hpp" // Full definition
 
 const float GRAVIDADE = 9.8f;    // Aceleração da gravidade (em unidades por segundo^2)
 const float TEMPO_FRAME = 0.16f; // Duração de cada frame (em segundos) - para 60 FPS
@@ -11,11 +12,6 @@ Personagem::Personagem(int px, int py, float vx, float vy, int vidas, tipoDeEnti
 
 Personagem::~Personagem() {}
 
-void Personagem::executar()
-{
-    // Implementação genérica, pode ser sobrescrita pelas subclasses
-}
-
 int Personagem::getVidas()
 {
     return num_vidas;
@@ -27,6 +23,10 @@ void Personagem::recebeDano(int vidas_perdidas)
     {
         num_vidas = max(0, num_vidas - vidas_perdidas);
         tempoDesdeUltimoDano = 0.0f;
+        if (tipo == JOGADOR && tempoDesdeMorte == 0.0f)
+        {
+            pFase->alteraPontos(-100);
+        }
     }
 }
 

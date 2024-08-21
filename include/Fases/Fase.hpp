@@ -27,6 +27,7 @@ protected:
   sf::Text vidasJogador;
   sf::Text pontosText;
   sf::Clock clock;
+  int segundosDesdeInicio;
   ObjetoEstatico caixaDeCorreio;
 
   void criarPlataformas(int qty_plt);
@@ -46,6 +47,7 @@ public:
   virtual void executar();
   int getPontos();
   void addProjetil(int px, int py, int direcao);
+  void alteraPontos(int soma);
 };
 
 #endif // FASE_HPP

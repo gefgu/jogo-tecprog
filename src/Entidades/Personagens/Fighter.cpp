@@ -1,4 +1,5 @@
 #include "Entidades/Personagens/Fighter.hpp"
+#include "Fases/Fase.hpp" // Full definition
 
 const float SCALING_FACTOR = 3;
 
@@ -110,6 +111,7 @@ void Fighter::executar()
     else if (tempoDesdeMorte > DEATH_ANIMATION_TIME)
     {
       morto = true;
+      pFase->alteraPontos(200);
     }
 
     if (!morto && (mudouDirecao || newState != state))

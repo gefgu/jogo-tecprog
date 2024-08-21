@@ -1,6 +1,6 @@
 #include "Fases/Fase.hpp"
 
-Fase::Fase(int qty_plt) : pontos(1000), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png")
+Fase::Fase(int qty_plt) : pontos(1000), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0)
 {
   clock.restart();
   Entidade::setFase(this);
@@ -127,8 +127,6 @@ void Fase::atualizaVidaJogador()
 
 void Fase::atualizaPontos()
 {
-  int tempo = clock.getElapsedTime().asSeconds();
-  pontos = 1000 - tempo;
   pontosText.setString(std::to_string(pontos) + " Pontos");
   sf::Vector2f pos = pGG->getTopLeftPosition();
   pontosText.setPosition(pos.x + 25, pos.y + 75);
@@ -157,4 +155,9 @@ void Fase::addProjetil(int px, int py, int direcao)
   Projetil *p = new Projetil(px, py, direcao);
   entidades.incluir(p);
   gerenciadorColisoes.incluirEntidadeMovel(p);
+}
+
+void Fase::alteraPontos(int soma)
+{
+  pontos += soma;
 }
