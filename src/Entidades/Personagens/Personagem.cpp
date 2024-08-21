@@ -5,7 +5,7 @@ const float TEMPO_FRAME = 0.16f; // Duração de cada frame (em segundos) - para
 const float SCALING_FACTOR = 3.f;
 const float DANO_COOLDOWN = 50.f;
 
-Personagem::Personagem(int px, int py, float vx, float vy, int vidas, tipoDeEntidade tipo) : Entidade(px, py, tipo), num_vidas(vidas), velocidadeX(vx), velocidadeY(vy), colisionBox(), noChao(false), direcao(1), tempoDesdeUltimoPiso(COOLDOWN_PISO), state(IDLE), tempoDesdeUltimoDano(DANO_COOLDOWN * 100), mudouDirecao(false), newState(IDLE)
+Personagem::Personagem(int px, int py, float vx, float vy, int vidas, tipoDeEntidade tipo) : Entidade(px, py, tipo), num_vidas(vidas), velocidadeX(vx), velocidadeY(vy), colisionBox(), noChao(false), direcao(1), tempoDesdeUltimoPiso(COOLDOWN_PISO), state(IDLE), tempoDesdeUltimoDano(DANO_COOLDOWN * 100), mudouDirecao(false), newState(IDLE), tempoDesdeMorte(0.0f), morto(false)
 {
 }
 
@@ -78,6 +78,10 @@ void Personagem::setAnimationState()
     {
         animacao.setTrilha("hurt");
     }
+    else if (state == DEAD)
+    {
+        animacao.setTrilha("dead");
+    }
 
     // Ajusta a escala com base na direção atual
     animacao.setScale(direcao * SCALING_FACTOR, SCALING_FACTOR);
@@ -105,4 +109,9 @@ sf::Vector2f Personagem ::getCenter()
 sf::FloatRect Personagem ::getSize()
 {
     return colisionBox.getGlobalBounds();
+}
+
+bool Personagem::getMorto()
+{
+    return morto;
 }

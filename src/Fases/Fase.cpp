@@ -136,7 +136,7 @@ void Fase::atualizaPontos()
 
 void Fase::verificaFim()
 {
-  if (jogador->getVidas() <= 0 || jogador->getCenter().x >= finalX)
+  if (jogador->getMorto() || jogador->getCenter().x >= finalX)
   {
     fimDeJogo();
   }
