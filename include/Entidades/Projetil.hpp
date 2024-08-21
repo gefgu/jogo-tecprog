@@ -11,9 +11,10 @@ class Projetil : public Entidade
 private:
   ObjetoEstatico visual;
   int dano;
+  int direcao;
 
 public:
-  Projetil(int px, int py); // posição e escala não mudam
+  Projetil(int px, int py, int direcao); // posição e escala não mudam
   ~Projetil();
   void desenhar();
   void executar();
