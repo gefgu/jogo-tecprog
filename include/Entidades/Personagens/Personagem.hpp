@@ -25,6 +25,7 @@ protected:
     bool noChao;
     int direcao;
     float tempoDesdeUltimoPiso;
+    float tempoDesdeUltimoDano;
     sf::RectangleShape colisionBox;
     Animacao animacao;
     void setAnimationState();

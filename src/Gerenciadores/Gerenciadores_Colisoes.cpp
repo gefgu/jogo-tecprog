@@ -55,6 +55,8 @@ void Gerenciador_Colisoes::executar()
   int i, j;
   for (i = 0; i < entidades_moveis.size(); i++)
   {
+    if (!entidades_moveis[i]->getAtivo())
+      continue;
     for (j = 0; j < entidades_estaticas.size(); j++)
     {
       if (verificaColisao(entidades_moveis[i]->getSize(), entidades_estaticas[j]->getSize()))
@@ -69,8 +71,12 @@ void Gerenciador_Colisoes::executar()
   // colisão entre moveis e moveis
   for (i = 0; i < entidades_moveis.size(); i++)
   {
+    if (!entidades_moveis[i]->getAtivo())
+      continue;
     for (j = i + 1; j < entidades_moveis.size(); j++)
     {
+      if (!entidades_moveis[j]->getAtivo())
+        continue;
       if (verificaColisao(entidades_moveis[i]->getSize(), entidades_moveis[j]->getSize()))
       {
         sf::Vector2f intersection = getIntersection(entidades_moveis[i]->getCenter(), entidades_moveis[i]->getSize(), entidades_moveis[j]->getCenter(), entidades_moveis[j]->getSize());

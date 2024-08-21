@@ -85,13 +85,15 @@ void Fighter::executar()
   }
 
   tempoDesdeUltimoPiso += elapsed_time;
+  tempoDesdeUltimoDano += elapsed_time;
 
   animacao.setPosition(x, y);
   colisionBox.setPosition(x, y);
   visao.setPosition(x, y);
   animacao.update();
   desenhar();
-  visao.desenhar();
+  if (getVidas() <= 0)
+    ativo = false;
 }
 
 void Fighter::atacar()

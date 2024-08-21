@@ -42,3 +42,8 @@ Entidade *ListaEntidades::getRandom()
   }
   return LEs.getPrimeiro()->getInfo();
 }
+
+void ListaEntidades::remover(Entidade *pE)
+{
+  LEs.remover(pE);
+}

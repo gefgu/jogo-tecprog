@@ -145,6 +145,7 @@ void Jogador::executar()
     tempoDesdeUltimoPiso += elapsed_time;
     tempoDesdeUltimoLixo += elapsed_time;
     tempoDesdeUltimoTiro += elapsed_time;
+    tempoDesdeUltimoDano += elapsed_time;
 
     mover();
 
