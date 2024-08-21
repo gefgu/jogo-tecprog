@@ -25,7 +25,7 @@ Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, VELOCIDADEINICI
     animacao.addTrilha("jump", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Jump.png"));
     animacao.setPosition(px, py);
     animacao.setScale(SCALING_FACTOR, SCALING_FACTOR);
-    setColisionBoxSize(sf::Vector2f(40 * SCALING_FACTOR, 128 * SCALING_FACTOR));
+    setColisionBoxSize(sf::Vector2f(30 * SCALING_FACTOR, 128 * SCALING_FACTOR));
     setAnimationState();
 }
 
@@ -160,6 +160,15 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
         if (intersecao.y > 0)
         {
             y -= intersecao.y - 1;
+            tempoDesdeUltimoPiso = 0.0f;
+            velocidadeY = 0;
+        }
+    }
+    if (other->getTipo() == tipoDeEntidade::FIGHTER)
+    {
+        if (intersecao.x > 0)
+        {
+            x -= intersecao.x - 1;
             tempoDesdeUltimoPiso = 0.0f;
             velocidadeY = 0;
         }
