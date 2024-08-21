@@ -12,13 +12,15 @@ enum estadoPersonagem
     WALK,
     RUN,
     JUMP,
-    ATTACK
+    ATTACK,
+    HURT
 };
 
 class Personagem : public Entidade
 {
 protected:
     estadoPersonagem state;
+    estadoPersonagem newState;
     int num_vidas;
     float velocidadeX; // em unidades por segundo
     float velocidadeY; // em unidades por segundo
@@ -26,6 +28,7 @@ protected:
     int direcao;
     float tempoDesdeUltimoPiso;
     float tempoDesdeUltimoDano;
+    bool mudouDirecao;
     sf::RectangleShape colisionBox;
     Animacao animacao;
     void setAnimationState();

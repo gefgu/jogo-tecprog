@@ -13,6 +13,8 @@ const float COOLDOWN_TIRO = 500.0f;
 
 const float SCALING_FACTOR = 3.f;
 
+const float HURT_ANIMATION_TIME = 500.0f;
+
 Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, VELOCIDADEINICIAL, 0, vidas, tipoDeEntidade::JOGADOR),
 
                                               tempoDesdeUltimoPulo(0.0f),
@@ -26,6 +28,7 @@ Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, VELOCIDADEINICI
     animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Run.png"));
     animacao.addTrilha("walking", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Walk.png"));
     animacao.addTrilha("jump", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Jump.png"));
+    animacao.addTrilha("hurt", new TrilhaAnimacao(4, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Hurt.png"));
     animacao.setPosition(px, py);
     animacao.setScale(SCALING_FACTOR, SCALING_FACTOR);
     setColisionBoxSize(sf::Vector2f(30 * SCALING_FACTOR, 128 * SCALING_FACTOR));
@@ -43,8 +46,8 @@ void Jogador::atacar()
 
 void Jogador::mover()
 {
-    estadoPersonagem newState = IDLE;
-    bool mudouDirecao = false;
+    newState = IDLE;
+    mudouDirecao = false;
     float elapsed_time = pGG->getElapsedTime();
     float velocidadeCorrida = VELOCIDADEINICIAL * VELOCIDADE_CORRIDA;
     // Verifica se o Shift está pressionado para correr
@@ -115,18 +118,6 @@ void Jogador::mover()
     {
         atacar();
     }
-
-    if (!noChao)
-    {
-        newState = JUMP;
-    }
-
-    // Atualiza a animação se a direção ou o estado mudar
-    if (mudouDirecao || newState != state)
-    {
-        state = newState;
-        setAnimationState();
-    }
 }
 
 void Jogador::executar()
@@ -155,6 +146,22 @@ void Jogador::executar()
         y = 0;
         x = 0;
         velocidadeY = 0;
+    }
+
+    if (!noChao)
+    {
+        newState = JUMP;
+    }
+
+    if (tempoDesdeUltimoDano < HURT_ANIMATION_TIME)
+    {
+        newState = HURT;
+    }
+
+    if (mudouDirecao || newState != state)
+    {
+        state = newState;
+        setAnimationState();
     }
 
     animacao.update();

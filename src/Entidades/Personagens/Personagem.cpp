@@ -5,7 +5,7 @@ const float TEMPO_FRAME = 0.16f; // Duração de cada frame (em segundos) - para
 const float SCALING_FACTOR = 3.f;
 const float DANO_COOLDOWN = 50.f;
 
-Personagem::Personagem(int px, int py, float vx, float vy, int vidas, tipoDeEntidade tipo) : Entidade(px, py, tipo), num_vidas(vidas), velocidadeX(vx), velocidadeY(vy), colisionBox(), noChao(false), direcao(1), tempoDesdeUltimoPiso(COOLDOWN_PISO), state(IDLE), tempoDesdeUltimoDano(DANO_COOLDOWN)
+Personagem::Personagem(int px, int py, float vx, float vy, int vidas, tipoDeEntidade tipo) : Entidade(px, py, tipo), num_vidas(vidas), velocidadeX(vx), velocidadeY(vy), colisionBox(), noChao(false), direcao(1), tempoDesdeUltimoPiso(COOLDOWN_PISO), state(IDLE), tempoDesdeUltimoDano(DANO_COOLDOWN * 100), mudouDirecao(false), newState(IDLE)
 {
 }
 
@@ -26,6 +26,7 @@ void Personagem::recebeDano(int vidas_perdidas)
     if (tempoDesdeUltimoDano >= DANO_COOLDOWN)
     {
         num_vidas = max(0, num_vidas - vidas_perdidas);
+        tempoDesdeUltimoDano = 0.0f;
     }
 }
 
@@ -72,6 +73,10 @@ void Personagem::setAnimationState()
     else if (state == ATTACK)
     {
         animacao.setTrilha("attack");
+    }
+    else if (state == HURT)
+    {
+        animacao.setTrilha("hurt");
     }
 
     // Ajusta a escala com base na direção atual
