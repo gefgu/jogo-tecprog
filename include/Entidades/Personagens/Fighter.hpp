@@ -9,6 +9,7 @@ class Fighter : public Inimigo
 {
 private:
   float dano_soco;
+  float tempoContato;
 
 public:
   Fighter(int px, int py, int vidas);

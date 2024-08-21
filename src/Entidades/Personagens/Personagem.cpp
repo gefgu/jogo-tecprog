@@ -65,6 +65,10 @@ void Personagem::setAnimationState()
     {
         animacao.setTrilha("jump");
     }
+    else if (state == ATTACK)
+    {
+        animacao.setTrilha("attack");
+    }
 
     // Ajusta a escala com base na direção atual
     animacao.setScale(direcao * SCALING_FACTOR, SCALING_FACTOR);

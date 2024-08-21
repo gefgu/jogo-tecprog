@@ -6,11 +6,12 @@ const float VELOCIDADE_CORRIDA = 1.5f; // Velocidade de corrida (em unidades por
 
 using namespace std;
 
-Fighter::Fighter(int px, int py, int vidas) : Inimigo(px, py, vidas, tipoDeEntidade::FIGHTER), dano_soco(1)
+Fighter::Fighter(int px, int py, int vidas) : Inimigo(px, py, vidas, tipoDeEntidade::FIGHTER), dano_soco(1), tempoContato(0.0f)
 {
   animacao.addTrilha("idle", new TrilhaAnimacao(6, 15, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Idle.png"));
   animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Run.png"));
   animacao.addTrilha("walking", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Walk.png"));
+  animacao.addTrilha("attack", new TrilhaAnimacao(5, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Attack_1.png"));
   animacao.addTrilha("jump", new TrilhaAnimacao(10, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Jump.png"));
   animacao.setPosition(px, py);
   animacao.setScale(SCALING_FACTOR, SCALING_FACTOR);
@@ -55,7 +56,8 @@ void Fighter::perseguir()
   }
   else
   {
-    newState = IDLE;
+    atacar();
+    newState = ATTACK;
   }
 
   if (mudouDirecao || newState != state)
@@ -67,13 +69,16 @@ void Fighter::perseguir()
 
 void Fighter::executar()
 {
+  float elapsed_time = pGG->getElapsedTime();
   aplicarGravidade();
+  if (state == ATTACK)
+  {
+    tempoContato += elapsed_time;
+  }
   if (visao.getJogador())
   {
     perseguir();
   }
-
-  float elapsed_time = pGG->getElapsedTime();
 
   tempoDesdeUltimoPiso += elapsed_time;
 
@@ -85,7 +90,20 @@ void Fighter::executar()
   visao.desenhar();
 }
 
-void Fighter::atacar() {}
+void Fighter::atacar()
+{
+  float elapsed_time = pGG->getElapsedTime();
+
+  Jogador *pJ = visao.getJogador();
+  if (tempoContato > 500.f)
+  {
+    if (pJ)
+    {
+      pJ->recebeDano(dano_soco);
+    }
+    tempoContato = 0;
+  }
+}
 
 void Fighter::lidarColisao(sf::Vector2f intersecao, Entidade *other)
 {

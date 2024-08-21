@@ -11,7 +11,8 @@ enum estadoPersonagem
     IDLE = 0,
     WALK,
     RUN,
-    JUMP
+    JUMP,
+    ATTACK
 };
 
 class Personagem : public Entidade
