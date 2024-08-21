@@ -75,6 +75,10 @@ void Fighter::executar()
   {
     tempoContato += elapsed_time;
   }
+  else
+  {
+    tempoContato = 0;
+  }
   if (visao.getJogador())
   {
     perseguir();
@@ -92,8 +96,6 @@ void Fighter::executar()
 
 void Fighter::atacar()
 {
-  float elapsed_time = pGG->getElapsedTime();
-
   Jogador *pJ = visao.getJogador();
   if (tempoContato > 500.f)
   {
