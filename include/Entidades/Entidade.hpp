@@ -12,7 +12,8 @@ enum tipoDeEntidade
     OBSTACULO,
     ESPINHO,
     LIXO,
-    VISAO
+    VISAO,
+    PROJETIL
 };
 
 class Entidade : public Ente
