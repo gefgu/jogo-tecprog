@@ -14,7 +14,8 @@ enum estadoPersonagem
     JUMP,
     ATTACK,
     HURT,
-    DEAD
+    DEAD,
+    SHOT
 };
 
 class Personagem : public Entidade

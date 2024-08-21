@@ -13,6 +13,7 @@ const float COOLDOWN_TIRO = 500.0f;
 
 const float SCALING_FACTOR = 3.f;
 
+const float SHOT_ANIMATION_TIME = 150.0f;
 const float HURT_ANIMATION_TIME = 250.0f;
 const float DEATH_ANIMATION_TIME = 1200.0f;
 
@@ -31,6 +32,7 @@ Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, VELOCIDADEINICI
     animacao.addTrilha("jump", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Jump.png"));
     animacao.addTrilha("hurt", new TrilhaAnimacao(4, 5, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Hurt.png"));
     animacao.addTrilha("dead", new TrilhaAnimacao(4, 20, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Dead.png", false));
+    animacao.addTrilha("shot", new TrilhaAnimacao(3, 5, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Shot.png", false));
     animacao.setPosition(px, py);
     animacao.setScale(SCALING_FACTOR, SCALING_FACTOR);
     setColisionBoxSize(sf::Vector2f(30 * SCALING_FACTOR, 128 * SCALING_FACTOR));
@@ -41,7 +43,7 @@ void Jogador::atacar()
 {
     if (tempoDesdeUltimoTiro >= COOLDOWN_TIRO)
     {
-        pFase->addProjetil(x + 40, y + getSize().height / 6, direcao);
+        pFase->addProjetil(x + 40, y + (getSize().height / 5), direcao);
         tempoDesdeUltimoTiro = 0;
     }
 }
@@ -157,6 +159,11 @@ void Jogador::executar()
     if (!noChao)
     {
         newState = JUMP;
+    }
+
+    if (tempoDesdeUltimoTiro <= SHOT_ANIMATION_TIME)
+    {
+        newState = SHOT;
     }
 
     if (tempoDesdeUltimoDano < HURT_ANIMATION_TIME)

@@ -82,6 +82,10 @@ void Personagem::setAnimationState()
     {
         animacao.setTrilha("dead");
     }
+    else if (state == SHOT)
+    {
+        animacao.setTrilha("shot");
+    }
 
     // Ajusta a escala com base na direção atual
     animacao.setScale(direcao * SCALING_FACTOR, SCALING_FACTOR);
