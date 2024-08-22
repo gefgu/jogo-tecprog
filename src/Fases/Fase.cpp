@@ -8,8 +8,9 @@ Fase::Fase(int qty_plt) : pontos(1000), finalX(10000), caixaDeCorreio("./assets/
   entidades.incluir(jogador);
   gerenciadorColisoes.incluirEntidadeMovel(jogador);
   criarPlataformas(qty_plt);
-  criaEspinhos();
-  criaLixos();
+  //criaEspinhos();
+  //criaLixos();
+  criaMina();
   criaFighters();
   // sf::Font *fonte = pGG->carregaFonte("./assets/fonts/INVASION2000.TTF");
   sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
@@ -99,6 +100,20 @@ void Fase::criaLixos()
     Lixo *l = new Lixo(px, py);
     entidades.incluir(l);
     gerenciadorColisoes.incluirEntidadeEstatica(l);
+  }
+}
+
+void Fase::criaMina()
+{
+  int total_minas = 10 + (rand() % 5);
+  for (int i = 0; i < total_minas; i++)
+  {
+    Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
+    int px = p->getCenter().x;
+    int py = p->getCenter().y - (p->getSize().height / 2.f) - (MINA_HEIGHT * 3) / 2;
+    Mina *m = new Mina(px, py);
+    entidades.incluir(m);
+    gerenciadorColisoes.incluirEntidadeEstatica(m);
   }
 }
 

@@ -130,8 +130,9 @@ void Fighter::executar()
 
 void Fighter::atacar()
 {
+
   Jogador *pJ = visao.getJogador();
-  if (tempoContato > 500.f)
+  if (tempoContato > 500.f )
   {
     if (pJ)
     {

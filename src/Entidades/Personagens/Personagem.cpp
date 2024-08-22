@@ -45,11 +45,14 @@ void Personagem::setColisionBoxPosition(int px, int py)
 
 void Personagem::aplicarGravidade()
 {
-    if (!noChao)
-    {
         velocidadeY += GRAVIDADE * TEMPO_FRAME; // Aceleração devido à gravidade
         y += velocidadeY * TEMPO_FRAME;
-    }
+
+    // if (!noChao)
+    // {
+    //     velocidadeY += GRAVIDADE * TEMPO_FRAME; // Aceleração devido à gravidade
+    //     y += velocidadeY * TEMPO_FRAME;
+    // }
 }
 
 void Personagem::setAnimationState()
@@ -108,6 +111,11 @@ sf::Vector2f Personagem ::getCenter()
 {
     sf::FloatRect size = getSize();
     return sf::Vector2f(size.left + size.width / 2.0f, size.top + size.height / 2.0f);
+}
+
+int Personagem::getDirecao()
+{
+    return direcao;
 }
 
 sf::FloatRect Personagem ::getSize()

@@ -18,4 +18,5 @@ public:
     void executar();
     void lidarColisao(sf::Vector2f intersecao, Entidade *other);
     void reduzirVelocidade(float fator);
+    void aplicarForcaRepulsao(float forcaX, float forcaY);
 };

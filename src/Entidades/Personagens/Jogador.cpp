@@ -1,5 +1,6 @@
 #include "Entidades/Personagens/Jogador.hpp"
 #include "Fases/Fase.hpp" // Full definition
+#include <unistd.h>      // Para usar sleep
 #include <cmath>          // Para usar std::max
 
 const float VELOCIDADEINICIAL = 25;
@@ -43,13 +44,18 @@ void Jogador::atacar()
 {
     if (tempoDesdeUltimoTiro >= COOLDOWN_TIRO)
     {
-        pFase->addProjetil(x + 60, y + (getSize().height / 5), direcao);
+        pFase->addProjetil(x + direcao*60, y + (getSize().height / 5), direcao);
         tempoDesdeUltimoTiro = 0;
     }
 }
 
+
 void Jogador::mover()
 {
+        if (state == DEAD) {
+        return;  // Bloqueia qualquer movimento se o jogador estiver morto.
+    }
+
     newState = IDLE;
     mudouDirecao = false;
     float elapsed_time = pGG->getElapsedTime();
@@ -118,7 +124,7 @@ void Jogador::mover()
         }
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
     {
         atacar();
     }
@@ -229,4 +235,10 @@ void Jogador::reduzirVelocidade(float fator)
 {
     tempoDesdeUltimoLixo = 0.0f;
     slowness = fator;
+}
+
+void Jogador::aplicarForcaRepulsao(float forcaX, float forcaY)
+{
+    velocidadeX = forcaX;
+    velocidadeY = forcaY;
 }

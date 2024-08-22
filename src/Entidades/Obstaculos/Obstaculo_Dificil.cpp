@@ -1,1 +1,0 @@
-#include "Entidades/Obstaculos/Obstaculo_Dificil.hpp"

@@ -15,6 +15,7 @@ enum tipoDeEntidade
     OBSTACULO,
     ESPINHO,
     LIXO,
+    MINA,
     VISAO,
     PROJETIL
 };
