@@ -13,6 +13,8 @@ using namespace std;
 class Leaderboard : public Menu
 {
 private:
+  void readLeaderboard();
+
 public:
   Leaderboard();
   ~Leaderboard();

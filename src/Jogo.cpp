@@ -100,6 +100,12 @@ void Jogo::executar()
             menuFimDeJogo = NULL;
         }
 
+        if (ultimoEstado == estadoJogo::LEADERBOARD)
+        {
+            delete leaderboard;
+            leaderboard = NULL;
+        }
+
         gerenciadorGrafico.display();
         performanceMonitor.endFrame(); // Finaliza a medição do tempo do quadro
         performanceMonitor.printFPS();

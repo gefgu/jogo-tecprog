@@ -1,4 +1,8 @@
 #include "Menus/Leaderboard.hpp"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
 
 Leaderboard::Leaderboard() : Menu()
 {
@@ -18,11 +22,13 @@ Leaderboard::Leaderboard() : Menu()
     sf::Text texto;
     texto.setFont(*fonte);
     texto.setFillColor(sf::Color::White);
-    texto.setCharacterSize(22);
+    texto.setCharacterSize(24);
     texto.setString("-------------");
     centralizaTextoNoBotao(texto, fundo);
     textosDecorativos.push_back(texto);
   }
+
+  readLeaderboard();
 
   sf::RectangleShape botao(sf::Vector2f(300, 75)); // Tamanho dos botões
   botao.setPosition(sf::Vector2f((largura / 2) + 150, altura / 2 - 75 / 2));
@@ -45,6 +51,43 @@ Leaderboard::Leaderboard() : Menu()
 }
 
 Leaderboard::~Leaderboard() {}
+
+void Leaderboard::readLeaderboard()
+{
+  const char *filename = "leaderboard.txt";
+  std::ifstream file(filename);
+
+  if (file.is_open())
+  {
+    std::string line;
+    int i = 0;
+    while (std::getline(file, line))
+    {
+      std::stringstream ss(line);
+      std::string name;
+      int points;
+
+      // Parse the line assuming it's in "name,points" format
+      if (std::getline(ss, name, ',') && ss >> points)
+      {
+        setFundoTexto(i, name + ": " + to_string(points));
+        std::cout
+            << "Name: " << name << ", Points: " << points << std::endl;
+      }
+      else
+      {
+        std::cerr << "Error parsing line: " << line << std::endl;
+      }
+      i++;
+    }
+
+    file.close();
+  }
+  else
+  {
+    std::cerr << "Unable to open the file " << filename << std::endl;
+  }
+}
 
 void Leaderboard::executar()
 {

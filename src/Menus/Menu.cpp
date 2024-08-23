@@ -77,3 +77,12 @@ void Menu::setBotaoTexto(int index, const std::string &texto)
         centralizaTextoNoBotao(textos[index], botoes[index]);
     }
 }
+
+void Menu::setFundoTexto(int index, const std::string &texto)
+{
+    if (index >= 0 && index < textosDecorativos.size())
+    {
+        textosDecorativos[index].setString(texto);
+        centralizaTextoNoBotao(textosDecorativos[index], fundos[index]);
+    }
+}

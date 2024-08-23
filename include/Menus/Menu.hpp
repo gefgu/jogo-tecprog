@@ -20,6 +20,7 @@ protected:
     int itemSelecionado;
 
     void setBotaoTexto(int index, const std::string &texto);
+    void setFundoTexto(int index, const std::string &texto);
     int getSelectedItemIndex() const;
     void centralizaTextoNoBotao(sf::Text &texto, const sf::RectangleShape &botao);
 
