@@ -52,8 +52,9 @@ void Jogador::atacar()
 
 void Jogador::mover()
 {
-        if (state == DEAD) {
-        return;  // Bloqueia qualquer movimento se o jogador estiver morto.
+    if (state == DEAD) 
+    {
+    return;  // Bloqueia qualquer movimento se o jogador estiver morto.
     }
 
     newState = IDLE;
@@ -118,7 +119,7 @@ void Jogador::mover()
         if (noChao && tempoDesdeUltimoPulo >= COOLDOWN_PULO)
         {
             velocidadeY = -sqrt(2 * GRAVIDADE * 150);
-            y -= 10;
+            y -= 15;
             noChao = false;
             tempoDesdeUltimoPulo = 0.0f; // Reseta o tempo desde o último pulo
         }
@@ -221,6 +222,21 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
             tempoDesdeUltimoPiso = 0.0f;
             velocidadeY = 0;
         }
+    }
+    else if (other->getTipo() == tipoDeEntidade::ATIRADOR && !static_cast<Atirador *>(other)->getMorto())
+    {
+        if (intersecao.x > 0)
+        {
+            x -= intersecao.x - 2;
+            tempoDesdeUltimoPiso = 0.0f;
+            velocidadeY = 0;
+        }
+    }
+    
+    else if (other->getTipo() == tipoDeEntidade::LIXO && tempoDesdeUltimoLixo >= COOLDOWN_LIXO)
+    {
+        slowness = 0.5;
+        tempoDesdeUltimoLixo = 0;
     }
     else if (other->getTipo() == tipoDeEntidade::ESPINHO && tempoDesdeUltimoEspinho >= COOLDOWN_ESPINHO)
     {

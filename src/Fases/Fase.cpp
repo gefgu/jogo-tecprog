@@ -8,10 +8,11 @@ Fase::Fase(int qty_plt) : pontos(1000), finalX(10000), caixaDeCorreio("./assets/
   entidades.incluir(jogador);
   gerenciadorColisoes.incluirEntidadeMovel(jogador);
   criarPlataformas(qty_plt);
-  //criaEspinhos();
-  //criaLixos();
+  // criaEspinhos();
+  // criaLixos();
   criaMina();
   criaFighters();
+  criaAtiradores();
   // sf::Font *fonte = pGG->carregaFonte("./assets/fonts/INVASION2000.TTF");
   sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
   vidasJogador.setFont(*fonte);
@@ -129,6 +130,21 @@ void Fase::criaFighters()
     entidades.incluir(f);
     gerenciadorColisoes.incluirEntidadeMovel(f);
     gerenciadorColisoes.incluirEntidadeMovel(f->getCampoDeVisao());
+  }
+}
+
+void Fase::criaAtiradores()
+{
+  int total_atiradores = 1 + (rand() % 3);
+  for (int i = 0; i < total_atiradores; i++)
+  {
+    Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
+    int px = p->getCenter().x;
+    int py = p->getCenter().y - (p->getSize().height / 2.f) - (ATIRADOR_HEIGHT / 2.f);
+    Atirador *a = new Atirador(px, py, 3 + (rand() % 4));
+    entidades.incluir(a);
+    gerenciadorColisoes.incluirEntidadeMovel(a);
+    gerenciadorColisoes.incluirEntidadeMovel(a->getCampoDeVisao());
   }
 }
 

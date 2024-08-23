@@ -15,7 +15,7 @@ enum estadoPersonagem
     ATTACK,
     HURT,
     DEAD,
-    SHOT
+    SHOT,
 };
 
 class Personagem : public Entidade
@@ -31,6 +31,7 @@ protected:
     float tempoDesdeUltimoPiso;
     float tempoDesdeUltimoDano;
     float tempoDesdeMorte;
+    bool podeAnimar;
     bool mudouDirecao;
     bool morto;
     sf::RectangleShape colisionBox;

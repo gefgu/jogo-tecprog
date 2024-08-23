@@ -1,4 +1,5 @@
 #include "Entidades/Projetil.hpp"
+#include "Entidades/Personagens/Atirador.hpp"
 
 const char *PROJETIL_PATH = "./assets/images/bullet.png";
 
@@ -16,6 +17,7 @@ Projetil::Projetil(int px, int py, int direcao) : Entidade(px, py, tipoDeEntidad
 Projetil::~Projetil()
 {
 }
+
 
 void Projetil::desenhar()
 {
@@ -51,6 +53,17 @@ void Projetil::lidarColisao(sf::Vector2f intersecao, Entidade *other)
   if (other->getTipo() == tipoDeEntidade::FIGHTER && !static_cast<Fighter *>(other)->getMorto())
   {
     static_cast<Fighter *>(other)->recebeDano(dano);
+    ativo = false;
+  }
+
+  if (other->getTipo() == tipoDeEntidade::ATIRADOR && !static_cast<Fighter *>(other)->getMorto())
+  {
+    static_cast<Atirador *>(other)->recebeDano(dano);
+    ativo = false;
+  }
+  if (other->getTipo() == tipoDeEntidade::JOGADOR && !static_cast<Jogador *>(other)->getMorto())
+  {
+    static_cast<Jogador *>(other)->recebeDano(dano);
     ativo = false;
   }
 

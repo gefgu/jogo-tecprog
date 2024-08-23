@@ -13,6 +13,7 @@
 #include "Entidades/Obstaculos/Lixo.hpp"
 #include "Entidades/Obstaculos/Mina.hpp"
 #include "Entidades/Personagens/Fighter.hpp"
+#include "Entidades/Personagens/Atirador.hpp"
 #include "Entidades/Projetil.hpp"
 
 class Fase : public Ente
@@ -37,6 +38,7 @@ protected:
   void criaLixos();
   void criaMina();
   void criaFighters();
+  void criaAtiradores();
   void atualizaVidaJogador();
   void atualizaPontos();
   void verificaFim();

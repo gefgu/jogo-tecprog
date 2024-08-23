@@ -4,6 +4,7 @@
 #include "Entidades/Entidade.hpp"
 #include "ElementosGraficos/ObjetoEstatico.hpp"
 #include "Entidades/Personagens/Fighter.hpp"
+#include "Entidades/Personagens/Atirador.hpp"
 
 const int PROJETIL_WIDTH = 80;
 const int PROJETIL_HEIGHT = 64 * 2;
