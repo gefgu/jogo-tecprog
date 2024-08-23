@@ -111,7 +111,7 @@ void Fase::criaMina()
   {
     Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
     int px = p->getCenter().x;
-    int py = p->getCenter().y - (p->getSize().height / 2.f) - (MINA_HEIGHT * 3) / 2;
+    int py = p->getCenter().y - (p->getSize().height / 2.f) - (MINA_HEIGHT * 2) / 2;
     Mina *m = new Mina(px, py);
     entidades.incluir(m);
     gerenciadorColisoes.incluirEntidadeEstatica(m);

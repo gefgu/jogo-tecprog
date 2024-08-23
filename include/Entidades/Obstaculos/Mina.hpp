@@ -4,7 +4,7 @@
 #include "Entidades/Obstaculos/Obstaculo.hpp"
 #include "Entidades/Personagens/Jogador.hpp"
 
-const int MINA_HEIGHT = 26;
+const int MINA_HEIGHT = 24; // Fiz a mina sem multiplicar por 3. Lembrar disso quando usar.
 
 class Mina : public Obstaculo
 {
