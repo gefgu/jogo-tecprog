@@ -1,6 +1,10 @@
 #include "Menus/MenuFimDeJogo.hpp"
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <sstream>
+#include <vector>
+#include <algorithm>
 
 MenuFimDeJogo::MenuFimDeJogo(int p, estadoJogo ultimoEstado) : Menu(), pontos(p), textInput(pGG->getWindowSize().x / 2 - 300, 400, 600, 75), ultimaFase(ultimoEstado)
 {
@@ -125,24 +129,52 @@ int MenuFimDeJogo::getPontos()
   return pontos;
 }
 
+struct LeaderboardEntry
+{
+  std::string name;
+  int pontos;
+
+  // Comparator to sort by points in descending order
+  bool operator<(const LeaderboardEntry &other) const
+  {
+    return pontos > other.pontos;
+  }
+};
+
 void MenuFimDeJogo::salvar()
 {
-  std::ofstream file;
-  const char *filename = "leaderboard.txt";
+  std::vector<LeaderboardEntry> entries;
+  std::ifstream infile("leaderboard.txt");
+  std::string line;
 
-  // Open the file in append mode to add new entries
-  file.open(filename, std::ios::app);
+  // Read the existing entries from the file
+  while (std::getline(infile, line))
+  {
+    std::stringstream ss(line);
+    std::string name;
+    int pontos;
+
+    if (std::getline(ss, name, ',') && ss >> pontos)
+    {
+      entries.push_back({name, pontos});
+    }
+  }
+  infile.close();
+
+  // Add the new entry
   const char *name = textInput.getTexto();
+  entries.push_back({name, pontos});
 
-  if (file.is_open())
+  // Sort the entries by points in descending order
+  std::sort(entries.begin(), entries.end());
+
+  // Write the sorted entries back to the file
+  std::ofstream outfile("leaderboard.txt", std::ios::trunc);
+  for (const auto &entry : entries)
   {
-    // Write the name and points in CSV format
-    file << name << "," << to_string(pontos) << "\n";
-    file.close();
-    std::cout << "Entry added to leaderboard: " << name << ", " << to_string(pontos) << " points\n";
+    outfile << entry.name << "," << entry.pontos << "\n";
   }
-  else
-  {
-    std::cerr << "Unable to open the file " << filename << "\n";
-  }
+  outfile.close();
+
+  std::cout << "Entry added to leaderboard: " << name << ", " << pontos << " points\n";
 }

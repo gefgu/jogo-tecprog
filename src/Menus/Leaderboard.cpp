@@ -79,6 +79,8 @@ void Leaderboard::readLeaderboard()
         std::cerr << "Error parsing line: " << line << std::endl;
       }
       i++;
+      if (i > textosDecorativos.size())
+        break;
     }
 
     file.close();
