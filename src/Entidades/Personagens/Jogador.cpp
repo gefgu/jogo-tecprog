@@ -151,6 +151,7 @@ void Jogador::executar()
         recebeDano(1);
         y = 0;
         x = 0;
+        velocidadeX = 0;
         velocidadeY = 0;
     }
 
