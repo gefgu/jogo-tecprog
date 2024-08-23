@@ -1,6 +1,6 @@
 #include "Fases/Fase_Primeira.hpp"
 
-Fase_Primeira::Fase_Primeira() : Fase(40)
+Fase_Primeira::Fase_Primeira() : Fase(300)
 {
   criarCenario();
 }

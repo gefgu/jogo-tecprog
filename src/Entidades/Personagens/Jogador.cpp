@@ -1,13 +1,15 @@
 #include "Entidades/Personagens/Jogador.hpp"
 #include "Fases/Fase.hpp" // Full definition
-#include <unistd.h>      // Para usar sleep
+#include <unistd.h>       // Para usar sleep
 #include <cmath>          // Para usar std::max
 
-const float VELOCIDADEINICIAL = 25;
+const float WALK_VELOCIDADE_MAXIMA = 4;
+const float RUN_VELOCIDADE_MAXIMA = 8;
+
 const float GRAVIDADE = 9.8f; // Aceleração da gravidade (em unidades por segundo^2)
 
-const float COOLDOWN_PULO = 800.0f;    // Tempo de espera entre pulos (em milissegundos)
-const float VELOCIDADE_CORRIDA = 1.5f; // Velocidade de corrida (em unidades por segundo)
+const float COOLDOWN_PULO = 800.0f; // Tempo de espera entre pulos (em milissegundos)
+
 const float COOLDOWN_ESPINHO = 500.0f;
 const float COOLDOWN_LIXO = 250.0f;
 const float COOLDOWN_TIRO = 500.0f;
@@ -18,7 +20,7 @@ const float SHOT_ANIMATION_TIME = 150.0f;
 const float HURT_ANIMATION_TIME = 250.0f;
 const float DEATH_ANIMATION_TIME = 1200.0f;
 
-Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, VELOCIDADEINICIAL, 0, vidas, tipoDeEntidade::JOGADOR),
+Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, 0, 0, vidas, tipoDeEntidade::JOGADOR),
 
                                               tempoDesdeUltimoPulo(0.0f),
                                               tempoDesdeUltimoEspinho(COOLDOWN_ESPINHO),
@@ -44,38 +46,25 @@ void Jogador::atacar()
 {
     if (tempoDesdeUltimoTiro >= COOLDOWN_TIRO)
     {
-        pFase->addProjetil(x + direcao*60, y + (getSize().height / 5), direcao);
+        pFase->addProjetil(x + direcao * 60, y + (getSize().height / 5), direcao);
         tempoDesdeUltimoTiro = 0;
     }
 }
 
-
 void Jogador::mover()
 {
-    if (state == DEAD) 
+    if (state == DEAD)
     {
-    return;  // Bloqueia qualquer movimento se o jogador estiver morto.
+        return; // Bloqueia qualquer movimento se o jogador estiver morto.
     }
 
     newState = IDLE;
     mudouDirecao = false;
     float elapsed_time = pGG->getElapsedTime();
-    float velocidadeCorrida = VELOCIDADEINICIAL * VELOCIDADE_CORRIDA;
+
     // Verifica se o Shift está pressionado para correr
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
-    {
-        velocidadeX = velocidadeCorrida / slowness; // Velocidade de corrida
         newState = RUN;
-
-        // Executa a corrida na direção atual
-
-        x += direcao * velocidadeX * (elapsed_time / 100.0);
-    }
-    else
-    {
-        // Retorna à velocidade normal de caminhada
-        velocidadeX = (velocidadeCorrida / slowness) / VELOCIDADE_CORRIDA;
-    }
 
     // Verifica se a tecla A (esquerda) está pressionada
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
@@ -85,7 +74,6 @@ void Jogador::mover()
             mudouDirecao = true;
             direcao = -1;
         }
-        x -= velocidadeX * (elapsed_time / 100.0);
         newState = (newState == RUN) ? RUN : WALK;
     }
     // Verifica se a tecla D (direita) está pressionada
@@ -96,21 +84,7 @@ void Jogador::mover()
             mudouDirecao = true;
             direcao = 1;
         }
-        x += velocidadeX * (elapsed_time / 100.0);
         newState = (newState == RUN) ? RUN : WALK;
-    }
-
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
-    {
-        velocidadeX = velocidadeCorrida / slowness; // Velocidade de corrida
-        if (direcao == -1)
-        {
-            x -= velocidadeX * (elapsed_time / 100.0);
-        }
-        else if (direcao == 1)
-        {
-            x += velocidadeX * (elapsed_time / 100.0);
-        }
     }
 
     // Verifica o pulo
@@ -118,7 +92,7 @@ void Jogador::mover()
     {
         if (noChao && tempoDesdeUltimoPulo >= COOLDOWN_PULO)
         {
-            velocidadeY = -sqrt(2 * GRAVIDADE * 200);
+            velocidadeY = -sqrt(2 * GRAVIDADE) * 1.5;
             y -= 15;
             noChao = false;
             tempoDesdeUltimoPulo = 0.0f; // Reseta o tempo desde o último pulo
@@ -129,6 +103,23 @@ void Jogador::mover()
     {
         atacar();
     }
+
+    if (state == IDLE)
+        velocidadeX = 0;
+    if (state == WALK)
+    {
+        velocidadeX += (elapsed_time / 50.0f) / slowness; // taking up speed
+        velocidadeX = min(velocidadeX, WALK_VELOCIDADE_MAXIMA);
+    }
+    if (state == RUN)
+    {
+        velocidadeX += (elapsed_time / 100.0f) / slowness; // taking up speed
+        velocidadeX = min(velocidadeX, RUN_VELOCIDADE_MAXIMA);
+    }
+
+    cout << velocidadeX << endl;
+    x += direcao * velocidadeX;
+    y += velocidadeY;
 }
 
 void Jogador::executar()
@@ -232,7 +223,7 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
             velocidadeY = 0;
         }
     }
-    
+
     else if (other->getTipo() == tipoDeEntidade::LIXO && tempoDesdeUltimoLixo >= COOLDOWN_LIXO)
     {
         slowness = 0.5;
