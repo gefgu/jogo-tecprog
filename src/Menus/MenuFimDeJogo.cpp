@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 
-MenuFimDeJogo::MenuFimDeJogo(int p, estadoJogo ultimoEstado) : Menu(), gerenciadorEstado(Gerenciador_Estado::getInstance()), pontos(p), textInput(pGG->getWindowSize().x / 2 - 300, 400, 600, 75), ultimaFase(ultimoEstado)
+MenuFimDeJogo::MenuFimDeJogo(int p, estadoJogo ultimoEstado) : Menu(), pontos(p), textInput(pGG->getWindowSize().x / 2 - 300, 400, 600, 75), ultimaFase(ultimoEstado)
 {
   int largura = pGG->getWindowSize().x;
   int altura = pGG->getWindowSize().y;
@@ -10,18 +10,18 @@ MenuFimDeJogo::MenuFimDeJogo(int p, estadoJogo ultimoEstado) : Menu(), gerenciad
   sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
 
   // Pontuação
-  sf::RectangleShape botao(sf::Vector2f(1000, 100)); // Tamanho dos botões
-  botao.setPosition(sf::Vector2f((largura / 2) - 500, (altura / 8)));
-  botao.setTexture(texturaBotao);
-  botoes.push_back(botao);
+  sf::RectangleShape fundo(sf::Vector2f(1000, 100)); // Tamanho dos botões
+  fundo.setPosition(sf::Vector2f((largura / 2) - 500, (altura / 8)));
+  fundo.setTexture(texturaBotao);
+  fundos.push_back(fundo);
 
   sf::Text textoFinal;
   textoFinal.setFont(*fonte);
   textoFinal.setFillColor(sf::Color::White);
   textoFinal.setCharacterSize(48);
   textoFinal.setString("Conseguiu " + to_string(pontos) + " Pontos!!");
-  centralizaTextoNoBotao(textoFinal, botao);
-  textos.push_back(textoFinal);
+  centralizaTextoNoBotao(textoFinal, fundo);
+  textosDecorativos.push_back(textoFinal);
 
   // Botões
   for (int i = 0; i < 4; i++)
@@ -39,16 +39,10 @@ MenuFimDeJogo::MenuFimDeJogo(int p, estadoJogo ultimoEstado) : Menu(), gerenciad
     textos.push_back(texto);
   }
 
-  setBotaoTexto(1, "Continuar", fonte);
-  setBotaoTexto(2, "Salvar e Continuar", fonte);
-  setBotaoTexto(3, "Salvar e Voltar", fonte);
-  setBotaoTexto(4, "Voltar Menu", fonte);
-  if (itemSelecionado < 1)
-  { // just to take advantage of existing code
-    nextButton();
-    textos[0].setCharacterSize(48);
-    centralizaTextoNoBotao(textos[0], botoes[0]);
-  }
+  setBotaoTexto(0, "Continuar");
+  setBotaoTexto(1, "Salvar e Continuar");
+  setBotaoTexto(2, "Salvar e Voltar");
+  setBotaoTexto(3, "Voltar Menu");
 }
 
 MenuFimDeJogo::~MenuFimDeJogo()
@@ -63,30 +57,30 @@ void MenuFimDeJogo::desenhar()
   textInput.desenhar();
   int i;
   for (i = 0; i < botoes.size(); i++)
-  {
     pGG->draw(botoes[i]);
-  }
+  for (i = 0; i < fundos.size(); i++)
+    pGG->draw(fundos[i]);
   for (i = 0; i < textos.size(); i++)
-  {
     pGG->draw(textos[i]);
-  }
+  for (i = 0; i < textosDecorativos.size(); i++)
+    pGG->draw(textosDecorativos[i]);
 }
 
 void MenuFimDeJogo::encerrar()
 {
 
-  if (itemSelecionado == 2 || itemSelecionado == 3)
+  if (itemSelecionado == 1 || itemSelecionado == 2)
   {
     salvar();
   }
-  if (itemSelecionado <= 2)
+  if (itemSelecionado <= 1)
   { // continuar
     if (ultimaFase == FASE1)
       gerenciadorEstado.setEstadoJogo(FASE2);
     else if (ultimaFase == FASE2)
       gerenciadorEstado.setEstadoJogo(FASE1);
   }
-  else if (itemSelecionado >= 3)
+  else if (itemSelecionado >= 2)
   {
     gerenciadorEstado.setEstadoJogo(MENUINICIO);
   }
@@ -122,12 +116,6 @@ void MenuFimDeJogo::executar()
       }
     }
     textInput.receiveEvent(event);
-  }
-  if (itemSelecionado < 1)
-  { // just to take advantage of existing code
-    nextButton();
-    textos[0].setCharacterSize(48);
-    centralizaTextoNoBotao(textos[0], botoes[0]);
   }
   desenhar();
 }

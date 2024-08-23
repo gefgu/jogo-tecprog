@@ -21,15 +21,14 @@ MenuInicio::MenuInicio() : Menu()
     texto.setFont(*fonte);
     texto.setFillColor(sf::Color::White);
     texto.setCharacterSize(22);
-    centralizaTextoNoBotao(texto, botao);
     textos.push_back(texto);
   }
 
   // Definir os textos dos botões
-  setBotaoTexto(0, "Stage 1", fonte);
-  setBotaoTexto(1, "Stage 2", fonte);
-  setBotaoTexto(2, "Load Games", fonte);
-  setBotaoTexto(3, "Leaderboard", fonte);
+  setBotaoTexto(0, "Stage 1");
+  setBotaoTexto(1, "Stage 2");
+  setBotaoTexto(2, "Load Games");
+  setBotaoTexto(3, "Leaderboard");
 
   if (!botoes.empty())
   {

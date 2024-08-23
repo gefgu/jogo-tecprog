@@ -3,8 +3,10 @@
 
 Menu::Menu() : gerenciadorEstado(Gerenciador_Estado::getInstance()), itemSelecionado(0)
 {
+    fundos.clear();
     botoes.clear();
     textos.clear();
+    textosDecorativos.clear();
     int largura = pGG->getWindowSize().x;
     int altura = pGG->getWindowSize().y;
     sf::Texture *texturaFundo = pGG->carregaTextura("./assets/images/fundo_menu.png");
@@ -19,6 +21,8 @@ Menu::~Menu()
 {
     botoes.clear();
     textos.clear();
+    fundos.clear();
+    textosDecorativos.clear();
 }
 
 void Menu::prevButton()
@@ -65,12 +69,11 @@ void Menu::centralizaTextoNoBotao(sf::Text &texto, const sf::RectangleShape &bot
     texto.setPosition(posX, posY);
 }
 
-void Menu::setBotaoTexto(int index, const std::string &texto, sf::Font *fonte)
+void Menu::setBotaoTexto(int index, const std::string &texto)
 {
     if (index >= 0 && index < textos.size())
     {
-        textos[index].setFont(*fonte);
         textos[index].setString(texto);
-        centralizaTextoNoBotao(textos[index], botoes[index]); // Recentraliza o texto após a atualização
+        centralizaTextoNoBotao(textos[index], botoes[index]);
     }
 }

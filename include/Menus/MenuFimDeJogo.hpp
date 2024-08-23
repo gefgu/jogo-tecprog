@@ -14,7 +14,6 @@ class MenuFimDeJogo : public Menu
 {
 private:
   int pontos;
-  Gerenciador_Estado &gerenciadorEstado;
   CampoDeTexto textInput;
   estadoJogo ultimaFase;
 
