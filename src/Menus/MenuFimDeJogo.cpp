@@ -1,7 +1,7 @@
 #include "Menus/MenuFimDeJogo.hpp"
 #include <iostream>
 
-MenuFimDeJogo::MenuFimDeJogo(int p) : Menu(), gerenciadorEstado(Gerenciador_Estado::getInstance()), pontos(p)
+MenuFimDeJogo::MenuFimDeJogo(int p) : Menu(), gerenciadorEstado(Gerenciador_Estado::getInstance()), pontos(p), textInput(pGG->getWindowSize().x / 2 - 300, 400, 600, 75)
 {
   int largura = pGG->getWindowSize().x;
   int altura = pGG->getWindowSize().y;
@@ -9,7 +9,7 @@ MenuFimDeJogo::MenuFimDeJogo(int p) : Menu(), gerenciadorEstado(Gerenciador_Esta
   sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
 
   sf::RectangleShape botao(sf::Vector2f(1000, 100)); // Tamanho dos botões
-  botao.setPosition(sf::Vector2f((largura / 2) - 500, (altura / (5 + 1))));
+  botao.setPosition(sf::Vector2f((largura / 2) - 500, (altura / 8)));
   botao.setTexture(texturaBotao);
   botoes.push_back(botao);
 
@@ -18,22 +18,22 @@ MenuFimDeJogo::MenuFimDeJogo(int p) : Menu(), gerenciadorEstado(Gerenciador_Esta
   textoFinal.setFillColor(sf::Color::White);
   textoFinal.setCharacterSize(48);
   textoFinal.setString("Conseguiu " + to_string(pontos) + " Pontos!!");
-  sf::Vector2f pos = pGG->getTopLeftPosition();
   centralizaTextoNoBotao(textoFinal, botao);
   textos.push_back(textoFinal);
 
-  cout << "Criando MENU FIM" << endl;
+  // cout << "Criando MENU FIM" << endl;
 }
 
 MenuFimDeJogo::~MenuFimDeJogo()
 {
-  std::cout << "Destruindo menu." << std::endl;
+  // std::cout << "Destruindo menu." << std::endl;
 }
 
 void MenuFimDeJogo::desenhar()
 {
   pGG->centerCamera(sf::Vector2f(pGG->getWindowSize().x / 2, pGG->getWindowSize().y / 2));
   pGG->draw(fundo);
+  textInput.desenhar();
   int i;
   for (i = 0; i < botoes.size(); i++)
   {
@@ -61,6 +61,7 @@ void MenuFimDeJogo::executar()
         gerenciadorEstado.setEstadoJogo(estadoJogo::MENUINICIO);
       }
     }
+    textInput.receiveEvent(event);
   }
   desenhar();
 }
