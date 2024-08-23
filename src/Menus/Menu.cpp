@@ -1,8 +1,10 @@
 #include "Menus/Menu.hpp"
 #include <iostream>
 
-Menu::Menu() : gerenciadorEstado(Gerenciador_Estado::getInstance())
+Menu::Menu() : gerenciadorEstado(Gerenciador_Estado::getInstance()), itemSelecionado(0)
 {
+    botoes.clear();
+    textos.clear();
     int largura = pGG->getWindowSize().x;
     int altura = pGG->getWindowSize().y;
     sf::Texture *texturaFundo = pGG->carregaTextura("./assets/images/fundo_menu.png");
@@ -15,9 +17,60 @@ Menu::Menu() : gerenciadorEstado(Gerenciador_Estado::getInstance())
 
 Menu::~Menu()
 {
-    std::cout << "Destruindo menu." << std::endl;
+    botoes.clear();
+    textos.clear();
 }
 
-void Menu::desenhar()
+void Menu::nextButton()
 {
+    std::cout << "Movendo para cima: itemSelecionado antes = " << itemSelecionado << std::endl;
+    if (itemSelecionado - 1 >= 0)
+    {
+        textos[itemSelecionado].setCharacterSize(22);                             // Redefine o tamanho da fonte para o padrão
+        centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Recentraliza o texto
+
+        itemSelecionado--;
+        textos[itemSelecionado].setCharacterSize(26);                             // Aumenta o tamanho da fonte do texto selecionado
+        centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Recentraliza o texto
+    }
+    std::cout << "itemSelecionado depois = " << itemSelecionado << std::endl;
+}
+
+void Menu::prevButton()
+{
+    std::cout << "Movendo para baixo: itemSelecionado antes = " << itemSelecionado << std::endl;
+    if (itemSelecionado + 1 < botoes.size())
+    {
+        textos[itemSelecionado].setCharacterSize(22);                             // Redefine o tamanho da fonte para o padrão
+        centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Recentraliza o texto
+
+        itemSelecionado++;
+        textos[itemSelecionado].setCharacterSize(26);                             // Aumenta o tamanho da fonte do texto selecionado
+        centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Recentraliza o texto
+    }
+    std::cout << "itemSelecionado depois = " << itemSelecionado << std::endl;
+}
+
+int Menu::getSelectedItemIndex() const
+{
+    return itemSelecionado;
+}
+
+void Menu::centralizaTextoNoBotao(sf::Text &texto, const sf::RectangleShape &botao)
+{
+    float posX = botao.getPosition().x + (botao.getSize().x / 2.f) - (texto.getLocalBounds().width / 2.f);
+
+    float posY = botao.getPosition().y + (botao.getSize().y / 2.f) - (texto.getLocalBounds().height / 2.f) - texto.getLocalBounds().top;
+
+    texto.setPosition(posX, posY);
+}
+
+void Menu::setBotaoTexto(int index, const std::string &texto, sf::Font *fonte)
+{
+    if (index >= 0 && index < textos.size())
+    {
+        textos[index].setFont(*fonte);
+        textos[index].setString(texto);
+        centralizaTextoNoBotao(textos[index], botoes[index]); // Recentraliza o texto após a atualização
+    }
 }
