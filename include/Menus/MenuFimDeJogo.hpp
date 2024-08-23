@@ -16,9 +16,10 @@ private:
   int pontos;
   Gerenciador_Estado &gerenciadorEstado;
   CampoDeTexto textInput;
+  estadoJogo ultimaFase;
 
 public:
-  MenuFimDeJogo(int p); // pontos
+  MenuFimDeJogo(int p, estadoJogo ultimoEstado); // pontos
   ~MenuFimDeJogo();
 
   void desenhar();

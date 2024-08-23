@@ -1,7 +1,7 @@
 #include "Menus/MenuFimDeJogo.hpp"
 #include <iostream>
 
-MenuFimDeJogo::MenuFimDeJogo(int p) : Menu(), gerenciadorEstado(Gerenciador_Estado::getInstance()), pontos(p), textInput(pGG->getWindowSize().x / 2 - 300, 400, 600, 75)
+MenuFimDeJogo::MenuFimDeJogo(int p, estadoJogo ultimoEstado) : Menu(), gerenciadorEstado(Gerenciador_Estado::getInstance()), pontos(p), textInput(pGG->getWindowSize().x / 2 - 300, 400, 600, 75), ultimaFase(ultimoEstado)
 {
   int largura = pGG->getWindowSize().x;
   int altura = pGG->getWindowSize().y;
@@ -73,9 +73,21 @@ void MenuFimDeJogo::desenhar()
 
 void MenuFimDeJogo::encerrar()
 {
-  if (itemSelecionado == 1)
+
+  if (itemSelecionado == 2 || itemSelecionado == 3)
+  {
+    salvar();
+  }
+  if (itemSelecionado <= 2)
   { // continuar
-    gerenciadorEstado.setEstadoJogo(FASE2);
+    if (ultimaFase == FASE1)
+      gerenciadorEstado.setEstadoJogo(FASE2);
+    else if (ultimaFase == FASE2)
+      gerenciadorEstado.setEstadoJogo(FASE1);
+  }
+  else if (itemSelecionado >= 3)
+  {
+    gerenciadorEstado.setEstadoJogo(MENUINICIO);
   }
 }
 
@@ -122,4 +134,8 @@ void MenuFimDeJogo::executar()
 int MenuFimDeJogo::getPontos()
 {
   return pontos;
+}
+
+void MenuFimDeJogo::salvar()
+{
 }
