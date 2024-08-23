@@ -121,6 +121,7 @@ void Fighter::executar()
 
     if (y > 2000)
     {
+      ativo = false;
       morto = true;
       velocidadeX = 0;
       velocidadeY = 0;
