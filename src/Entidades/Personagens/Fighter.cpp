@@ -3,6 +3,9 @@
 
 const float SCALING_FACTOR = 3;
 
+const float WALK_VELOCIDADE_MAXIMA = 3;
+const float RUN_VELOCIDADE_MAXIMA = 6;
+
 const float VELOCIDADE_CORRIDA = 1.5f; // Velocidade de corrida (em unidades por
 
 const float HURT_ANIMATION_TIME = 150.0f;
@@ -16,7 +19,7 @@ Fighter::Fighter(int px, int py, int vidas) : Inimigo(px, py, vidas, tipoDeEntid
   animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Run.png"));
   animacao.addTrilha("walking", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Walk.png"));
   animacao.addTrilha("attack", new TrilhaAnimacao(5, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Attack_1.png"));
-  animacao.addTrilha("jump", new TrilhaAnimacao(10, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Jump.png"));
+  animacao.addTrilha("jump", new TrilhaAnimacao(10, 9, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Jump.png"));
   animacao.addTrilha("hurt", new TrilhaAnimacao(3, 7, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Hurt.png"));
   animacao.addTrilha("dead", new TrilhaAnimacao(4, 20, 128, 128, 3.0, 3.0, "./assets/Gangsters_2/Dead.png", false));
   animacao.setPosition(px, py);
@@ -53,12 +56,10 @@ void Fighter::perseguir()
   if (abs(distance) > 200)
   {
     newState = RUN;
-    x += direcao * velocidadeX * VELOCIDADE_CORRIDA * (elapsed_time / 100.0);
   }
   else if (abs(distance) > 30 * 3)
   {
     newState = WALK;
-    x += direcao * velocidadeX * (elapsed_time / 100.0);
   }
   else
   {
@@ -72,6 +73,7 @@ void Fighter::executar()
   if (!morto)
   {
     float elapsed_time = pGG->getElapsedTime();
+    noChao = tempoDesdeUltimoPiso <= COOLDOWN_PISO;
     newState = IDLE;
     aplicarGravidade();
     if (state == ATTACK)
@@ -86,9 +88,32 @@ void Fighter::executar()
     {
       perseguir();
     }
+    if (!noChao)
+    {
+      newState = JUMP;
+    }
 
     tempoDesdeUltimoPiso += elapsed_time;
     tempoDesdeUltimoDano += elapsed_time;
+
+    if (state == WALK)
+    {
+      velocidadeX += (elapsed_time / 50.0f); // taking up speed
+      velocidadeX = min(velocidadeX, WALK_VELOCIDADE_MAXIMA);
+    }
+    else if (state == RUN)
+    {
+      velocidadeX += (elapsed_time / 100.0f); // taking up speed
+      velocidadeX = min(velocidadeX, RUN_VELOCIDADE_MAXIMA);
+    }
+    else if (!state == JUMP)
+    {
+      velocidadeX = 0;
+    }
+
+    x += direcao * velocidadeX;
+    y += velocidadeY;
+
     if (getVidas() <= 0)
     {
       tempoDesdeMorte += elapsed_time;
@@ -132,7 +157,7 @@ void Fighter::atacar()
 {
 
   Jogador *pJ = visao.getJogador();
-  if (tempoContato > 500.f )
+  if (tempoContato > 500.f)
   {
     if (pJ)
     {

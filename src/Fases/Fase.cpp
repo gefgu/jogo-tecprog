@@ -10,9 +10,9 @@ Fase::Fase(int qty_plt) : pontos(1000), finalX(10000), caixaDeCorreio("./assets/
   criarPlataformas(qty_plt);
   // criaEspinhos();
   // criaLixos();
-  criaMina();
+  // criaMina();
   criaFighters();
-  criaAtiradores();
+  // criaAtiradores();
   // sf::Font *fonte = pGG->carregaFonte("./assets/fonts/INVASION2000.TTF");
   sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
   vidasJogador.setFont(*fonte);
@@ -120,7 +120,7 @@ void Fase::criaMina()
 
 void Fase::criaFighters()
 {
-  int total_fighters = 1 + (rand() % 3);
+  int total_fighters = 3 + (rand() % 3);
   for (int i = 0; i < total_fighters; i++)
   {
     Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());

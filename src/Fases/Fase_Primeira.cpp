@@ -1,6 +1,6 @@
 #include "Fases/Fase_Primeira.hpp"
 
-Fase_Primeira::Fase_Primeira() : Fase(300)
+Fase_Primeira::Fase_Primeira() : Fase(30)
 {
   criarCenario();
 }
@@ -13,7 +13,7 @@ void Fase_Primeira::criarCenario()
   int altura = pGG->getWindowSize().y;
   sf::Texture *texturaFundo = pGG->carregaTextura("./assets/images/fundo_fase_1.png");
   fundo.setTexture(*texturaFundo);
-  fundo.setPosition(-largura, -altura);
+  fundo.setPosition(-largura * 2, -altura * 2);
   float scaleX = static_cast<float>(largura) * 4 / fundo.getTexture()->getSize().x;
   float scaleY = static_cast<float>(altura) * 4 / fundo.getTexture()->getSize().y;
   fundo.setScale(scaleX, scaleY);
