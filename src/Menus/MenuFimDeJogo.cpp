@@ -1,5 +1,6 @@
 #include "Menus/MenuFimDeJogo.hpp"
 #include <iostream>
+#include <fstream>
 
 MenuFimDeJogo::MenuFimDeJogo(int p, estadoJogo ultimoEstado) : Menu(), gerenciadorEstado(Gerenciador_Estado::getInstance()), pontos(p), textInput(pGG->getWindowSize().x / 2 - 300, 400, 600, 75), ultimaFase(ultimoEstado)
 {
@@ -138,4 +139,22 @@ int MenuFimDeJogo::getPontos()
 
 void MenuFimDeJogo::salvar()
 {
+  std::ofstream file;
+  const char *filename = "leaderboard.txt";
+
+  // Open the file in append mode to add new entries
+  file.open(filename, std::ios::app);
+  const char *name = textInput.getTexto();
+
+  if (file.is_open())
+  {
+    // Write the name and points in CSV format
+    file << name << "," << to_string(pontos) << "\n";
+    file.close();
+    std::cout << "Entry added to leaderboard: " << name << ", " << to_string(pontos) << " points\n";
+  }
+  else
+  {
+    std::cerr << "Unable to open the file " << filename << "\n";
+  }
 }

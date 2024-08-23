@@ -26,7 +26,8 @@ void CampoDeTexto::executar()
 
 const char *CampoDeTexto::getTexto()
 {
-  return playerInput.toAnsiString().c_str();
+  playerInputStr = playerInput.toAnsiString(); // Convert and store
+  return playerInputStr.c_str();
 }
 
 void CampoDeTexto::receiveEvent(sf::Event event)

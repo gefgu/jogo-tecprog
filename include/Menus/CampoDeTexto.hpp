@@ -7,6 +7,7 @@ class CampoDeTexto : public Ente
 {
 private:
   sf::String playerInput;
+  std::string playerInputStr;
   sf::Text playerText;
   sf::RectangleShape fundo;
 

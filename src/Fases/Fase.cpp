@@ -160,4 +160,5 @@ void Fase::addProjetil(int px, int py, int direcao)
 void Fase::alteraPontos(int soma)
 {
   pontos += soma;
+  pontos = max(pontos, 0);
 }
