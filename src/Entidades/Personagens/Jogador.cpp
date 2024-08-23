@@ -106,6 +106,11 @@ void Jogador::mover()
         atacar();
     }
 
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+    {
+        Gerenciador_Estado::getInstance().setEstadoJogo(PAUSE);
+    }
+
     if (state == IDLE)
         velocidadeX = 0;
     if (state == WALK)

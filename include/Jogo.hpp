@@ -17,6 +17,7 @@
 #include "Menus/MenuInicio.hpp"
 #include "Menus/MenuFimDeJogo.hpp"
 #include "Menus/Leaderboard.hpp"
+#include "Menus/Pause.hpp"
 #include "Fases/Fase_Primeira.hpp"
 #include "Fases/Fase_Segunda.hpp"
 
@@ -34,6 +35,7 @@ private:
     Fase_Segunda *fase2;
     MenuFimDeJogo *menuFimDeJogo;
     Leaderboard *leaderboard;
+    Pause *pauseMenu;
 
 public:
     Jogo();
