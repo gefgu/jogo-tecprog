@@ -50,7 +50,7 @@ public:
   void desenhar();
   virtual void executar();
   int getPontos();
-  void addProjetil(int px, int py, int direcao);
+  void addProjetil(int px, int py, int direcao, tipoDeEntidade atirador);
   void alteraPontos(int soma);
 };
 

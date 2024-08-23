@@ -124,11 +124,11 @@ void Atirador::executar()
 
 void Atirador::atacar()
 {
-    if (tempoDisparo>= COOLDOWN_TIRO)
-    {
-        pFase->addProjetil(x + direcao*120, y + (getSize().height / 12), direcao);
-        tempoDisparo = 0;
-    }
+  if (tempoDisparo >= COOLDOWN_TIRO)
+  {
+    pFase->addProjetil(x + direcao * 120, y + (getSize().height / 12), direcao, ATIRADOR);
+    tempoDisparo = 0;
+  }
 }
 
 void Atirador::lidarColisao(sf::Vector2f intersecao, Entidade *other)

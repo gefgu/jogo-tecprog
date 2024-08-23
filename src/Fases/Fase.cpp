@@ -181,9 +181,9 @@ int Fase::getPontos()
   return pontos;
 }
 
-void Fase::addProjetil(int px, int py, int direcao)
+void Fase::addProjetil(int px, int py, int direcao, tipoDeEntidade atirador)
 {
-  Projetil *p = new Projetil(px, py, direcao);
+  Projetil *p = new Projetil(px, py, direcao, atirador);
   entidades.incluir(p);
   gerenciadorColisoes.incluirEntidadeMovel(p);
 }

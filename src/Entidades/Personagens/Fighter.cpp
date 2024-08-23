@@ -106,7 +106,7 @@ void Fighter::executar()
       velocidadeX += (elapsed_time / 100.0f); // taking up speed
       velocidadeX = min(velocidadeX, RUN_VELOCIDADE_MAXIMA);
     }
-    else if (!state == JUMP)
+    else
     {
       velocidadeX = 0;
     }
