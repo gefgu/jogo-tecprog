@@ -12,7 +12,8 @@ const float COOLDOWN_PULO = 800.0f; // Tempo de espera entre pulos (em milissegu
 
 const float COOLDOWN_ESPINHO = 500.0f;
 const float COOLDOWN_LIXO = 250.0f;
-const float COOLDOWN_TIRO = 500.0f;
+const float COOLDOWN_TIRO = 1250.0f;
+const float COOLDOWN_MINA = 1250.0f;
 
 const float SCALING_FACTOR = 3.f;
 
@@ -26,6 +27,7 @@ Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, 0, 0, vidas, ti
                                               tempoDesdeUltimoEspinho(COOLDOWN_ESPINHO),
                                               tempoDesdeUltimoLixo(COOLDOWN_LIXO),
                                               tempoDesdeUltimoTiro(COOLDOWN_TIRO),
+                                              tempoDesdeUltimaMina(COOLDOWN_MINA),
                                               slowness(1)
 
 {
@@ -69,7 +71,7 @@ void Jogador::mover()
     // Verifica se a tecla A (esquerda) está pressionada
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        if (direcao != -1)
+        if (direcao != -1 && tempoDesdeUltimaMina >= COOLDOWN_MINA)
         {
             mudouDirecao = true;
             direcao = -1;
@@ -79,7 +81,7 @@ void Jogador::mover()
     // Verifica se a tecla D (direita) está pressionada
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        if (direcao != 1)
+        if (direcao != 1 && tempoDesdeUltimaMina >= COOLDOWN_MINA)
         {
             mudouDirecao = true;
             direcao = 1;
@@ -117,7 +119,6 @@ void Jogador::mover()
         velocidadeX = min(velocidadeX, RUN_VELOCIDADE_MAXIMA);
     }
 
-    cout << velocidadeX << endl;
     x += direcao * velocidadeX;
     y += velocidadeY;
 }
@@ -139,6 +140,8 @@ void Jogador::executar()
     tempoDesdeUltimoLixo += elapsed_time;
     tempoDesdeUltimoTiro += elapsed_time;
     tempoDesdeUltimoDano += elapsed_time;
+    tempoDesdeUltimaMina += elapsed_time;
+
     if (getVidas() <= 0)
     {
         tempoDesdeMorte += elapsed_time;
@@ -247,6 +250,7 @@ void Jogador::reduzirVelocidade(float fator)
 
 void Jogador::aplicarForcaRepulsao(float forcaX, float forcaY)
 {
+    tempoDesdeUltimaMina = 0.0f;
     velocidadeX = forcaX;
     velocidadeY = forcaY;
 }

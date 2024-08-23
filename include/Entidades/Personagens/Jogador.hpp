@@ -9,6 +9,7 @@ private:
     float tempoDesdeUltimoEspinho;
     float tempoDesdeUltimoLixo;
     float tempoDesdeUltimoTiro;
+    float tempoDesdeUltimaMina;
     float slowness;
     void mover();
 
