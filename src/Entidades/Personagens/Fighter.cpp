@@ -119,10 +119,12 @@ void Fighter::executar()
       tempoDesdeMorte += elapsed_time;
     }
 
-    // if (!noChao)
-    // {
-    //   newState = JUMP;
-    // }
+    if (y > 2000)
+    {
+      morto = true;
+      velocidadeX = 0;
+      velocidadeY = 0;
+    }
 
     if (tempoDesdeUltimoDano < HURT_ANIMATION_TIME)
     {
