@@ -1,46 +1,33 @@
-#include "Menus/MenuInicio.hpp"
+#include "Menus/Leaderboard.hpp"
 
-MenuInicio::MenuInicio() : Menu()
+Leaderboard::Leaderboard() : Menu()
 {
   int largura = pGG->getWindowSize().x;
   int altura = pGG->getWindowSize().y;
 
   sf::Texture *texturaBotao = pGG->carregaTextura("./assets/images/botao.png");
-
   sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
 
-  // Criar botões
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 7; i++)
   {
-    sf::RectangleShape botao(sf::Vector2f(300, 75)); // Tamanho dos botões
-    botao.setPosition(sf::Vector2f((largura / 2) - 150, (150 + 150 * i)));
-    botao.setTexture(texturaBotao);
-    botoes.push_back(botao);
+    sf::RectangleShape fundo(sf::Vector2f(400, 75)); // Tamanho dos botões
+    fundo.setPosition(sf::Vector2f((largura / 2) - 400, 100 * (i + 1)));
+    fundo.setTexture(texturaBotao);
+    fundos.push_back(fundo);
 
     sf::Text texto;
     texto.setFont(*fonte);
     texto.setFillColor(sf::Color::White);
     texto.setCharacterSize(22);
-    textos.push_back(texto);
-  }
-
-  // Definir os textos dos botões
-  setBotaoTexto(0, "Stage 1");
-  setBotaoTexto(1, "Stage 2");
-  setBotaoTexto(2, "Load Games");
-  setBotaoTexto(3, "Leaderboard");
-
-  if (!botoes.empty())
-  {
-    textos[itemSelecionado].setCharacterSize(26);
-    centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Aumentar o tamanho da fonte do botão selecionado
-    std::cout << "Botão " << itemSelecionado << " destacado." << std::endl;
+    texto.setString("-------------");
+    centralizaTextoNoBotao(texto, fundo);
+    textosDecorativos.push_back(texto);
   }
 }
 
-MenuInicio::~MenuInicio() {}
+Leaderboard::~Leaderboard() {}
 
-void MenuInicio::executar()
+void Leaderboard::executar()
 {
   sf::Event event;
   while (pGG->pollEvent(event))
@@ -64,12 +51,12 @@ void MenuInicio::executar()
         int selectedItem = getSelectedItemIndex();
         if (selectedItem == 0)
         {
-          gerenciadorEstado.setEstadoJogo(estadoJogo::FASE1);
+          // gerenciadorEstado.setEstadoJogo(estadoJogo::FASE1);
         }
         else if (selectedItem == 1)
         {
           // Começar Fase 2
-          gerenciadorEstado.setEstadoJogo(estadoJogo::FASE2);
+          // gerenciadorEstado.setEstadoJogo(estadoJogo::FASE2);
         }
         else if (selectedItem == 2)
         {
@@ -77,7 +64,7 @@ void MenuInicio::executar()
         }
         else if (selectedItem == 3)
         {
-          gerenciadorEstado.setEstadoJogo(estadoJogo::LEADERBOARD);
+          // Carregar jogo salvo
         }
       }
     }
@@ -85,14 +72,18 @@ void MenuInicio::executar()
   desenhar();
 }
 
-void MenuInicio::desenhar()
+void Leaderboard::desenhar()
 {
   pGG->centerCamera(sf::Vector2f(pGG->getWindowSize().x / 2, pGG->getWindowSize().y / 2));
   pGG->draw(fundo);
 
-  for (size_t i = 0; i < botoes.size(); i++)
-  {
+  int i;
+  for (i = 0; i < botoes.size(); i++)
     pGG->draw(botoes[i]);
+  for (i = 0; i < fundos.size(); i++)
+    pGG->draw(fundos[i]);
+  for (i = 0; i < textos.size(); i++)
     pGG->draw(textos[i]);
-  }
+  for (i = 0; i < textosDecorativos.size(); i++)
+    pGG->draw(textosDecorativos[i]);
 }
