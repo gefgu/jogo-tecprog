@@ -38,7 +38,16 @@ void Jogo::executar()
         else if (estado == estadoJogo::FASE2)
         {
             if (fase2 == NULL)
-                fase2 = new Fase_Segunda();
+            {
+                if (ultimoEstado == MENUGAMEOVER)
+                {
+                    fase2 = new Fase_Segunda(menuFimDeJogo->getPontos());
+                }
+                else
+                {
+                    fase2 = new Fase_Segunda();
+                }
+            }
             fase2->executar();
         }
         else if (estado == estadoJogo::GAMEOVER)

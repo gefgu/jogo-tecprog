@@ -9,7 +9,7 @@ private:
   void criarCenario();
 
 public:
-  Fase_Primeira();
+  Fase_Primeira(int pontos_iniciais = 1000);
   ~Fase_Primeira();
   void executar();
   void criarInimigosFaceis();

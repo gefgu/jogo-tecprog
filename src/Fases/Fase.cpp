@@ -1,6 +1,6 @@
 #include "Fases/Fase.hpp"
 
-Fase::Fase(int qty_plt) : pontos(1000), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0)
+Fase::Fase(int pontos_iniciais, int qty_plt) : pontos(pontos_iniciais), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0)
 {
   clock.restart();
   Entidade::setFase(this);

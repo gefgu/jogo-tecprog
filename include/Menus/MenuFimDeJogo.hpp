@@ -23,4 +23,7 @@ public:
 
   void desenhar();
   void executar();
+  void encerrar();
+  void salvar();
+  int getPontos();
 };

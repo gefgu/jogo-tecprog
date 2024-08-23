@@ -25,8 +25,8 @@ MenuFimDeJogo::MenuFimDeJogo(int p) : Menu(), gerenciadorEstado(Gerenciador_Esta
   // Botões
   for (int i = 0; i < 4; i++)
   {
-    sf::RectangleShape botao(sf::Vector2f(400, 75)); // Tamanho dos botões
-    botao.setPosition(sf::Vector2f(150 + ((i % 2) * 500), (altura / 2) + 100 + (i >= 2) * 150));
+    sf::RectangleShape botao(sf::Vector2f(425, 75)); // Tamanho dos botões
+    botao.setPosition(sf::Vector2f(125 + ((i % 2) * 525), (altura / 2) + 100 + (i >= 2) * 150));
     botao.setTexture(texturaBotao);
     botoes.push_back(botao);
 
@@ -71,6 +71,14 @@ void MenuFimDeJogo::desenhar()
   }
 }
 
+void MenuFimDeJogo::encerrar()
+{
+  if (itemSelecionado == 1)
+  { // continuar
+    gerenciadorEstado.setEstadoJogo(FASE2);
+  }
+}
+
 void MenuFimDeJogo::executar()
 {
 
@@ -91,6 +99,10 @@ void MenuFimDeJogo::executar()
       {
         prevButton();
       }
+      else if (event.key.code == sf::Keyboard::Enter)
+      {
+        encerrar();
+      }
       else if (event.key.code == sf::Keyboard::Escape)
       {
         gerenciadorEstado.setEstadoJogo(estadoJogo::MENUINICIO);
@@ -105,4 +117,9 @@ void MenuFimDeJogo::executar()
     centralizaTextoNoBotao(textos[0], botoes[0]);
   }
   desenhar();
+}
+
+int MenuFimDeJogo::getPontos()
+{
+  return pontos;
 }

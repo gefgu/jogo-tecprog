@@ -54,11 +54,11 @@ void MenuInicio::executar()
     {
       if (event.key.code == sf::Keyboard::Up)
       {
-        nextButton();
+        prevButton();
       }
       else if (event.key.code == sf::Keyboard::Down)
       {
-        prevButton();
+        nextButton();
       }
       else if (event.key.code == sf::Keyboard::Enter)
       {
