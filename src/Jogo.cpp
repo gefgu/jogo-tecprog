@@ -3,7 +3,7 @@
 #include <iostream>
 
 Jogo::Jogo() : gerenciadorGrafico(Gerenciador_Grafico::getInstance()),
-               gerenciadorEstado(Gerenciador_Estado::getInstance()), menuInicio(NULL), fase1(NULL), fase2(NULL), menuFimDeJogo(NULL)
+               gerenciadorEstado(Gerenciador_Estado::getInstance()), menuInicio(NULL), fase1(NULL), fase2(NULL), menuFimDeJogo(NULL), leaderboard(NULL)
 {
     Ente::setGerenciadorGrafico(&gerenciadorGrafico);
     gerenciadorThreads.iniciarThreadColisoes(&gerenciadorColisoes);
@@ -32,13 +32,31 @@ void Jogo::executar()
         else if (estado == estadoJogo::FASE1)
         {
             if (fase1 == NULL)
-                fase1 = new Fase_Primeira();
+            {
+                if (ultimoEstado == MENUGAMEOVER)
+                {
+                    fase1 = new Fase_Primeira(menuFimDeJogo->getPontos());
+                }
+                else
+                {
+                    fase1 = new Fase_Primeira();
+                }
+            }
             fase1->executar();
         }
         else if (estado == estadoJogo::FASE2)
         {
             if (fase2 == NULL)
-                fase2 = new Fase_Segunda();
+            {
+                if (ultimoEstado == MENUGAMEOVER)
+                {
+                    fase2 = new Fase_Segunda(menuFimDeJogo->getPontos());
+                }
+                else
+                {
+                    fase2 = new Fase_Segunda();
+                }
+            }
             fase2->executar();
         }
         else if (estado == estadoJogo::GAMEOVER)
@@ -50,7 +68,7 @@ void Jogo::executar()
                     pontos = fase1->getPontos();
                 else if (ultimoEstado == estadoJogo::FASE2)
                     pontos = fase2->getPontos();
-                menuFimDeJogo = new MenuFimDeJogo(pontos);
+                menuFimDeJogo = new MenuFimDeJogo(pontos, ultimoEstado);
                 gerenciadorEstado.setEstadoJogo(estadoJogo::MENUGAMEOVER);
             }
 
@@ -68,11 +86,24 @@ void Jogo::executar()
             else
                 menuFimDeJogo->executar();
         }
+        else if (estado == estadoJogo::LEADERBOARD)
+        {
+            if (leaderboard == NULL)
+                leaderboard = new Leaderboard();
+            else
+                leaderboard->executar();
+        }
 
         if (ultimoEstado == estadoJogo::MENUGAMEOVER)
         {
             delete menuFimDeJogo;
             menuFimDeJogo = NULL;
+        }
+
+        if (ultimoEstado == estadoJogo::LEADERBOARD)
+        {
+            delete leaderboard;
+            leaderboard = NULL;
         }
 
         gerenciadorGrafico.display();

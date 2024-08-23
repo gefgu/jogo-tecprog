@@ -9,3 +9,5 @@ Jogo/x64/
 Jogo/x64/*
 **/*.o
 game
+leaderboard.txt
+.vscode/

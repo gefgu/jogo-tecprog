@@ -16,6 +16,7 @@
 #include "PerformanceMonitor.hpp"
 #include "Menus/MenuInicio.hpp"
 #include "Menus/MenuFimDeJogo.hpp"
+#include "Menus/Leaderboard.hpp"
 #include "Fases/Fase_Primeira.hpp"
 #include "Fases/Fase_Segunda.hpp"
 
@@ -32,6 +33,7 @@ private:
     Fase_Primeira *fase1;
     Fase_Segunda *fase2;
     MenuFimDeJogo *menuFimDeJogo;
+    Leaderboard *leaderboard;
 
 public:
     Jogo();

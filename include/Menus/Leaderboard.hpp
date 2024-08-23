@@ -10,20 +10,15 @@
 
 using namespace std;
 
-class MenuFimDeJogo : public Menu
+class Leaderboard : public Menu
 {
 private:
-  int pontos;
-  CampoDeTexto textInput;
-  estadoJogo ultimaFase;
+  void readLeaderboard();
 
 public:
-  MenuFimDeJogo(int p, estadoJogo ultimoEstado); // pontos
-  ~MenuFimDeJogo();
+  Leaderboard();
+  ~Leaderboard();
 
   void desenhar();
   void executar();
-  void encerrar();
-  void salvar();
-  int getPontos();
 };

@@ -1,6 +1,6 @@
 #include "Menus/MenuInicio.hpp"
 
-MenuInicio::MenuInicio() : Menu(), itemSelecionado(0)
+MenuInicio::MenuInicio() : Menu()
 {
   int largura = pGG->getWindowSize().x;
   int altura = pGG->getWindowSize().y;
@@ -12,8 +12,8 @@ MenuInicio::MenuInicio() : Menu(), itemSelecionado(0)
   // Criar botões
   for (int i = 0; i < 4; i++)
   {
-    sf::RectangleShape botao(sf::Vector2f(300, 50)); // Tamanho dos botões
-    botao.setPosition(sf::Vector2f((largura / 2) - 150, (altura / (5 + 1) * (i + 1))));
+    sf::RectangleShape botao(sf::Vector2f(300, 75)); // Tamanho dos botões
+    botao.setPosition(sf::Vector2f((largura / 2) - 150, (150 + 150 * i)));
     botao.setTexture(texturaBotao);
     botoes.push_back(botao);
 
@@ -21,15 +21,14 @@ MenuInicio::MenuInicio() : Menu(), itemSelecionado(0)
     texto.setFont(*fonte);
     texto.setFillColor(sf::Color::White);
     texto.setCharacterSize(22);
-    centralizaTextoNoBotao(texto, botao);
     textos.push_back(texto);
   }
 
   // Definir os textos dos botões
-  setBotaoTexto(0, "Stage 1", fonte);
-  setBotaoTexto(1, "Stage 2", fonte);
-  setBotaoTexto(2, "Load Games", fonte);
-  setBotaoTexto(3, "Leaderboard", fonte);
+  setBotaoTexto(0, "Stage 1");
+  setBotaoTexto(1, "Stage 2");
+  setBotaoTexto(2, "Load Games");
+  setBotaoTexto(3, "Leaderboard");
 
   if (!botoes.empty())
   {
@@ -40,60 +39,6 @@ MenuInicio::MenuInicio() : Menu(), itemSelecionado(0)
 }
 
 MenuInicio::~MenuInicio() {}
-
-void MenuInicio::moveUp()
-{
-  std::cout << "Movendo para cima: itemSelecionado antes = " << itemSelecionado << std::endl;
-  if (itemSelecionado - 1 >= 0)
-  {
-    textos[itemSelecionado].setCharacterSize(22);                             // Redefine o tamanho da fonte para o padrão
-    centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Recentraliza o texto
-
-    itemSelecionado--;
-    textos[itemSelecionado].setCharacterSize(26);                             // Aumenta o tamanho da fonte do texto selecionado
-    centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Recentraliza o texto
-  }
-  std::cout << "itemSelecionado depois = " << itemSelecionado << std::endl;
-}
-
-void MenuInicio::moveDown()
-{
-  std::cout << "Movendo para baixo: itemSelecionado antes = " << itemSelecionado << std::endl;
-  if (itemSelecionado + 1 < botoes.size())
-  {
-    textos[itemSelecionado].setCharacterSize(22);                             // Redefine o tamanho da fonte para o padrão
-    centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Recentraliza o texto
-
-    itemSelecionado++;
-    textos[itemSelecionado].setCharacterSize(26);                             // Aumenta o tamanho da fonte do texto selecionado
-    centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]); // Recentraliza o texto
-  }
-  std::cout << "itemSelecionado depois = " << itemSelecionado << std::endl;
-}
-
-int MenuInicio::getSelectedItemIndex() const
-{
-  return itemSelecionado;
-}
-
-void MenuInicio::centralizaTextoNoBotao(sf::Text &texto, const sf::RectangleShape &botao)
-{
-  float posX = botao.getPosition().x + (botao.getSize().x / 2.f) - (texto.getLocalBounds().width / 2.f);
-
-  float posY = botao.getPosition().y + (botao.getSize().y / 2.f) - (texto.getLocalBounds().height / 2.f) - texto.getLocalBounds().top;
-
-  texto.setPosition(posX, posY);
-}
-
-void MenuInicio::setBotaoTexto(int index, const std::string &texto, sf::Font *fonte)
-{
-  if (index >= 0 && index < textos.size())
-  {
-    textos[index].setFont(*fonte);
-    textos[index].setString(texto);
-    centralizaTextoNoBotao(textos[index], botoes[index]); // Recentraliza o texto após a atualização
-  }
-}
 
 void MenuInicio::executar()
 {
@@ -108,11 +53,11 @@ void MenuInicio::executar()
     {
       if (event.key.code == sf::Keyboard::Up)
       {
-        moveUp();
+        prevButton();
       }
       else if (event.key.code == sf::Keyboard::Down)
       {
-        moveDown();
+        nextButton();
       }
       else if (event.key.code == sf::Keyboard::Enter)
       {
@@ -132,7 +77,7 @@ void MenuInicio::executar()
         }
         else if (selectedItem == 3)
         {
-          // Carregar jogo salvo
+          gerenciadorEstado.setEstadoJogo(estadoJogo::LEADERBOARD);
         }
       }
     }
