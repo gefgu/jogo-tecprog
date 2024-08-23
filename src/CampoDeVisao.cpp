@@ -1,6 +1,6 @@
 #include "CampoDeVisao.hpp"
 
-const int WIDTH = 500;
+const int WIDTH = 1000;
 const int HEIGHT = 300;
 
 CampoDeVisao::CampoDeVisao() : Entidade(0, 0, tipoDeEntidade::VISAO), pJogador(NULL), visao(sf::Vector2f(WIDTH, HEIGHT))
