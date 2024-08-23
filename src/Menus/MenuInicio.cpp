@@ -12,8 +12,8 @@ MenuInicio::MenuInicio() : Menu()
   // Criar botões
   for (int i = 0; i < 4; i++)
   {
-    sf::RectangleShape botao(sf::Vector2f(300, 50)); // Tamanho dos botões
-    botao.setPosition(sf::Vector2f((largura / 2) - 150, (altura / (5 + 1) * (i + 1))));
+    sf::RectangleShape botao(sf::Vector2f(300, 75)); // Tamanho dos botões
+    botao.setPosition(sf::Vector2f((largura / 2) - 150, (150 + 150 * i)));
     botao.setTexture(texturaBotao);
     botoes.push_back(botao);
 

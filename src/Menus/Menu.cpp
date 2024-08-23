@@ -21,7 +21,7 @@ Menu::~Menu()
     textos.clear();
 }
 
-void Menu::nextButton()
+void Menu::prevButton()
 {
     std::cout << "Movendo para cima: itemSelecionado antes = " << itemSelecionado << std::endl;
     if (itemSelecionado - 1 >= 0)
@@ -36,7 +36,7 @@ void Menu::nextButton()
     std::cout << "itemSelecionado depois = " << itemSelecionado << std::endl;
 }
 
-void Menu::prevButton()
+void Menu::nextButton()
 {
     std::cout << "Movendo para baixo: itemSelecionado antes = " << itemSelecionado << std::endl;
     if (itemSelecionado + 1 < botoes.size())
