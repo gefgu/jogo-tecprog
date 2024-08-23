@@ -23,6 +23,25 @@ Leaderboard::Leaderboard() : Menu()
     centralizaTextoNoBotao(texto, fundo);
     textosDecorativos.push_back(texto);
   }
+
+  sf::RectangleShape botao(sf::Vector2f(300, 75)); // Tamanho dos botões
+  botao.setPosition(sf::Vector2f((largura / 2) + 150, altura / 2 - 75 / 2));
+  botao.setTexture(texturaBotao);
+  botoes.push_back(botao);
+
+  sf::Text texto;
+  texto.setFont(*fonte);
+  texto.setFillColor(sf::Color::White);
+  texto.setCharacterSize(22);
+  textos.push_back(texto);
+
+  setBotaoTexto(0, "Voltar");
+
+  if (!botoes.empty())
+  {
+    textos[itemSelecionado].setCharacterSize(26);
+    centralizaTextoNoBotao(textos[itemSelecionado], botoes[itemSelecionado]);
+  }
 }
 
 Leaderboard::~Leaderboard() {}
@@ -38,34 +57,9 @@ void Leaderboard::executar()
     }
     else if (event.type == sf::Event::KeyPressed)
     {
-      if (event.key.code == sf::Keyboard::Up)
+      if (event.key.code == sf::Keyboard::Enter || event.key.code == sf::Keyboard::Escape)
       {
-        prevButton();
-      }
-      else if (event.key.code == sf::Keyboard::Down)
-      {
-        nextButton();
-      }
-      else if (event.key.code == sf::Keyboard::Enter)
-      {
-        int selectedItem = getSelectedItemIndex();
-        if (selectedItem == 0)
-        {
-          // gerenciadorEstado.setEstadoJogo(estadoJogo::FASE1);
-        }
-        else if (selectedItem == 1)
-        {
-          // Começar Fase 2
-          // gerenciadorEstado.setEstadoJogo(estadoJogo::FASE2);
-        }
-        else if (selectedItem == 2)
-        {
-          // Configurações
-        }
-        else if (selectedItem == 3)
-        {
-          // Carregar jogo salvo
-        }
+        gerenciadorEstado.setEstadoJogo(estadoJogo::MENUINICIO);
       }
     }
   }
