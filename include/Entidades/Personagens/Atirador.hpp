@@ -16,7 +16,7 @@ public:
   Atirador(int px, int py, int vidas);
   ~Atirador();
   void executar();
-  void perseguir();
+  void olhar();
   void atacar();
   void lidarColisao(sf::Vector2f intersecao, Entidade *other);
 };

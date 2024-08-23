@@ -118,7 +118,7 @@ void Jogador::mover()
     {
         if (noChao && tempoDesdeUltimoPulo >= COOLDOWN_PULO)
         {
-            velocidadeY = -sqrt(2 * GRAVIDADE * 150);
+            velocidadeY = -sqrt(2 * GRAVIDADE * 200);
             y -= 15;
             noChao = false;
             tempoDesdeUltimoPulo = 0.0f; // Reseta o tempo desde o último pulo

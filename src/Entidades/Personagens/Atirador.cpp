@@ -30,7 +30,7 @@ Atirador::Atirador(int px, int py, int vidas) : Inimigo(px, py, vidas, tipoDeEnt
 
 Atirador::~Atirador() {}
 
-void Atirador::perseguir()
+void Atirador::olhar()
 {
   Jogador *pJ = visao.getJogador();
   if (pJ == NULL)
@@ -83,7 +83,7 @@ void Atirador::executar()
     }
     if (visao.getJogador())
     {
-      perseguir();
+      olhar();
     }
 
     tempoDesdeUltimoPiso += elapsed_time;
@@ -126,7 +126,7 @@ void Atirador::atacar()
 {
     if (tempoDisparo>= COOLDOWN_TIRO)
     {
-        pFase->addProjetil(x + direcao*150, y + (getSize().height / 12), direcao);
+        pFase->addProjetil(x + direcao*120, y + (getSize().height / 12), direcao);
         tempoDisparo = 0;
     }
 }
