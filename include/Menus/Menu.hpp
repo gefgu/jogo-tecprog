@@ -13,12 +13,19 @@ class Menu : public Ente
 protected:
     sf::Sprite fundo; // Fundo do menu
     Gerenciador_Estado &gerenciadorEstado;
+    vector<sf::RectangleShape> botoes; // Botões
+    vector<sf::Text> textos;           // Textos nos botões
+    int itemSelecionado;
 
     void setBotaoTexto(int index, const std::string &texto, sf::Font *fonte);
+    int getSelectedItemIndex() const;
+    void centralizaTextoNoBotao(sf::Text &texto, const sf::RectangleShape &botao);
 
 public:
     Menu();
     ~Menu();
+    void nextButton();
+    void prevButton();
 
     virtual void desenhar() = 0;
     virtual void executar() = 0;

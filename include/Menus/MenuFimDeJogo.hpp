@@ -6,6 +6,7 @@
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
 #include "Gerenciadores/Gerenciador_Estado.hpp"
 #include "Menus/Menu.hpp"
+#include "Menus/CampoDeTexto.hpp"
 
 using namespace std;
 
@@ -14,12 +15,16 @@ class MenuFimDeJogo : public Menu
 private:
   int pontos;
   Gerenciador_Estado &gerenciadorEstado;
-  sf::Text textoFinal;
+  CampoDeTexto textInput;
+  estadoJogo ultimaFase;
 
 public:
-  MenuFimDeJogo(int p); // pontos
+  MenuFimDeJogo(int p, estadoJogo ultimoEstado); // pontos
   ~MenuFimDeJogo();
 
   void desenhar();
   void executar();
+  void encerrar();
+  void salvar();
+  int getPontos();
 };

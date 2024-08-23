@@ -41,13 +41,14 @@ protected:
   void fimDeJogo();
 
 public:
-  Fase(int qty_plt);
+  Fase(int pontos_iniciais = 1000, int qty_plt = 50);
   ~Fase();
   void desenhar();
   virtual void executar();
   int getPontos();
   void addProjetil(int px, int py, int direcao);
   void alteraPontos(int soma);
+  void setPontos(int p);
 };
 
 #endif // FASE_HPP
