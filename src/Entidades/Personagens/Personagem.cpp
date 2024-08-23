@@ -6,7 +6,7 @@ const float TEMPO_FRAME = 0.16f; // Duração de cada frame (em segundos) - para
 const float SCALING_FACTOR = 3.f;
 const float DANO_COOLDOWN = 50.f;
 
-Personagem::Personagem(int px, int py, float vx, float vy, int vidas, tipoDeEntidade tipo) : Entidade(px, py, tipo), num_vidas(vidas), velocidadeX(vx), velocidadeY(vy), colisionBox(), noChao(false), direcao(1), tempoDesdeUltimoPiso(COOLDOWN_PISO), state(IDLE), tempoDesdeUltimoDano(DANO_COOLDOWN * 100), mudouDirecao(false), newState(IDLE), tempoDesdeMorte(0.0f), morto(false)
+Personagem::Personagem(int px, int py, float vx, float vy, int vidas, tipoDeEntidade tipo) : Entidade(px, py, tipo), num_vidas(vidas), velocidadeX(vx), velocidadeY(vy), colisionBox(), noChao(false), direcao(1), tempoDesdeUltimoPiso(COOLDOWN_PISO), state(IDLE), tempoDesdeUltimoDano(DANO_COOLDOWN * 100), mudouDirecao(false), newState(IDLE), tempoDesdeMorte(0.0f), morto(false), podeAnimar(true)
 {
 }
 
@@ -23,10 +23,15 @@ void Personagem::recebeDano(int vidas_perdidas)
     {
         num_vidas = max(0, num_vidas - vidas_perdidas);
         tempoDesdeUltimoDano = 0.0f;
+        podeAnimar = false;
         if (tipo == JOGADOR && tempoDesdeMorte == 0.0f)
         {
             pFase->alteraPontos(-100);
         }
+    }
+    if (tempoDesdeUltimoDano < 2)
+    {
+        podeAnimar = true;
     }
 }
 
@@ -45,16 +50,21 @@ void Personagem::setColisionBoxPosition(int px, int py)
 
 void Personagem::aplicarGravidade()
 {
+    float elapsed_time = pGG->getElapsedTime();
     if (!noChao)
     {
-        velocidadeY += GRAVIDADE * TEMPO_FRAME; // Aceleração devido à gravidade
-        y += velocidadeY * TEMPO_FRAME;
+        // in seconds
+        velocidadeY += 2 * GRAVIDADE * (elapsed_time / 1000.0f); // Aceleração devido à gravidade
     }
 }
 
 void Personagem::setAnimationState()
 {
-    if (state == IDLE)
+    if (!podeAnimar)
+    {
+        return;
+    }
+    else if (state == IDLE)
     {
         animacao.setTrilha("idle");
     }
@@ -108,6 +118,11 @@ sf::Vector2f Personagem ::getCenter()
 {
     sf::FloatRect size = getSize();
     return sf::Vector2f(size.left + size.width / 2.0f, size.top + size.height / 2.0f);
+}
+
+int Personagem::getDirecao()
+{
+    return direcao;
 }
 
 sf::FloatRect Personagem ::getSize()

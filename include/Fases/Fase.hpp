@@ -11,7 +11,9 @@
 #include "Entidades/Personagens/Jogador.hpp"
 #include "Entidades/Obstaculos/Espinho.hpp"
 #include "Entidades/Obstaculos/Lixo.hpp"
+#include "Entidades/Obstaculos/Mina.hpp"
 #include "Entidades/Personagens/Fighter.hpp"
+#include "Entidades/Personagens/Atirador.hpp"
 #include "Entidades/Projetil.hpp"
 
 class Fase : public Ente
@@ -34,7 +36,9 @@ protected:
   virtual void criarCenario() = 0;
   void criaEspinhos();
   void criaLixos();
+  void criaMina();
   void criaFighters();
+  void criaAtiradores();
   void atualizaVidaJogador();
   void atualizaPontos();
   void verificaFim();
@@ -46,7 +50,7 @@ public:
   void desenhar();
   virtual void executar();
   int getPontos();
-  void addProjetil(int px, int py, int direcao);
+  void addProjetil(int px, int py, int direcao, tipoDeEntidade atirador);
   void alteraPontos(int soma);
   void setPontos(int p);
 };

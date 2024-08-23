@@ -8,9 +8,11 @@ Fase::Fase(int pontos_iniciais, int qty_plt) : pontos(pontos_iniciais), finalX(1
   entidades.incluir(jogador);
   gerenciadorColisoes.incluirEntidadeMovel(jogador);
   criarPlataformas(qty_plt);
-  criaEspinhos();
-  criaLixos();
+  // criaEspinhos();
+  // criaLixos();
+  // criaMina();
   criaFighters();
+  // criaAtiradores();
   // sf::Font *fonte = pGG->carregaFonte("./assets/fonts/INVASION2000.TTF");
   sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
   vidasJogador.setFont(*fonte);
@@ -102,9 +104,23 @@ void Fase::criaLixos()
   }
 }
 
+void Fase::criaMina()
+{
+  int total_minas = 10 + (rand() % 5);
+  for (int i = 0; i < total_minas; i++)
+  {
+    Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
+    int px = p->getCenter().x;
+    int py = p->getCenter().y - (p->getSize().height / 2.f) - (MINA_HEIGHT * 2) / 2;
+    Mina *m = new Mina(px, py);
+    entidades.incluir(m);
+    gerenciadorColisoes.incluirEntidadeEstatica(m);
+  }
+}
+
 void Fase::criaFighters()
 {
-  int total_fighters = 1 + (rand() % 3);
+  int total_fighters = 3 + (rand() % 3);
   for (int i = 0; i < total_fighters; i++)
   {
     Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
@@ -114,6 +130,21 @@ void Fase::criaFighters()
     entidades.incluir(f);
     gerenciadorColisoes.incluirEntidadeMovel(f);
     gerenciadorColisoes.incluirEntidadeMovel(f->getCampoDeVisao());
+  }
+}
+
+void Fase::criaAtiradores()
+{
+  int total_atiradores = 1 + (rand() % 3);
+  for (int i = 0; i < total_atiradores; i++)
+  {
+    Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
+    int px = p->getCenter().x;
+    int py = p->getCenter().y - (p->getSize().height / 2.f) - (ATIRADOR_HEIGHT / 2.f);
+    Atirador *a = new Atirador(px, py, 3 + (rand() % 4));
+    entidades.incluir(a);
+    gerenciadorColisoes.incluirEntidadeMovel(a);
+    gerenciadorColisoes.incluirEntidadeMovel(a->getCampoDeVisao());
   }
 }
 
@@ -150,9 +181,9 @@ int Fase::getPontos()
   return pontos;
 }
 
-void Fase::addProjetil(int px, int py, int direcao)
+void Fase::addProjetil(int px, int py, int direcao, tipoDeEntidade atirador)
 {
-  Projetil *p = new Projetil(px, py, direcao);
+  Projetil *p = new Projetil(px, py, direcao, atirador);
   entidades.incluir(p);
   gerenciadorColisoes.incluirEntidadeMovel(p);
 }

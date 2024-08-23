@@ -12,9 +12,11 @@ enum tipoDeEntidade
     PLATAFORMA = 0,
     JOGADOR,
     FIGHTER,
+    ATIRADOR,
     OBSTACULO,
     ESPINHO,
     LIXO,
+    MINA,
     VISAO,
     PROJETIL
 };

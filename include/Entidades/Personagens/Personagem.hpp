@@ -15,7 +15,7 @@ enum estadoPersonagem
     ATTACK,
     HURT,
     DEAD,
-    SHOT
+    SHOT,
 };
 
 class Personagem : public Entidade
@@ -31,6 +31,7 @@ protected:
     float tempoDesdeUltimoPiso;
     float tempoDesdeUltimoDano;
     float tempoDesdeMorte;
+    bool podeAnimar;
     bool mudouDirecao;
     bool morto;
     sf::RectangleShape colisionBox;
@@ -46,6 +47,7 @@ public:
     virtual void executar() = 0;
     virtual void lidarColisao(sf::Vector2f intersecao, Entidade *other) = 0;
     int getVidas();
+    int getDirecao();
     void desenhar();
     void recebeDano(int vidas_perdidas);
     void setColisionBoxSize(sf::Vector2f s);

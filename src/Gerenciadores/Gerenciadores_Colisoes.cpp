@@ -59,6 +59,8 @@ void Gerenciador_Colisoes::executar()
       continue;
     for (j = 0; j < entidades_estaticas.size(); j++)
     {
+      if (!entidades_estaticas[j]->getAtivo())
+        continue;
       if (verificaColisao(entidades_moveis[i]->getSize(), entidades_estaticas[j]->getSize()))
       {
         sf::Vector2f intersection = getIntersection(entidades_moveis[i]->getCenter(), entidades_moveis[i]->getSize(), entidades_estaticas[j]->getCenter(), entidades_estaticas[j]->getSize());
