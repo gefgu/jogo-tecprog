@@ -3,7 +3,7 @@
 #include <iostream>
 
 Jogo::Jogo() : gerenciadorGrafico(Gerenciador_Grafico::getInstance()),
-               gerenciadorEstado(Gerenciador_Estado::getInstance()), menuInicio(NULL), fase1(NULL), fase2(NULL), menuFimDeJogo(NULL), leaderboard(NULL), pauseMenu(NULL)
+               gerenciadorEstado(Gerenciador_Estado::getInstance()), menuInicio(NULL), fase1(NULL), fase2(NULL), menuFimDeJogo(NULL), leaderboard(NULL), pauseMenu(NULL), gerenciadorInput(Gerenciador_Input::getInstance())
 {
     Ente::setGerenciadorGrafico(&gerenciadorGrafico);
     gerenciadorThreads.iniciarThreadColisoes(&gerenciadorColisoes);
@@ -21,6 +21,7 @@ void Jogo::executar()
     {
         performanceMonitor.startFrame();
         gerenciadorGrafico.clear();
+
         estadoJogo estado = gerenciadorEstado.getEstadoJogo();
         estadoJogo ultimoEstado = gerenciadorEstado.getUltimoEstadoJogo();
         if (estado == estadoJogo::MENUINICIO)
@@ -42,6 +43,7 @@ void Jogo::executar()
                     fase1 = new Fase_Primeira();
                 }
             }
+            gerenciadorInput.executar();
             fase1->executar();
         }
         else if (estado == estadoJogo::FASE2)

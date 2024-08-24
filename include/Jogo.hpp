@@ -26,6 +26,7 @@ class Jogo
 private:
     Gerenciador_Grafico &gerenciadorGrafico;
     Gerenciador_Estado &gerenciadorEstado;
+    Gerenciador_Input &gerenciadorInput;
     Gerenciador_Colisoes gerenciadorColisoes;
     Gerenciador_Threads gerenciadorThreads;
     PerformanceMonitor performanceMonitor;
