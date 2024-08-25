@@ -245,6 +245,10 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
             }
         }
     }
+
+    if (morto)
+        return;
+
     if (other->getTipo() == tipoDeEntidade::FIGHTER && !static_cast<Fighter *>(other)->getMorto())
     {
         if (intersecao.x > 0)
