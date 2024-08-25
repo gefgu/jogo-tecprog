@@ -26,6 +26,7 @@ protected:
   ListaEntidades plataformas;
   ListaEntidades entidades;
   Jogador *jogador;
+  Jogador *jogador2;
   int pontos;
   int finalX;
   sf::Text vidasJogador;
@@ -46,6 +47,7 @@ protected:
   void atualizaPontos();
   void verificaFim();
   void fimDeJogo();
+  void centralizaCamera();
 
 public:
   Fase(int pontos_iniciais = 1000, int qty_plt = 50, bool temP2 = false);

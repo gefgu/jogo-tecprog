@@ -40,6 +40,7 @@ void Fase_Segunda::executar()
 {
   gerenciadorColisoes.executar();
   entidades.executar();
+  centralizaCamera();
   atualizaVidaJogador();
   atualizaPontos();
   verificaFim();

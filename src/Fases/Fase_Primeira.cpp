@@ -42,6 +42,7 @@ void Fase_Primeira::executar()
 {
   gerenciadorColisoes.executar();
   entidades.executar();
+  centralizaCamera();
   atualizaVidaJogador();
   atualizaPontos();
   verificaFim();

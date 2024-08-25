@@ -1,7 +1,7 @@
 #include "Fases/Fase.hpp"
 #include <cstring>
 
-Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciais), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0), _gerenciadorInput(Gerenciador_Input::getInstance()), temPlayerDois(temP2)
+Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciais), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0), _gerenciadorInput(Gerenciador_Input::getInstance()), temPlayerDois(temP2), jogador(NULL), jogador2(NULL)
 {
   clock.restart();
   _gerenciadorInput.Attach(this);
@@ -11,10 +11,15 @@ Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciai
   gerenciadorColisoes.incluirEntidadeMovel(jogador);
   if (temPlayerDois)
   {
-    Jogador *jogador2 = new Jogador(200, 100, 5, false);
+    jogador2 = new Jogador(200, 100, 5, false);
     entidades.incluir(jogador2);
     gerenciadorColisoes.incluirEntidadeMovel(jogador2);
   }
+  else
+  {
+    jogador2 = NULL;
+  }
+
   criarPlataformas(qty_plt);
   // criaEspinhos();
   // criaLixos();
@@ -209,4 +214,20 @@ void Fase::Update(const char *teclaPressionada)
 {
   if (strcmp(teclaPressionada, "Escape") == 0)
     Gerenciador_Estado::getInstance().setEstadoJogo(PAUSE);
+}
+
+void Fase::centralizaCamera()
+{
+  int x, y;
+  if (temPlayerDois)
+  {
+    x = (jogador->getCenter().x + jogador2->getCenter().x) / 2;
+    y = (jogador->getCenter().y + jogador2->getCenter().y) / 2;
+  }
+  else
+  {
+    x = jogador->getCenter().x;
+    y = jogador->getCenter().y;
+  }
+  pGG->centerCamera(sf::Vector2f(x, y));
 }
