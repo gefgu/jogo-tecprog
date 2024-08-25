@@ -1,6 +1,4 @@
 #include "Menus/Pause.hpp"
-
-#include "Menus/Pause.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
