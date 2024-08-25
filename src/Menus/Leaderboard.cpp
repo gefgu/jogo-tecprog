@@ -52,6 +52,8 @@ Leaderboard::Leaderboard() : Menu()
 
 Leaderboard::~Leaderboard() {}
 
+void Leaderboard::Update(const char *teclaPressionada) {}
+
 void Leaderboard::readLeaderboard()
 {
   const char *filename = "leaderboard.txt";

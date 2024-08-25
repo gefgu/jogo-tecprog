@@ -1,7 +1,7 @@
 #include "Menus/Menu.hpp"
 #include <iostream>
 
-Menu::Menu() : gerenciadorEstado(Gerenciador_Estado::getInstance()), itemSelecionado(0)
+Menu::Menu() : gerenciadorEstado(Gerenciador_Estado::getInstance()), _gerenciadorInput(Gerenciador_Input::getInstance()), itemSelecionado(0)
 {
     fundos.clear();
     botoes.clear();
@@ -15,6 +15,9 @@ Menu::Menu() : gerenciadorEstado(Gerenciador_Estado::getInstance()), itemSelecio
     float scaleX = static_cast<float>(largura) / fundo.getTexture()->getSize().x;
     float scaleY = static_cast<float>(altura) / fundo.getTexture()->getSize().y;
     fundo.setScale(scaleX, scaleY);
+
+    // observer
+    _gerenciadorInput.Attach(this);
 }
 
 Menu::~Menu()
@@ -23,6 +26,9 @@ Menu::~Menu()
     textos.clear();
     fundos.clear();
     textosDecorativos.clear();
+
+    // observer
+    _gerenciadorInput.Detach(this);
 }
 
 void Menu::prevButton()

@@ -55,6 +55,8 @@ Pause::~Pause()
   // std::cout << "Destruindo menu." << std::endl;
 }
 
+void Pause::Update(const char *teclaPressionada) {}
+
 void Pause::desenhar()
 {
   pGG->centerCamera(sf::Vector2f(pGG->getWindowSize().x / 2, pGG->getWindowSize().y / 2));

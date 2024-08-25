@@ -54,6 +54,8 @@ MenuFimDeJogo::~MenuFimDeJogo()
   // std::cout << "Destruindo menu." << std::endl;
 }
 
+void MenuFimDeJogo::Update(const char *teclaPressionada) {}
+
 void MenuFimDeJogo::desenhar()
 {
   pGG->centerCamera(sf::Vector2f(pGG->getWindowSize().x / 2, pGG->getWindowSize().y / 2));

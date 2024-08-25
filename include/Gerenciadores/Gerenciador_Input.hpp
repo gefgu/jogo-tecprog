@@ -25,4 +25,5 @@ public:
   }
   void executar();
   void Notify(const char *teclaPressionada);
+  void NotifyContinuous(const char *teclaPressionada);
 };

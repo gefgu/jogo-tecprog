@@ -14,7 +14,7 @@ private:
     float tempoDesdeUltimaMina;
     float tempoDesdeUltimaAcao;
     float slowness;
-    Gerenciador_Input &_gerenciador_input;
+    Gerenciador_Input &_gerenciadorInput;
 
     void
     mover();

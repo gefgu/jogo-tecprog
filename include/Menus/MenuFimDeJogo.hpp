@@ -26,4 +26,5 @@ public:
   void encerrar();
   void salvar();
   int getPontos();
+  void Update(const char *teclaPressionada);
 };

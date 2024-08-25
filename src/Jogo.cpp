@@ -24,6 +24,7 @@ void Jogo::executar()
 
         estadoJogo estado = gerenciadorEstado.getEstadoJogo();
         estadoJogo ultimoEstado = gerenciadorEstado.getUltimoEstadoJogo();
+        gerenciadorInput.executar();
         if (estado == estadoJogo::MENUINICIO)
         {
             if (menuInicio == NULL)
@@ -43,7 +44,6 @@ void Jogo::executar()
                     fase1 = new Fase_Primeira();
                 }
             }
-            gerenciadorInput.executar();
             fase1->executar();
         }
         else if (estado == estadoJogo::FASE2)

@@ -1,4 +1,5 @@
 #include "Menus/MenuInicio.hpp"
+#include <cstring>
 
 MenuInicio::MenuInicio() : Menu()
 {
@@ -40,48 +41,42 @@ MenuInicio::MenuInicio() : Menu()
 
 MenuInicio::~MenuInicio() {}
 
-void MenuInicio::executar()
+void MenuInicio::Update(const char *teclaPressionada)
 {
-  sf::Event event;
-  while (pGG->pollEvent(event))
+  cout << teclaPressionada << endl;
+  if (strcmp(teclaPressionada, "Up") == 0)
   {
-    if (event.type == sf::Event::Closed)
+    prevButton();
+  }
+  if (strcmp(teclaPressionada, "Down") == 0)
+  {
+    nextButton();
+  }
+  else if (strcmp(teclaPressionada, "Enter") == 0)
+  {
+    int selectedItem = getSelectedItemIndex();
+    if (selectedItem == 0)
     {
-      pGG->fecharJanela();
+      gerenciadorEstado.setEstadoJogo(estadoJogo::FASE1);
     }
-    else if (event.type == sf::Event::KeyPressed)
+    else if (selectedItem == 1)
     {
-      if (event.key.code == sf::Keyboard::Up)
-      {
-        prevButton();
-      }
-      else if (event.key.code == sf::Keyboard::Down)
-      {
-        nextButton();
-      }
-      else if (event.key.code == sf::Keyboard::Enter)
-      {
-        int selectedItem = getSelectedItemIndex();
-        if (selectedItem == 0)
-        {
-          gerenciadorEstado.setEstadoJogo(estadoJogo::FASE1);
-        }
-        else if (selectedItem == 1)
-        {
-          // Começar Fase 2
-          gerenciadorEstado.setEstadoJogo(estadoJogo::FASE2);
-        }
-        else if (selectedItem == 2)
-        {
-          // Configurações
-        }
-        else if (selectedItem == 3)
-        {
-          gerenciadorEstado.setEstadoJogo(estadoJogo::LEADERBOARD);
-        }
-      }
+      // Começar Fase 2
+      gerenciadorEstado.setEstadoJogo(estadoJogo::FASE2);
+    }
+    else if (selectedItem == 2)
+    {
+      // Configurações
+    }
+    else if (selectedItem == 3)
+    {
+      gerenciadorEstado.setEstadoJogo(estadoJogo::LEADERBOARD);
     }
   }
+}
+
+void MenuInicio::executar()
+{
   desenhar();
 }
 

@@ -21,4 +21,5 @@ public:
 
   void desenhar();
   void executar();
+  void Update(const char *teclaPressionada);
 };

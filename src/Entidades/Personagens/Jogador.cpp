@@ -32,7 +32,7 @@ Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, 0, 0, vidas, ti
                                               tempoDesdeUltimaMina(COOLDOWN_MINA),
                                               tempoDesdeUltimaAcao(COOLDOWN_ACAO),
                                               slowness(1),
-                                              _gerenciador_input(Gerenciador_Input::getInstance())
+                                              _gerenciadorInput(Gerenciador_Input::getInstance())
 
 {
     animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Idle.png"));
@@ -48,12 +48,12 @@ Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, 0, 0, vidas, ti
     setAnimationState();
 
     // observer
-    _gerenciador_input.Attach(this);
+    _gerenciadorInput.AttachContinuous(this);
 }
 
 Jogador::~Jogador()
 {
-    _gerenciador_input.Detach(this);
+    _gerenciadorInput.DetachContinuous(this);
 }
 
 void Jogador::Update(const char *teclaPressionada)

@@ -63,15 +63,24 @@ Gerenciador_Input::Gerenciador_Input() : pGG(Gerenciador_Grafico::getInstance())
   keyMap[sf::Keyboard::RShift] = "RShift";
   keyMap[sf::Keyboard::Hyphen] = "-";
   keyMap[sf::Keyboard::Tab] = "Tab";
+  pressedKeys.clear();
 }
 
-Gerenciador_Input::~Gerenciador_Input() {}
+Gerenciador_Input::~Gerenciador_Input()
+{
+  pressedKeys.clear();
+}
 
 void Gerenciador_Input::executar()
 {
   sf::Event event;
+
   while (pGG.pollEvent(event))
   {
+    if (event.type == sf::Event::Closed)
+    {
+      Gerenciador_Grafico::getInstance().fecharJanela();
+    }
     if (event.type == sf::Event::KeyPressed)
     {
       std::map<sf::Keyboard::Key, std::string>::iterator it = keyMap.find(event.key.code);
@@ -99,7 +108,7 @@ void Gerenciador_Input::executar()
       std::map<sf::Keyboard::Key, std::string>::iterator keyIt = keyMap.find(*it);
       if (keyIt != keyMap.end())
       {
-        Notify(keyIt->second.c_str());
+        NotifyContinuous(keyIt->second.c_str());
       }
     }
   }
@@ -109,6 +118,15 @@ void Gerenciador_Input::Notify(const char *teclaPressionada)
 {
   list<Observer *>::iterator it;
   for (it = _observers.begin(); it != _observers.end(); it++)
+  {
+    (*it)->Update(teclaPressionada);
+  }
+}
+
+void Gerenciador_Input::NotifyContinuous(const char *teclaPressionada)
+{
+  list<Observer *>::iterator it;
+  for (it = _observersContinuous.begin(); it != _observersContinuous.end(); it++)
   {
     (*it)->Update(teclaPressionada);
   }
