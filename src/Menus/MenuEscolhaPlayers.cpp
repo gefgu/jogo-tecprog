@@ -1,7 +1,7 @@
-#include "Menus/MenuInicio.hpp"
+#include "Menus/MenuEscolhaPlayers.hpp"
 #include <cstring>
 
-MenuInicio::MenuInicio() : Menu()
+MenuEscolhaPlayers::MenuEscolhaPlayers(estadoJogo proxFase) : Menu(), twoPlayers(false), fase(proxFase)
 {
   int largura = pGG->getWindowSize().x;
   int altura = pGG->getWindowSize().y;
@@ -11,10 +11,10 @@ MenuInicio::MenuInicio() : Menu()
   sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
 
   // Criar botões
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 2; i++)
   {
     sf::RectangleShape botao(sf::Vector2f(300, 75)); // Tamanho dos botões
-    botao.setPosition(sf::Vector2f((largura / 2) - 150, (150 + 150 * i)));
+    botao.setPosition(sf::Vector2f((largura / 2) - 150, (300 + 150 * i)));
     botao.setTexture(texturaBotao);
     botoes.push_back(botao);
 
@@ -26,10 +26,8 @@ MenuInicio::MenuInicio() : Menu()
   }
 
   // Definir os textos dos botões
-  setBotaoTexto(0, "Stage 1");
-  setBotaoTexto(1, "Stage 2");
-  setBotaoTexto(2, "Load Games");
-  setBotaoTexto(3, "Leaderboard");
+  setBotaoTexto(0, "1 Player");
+  setBotaoTexto(1, "2 Player");
 
   if (!botoes.empty())
   {
@@ -39,9 +37,9 @@ MenuInicio::MenuInicio() : Menu()
   }
 }
 
-MenuInicio::~MenuInicio() {}
+MenuEscolhaPlayers::~MenuEscolhaPlayers() {}
 
-void MenuInicio::Update(const char *teclaPressionada)
+void MenuEscolhaPlayers::Update(const char *teclaPressionada)
 {
   if (strcmp(teclaPressionada, "Up") == 0)
     prevButton();
@@ -50,32 +48,19 @@ void MenuInicio::Update(const char *teclaPressionada)
   else if (strcmp(teclaPressionada, "Enter") == 0)
   {
     int selectedItem = getSelectedItemIndex();
-    if (selectedItem == 0)
-    {
-      gerenciadorEstado.setEstadoJogo(estadoJogo::ESCOLHAPLAYERS);
-    }
-    else if (selectedItem == 1)
-    {
-      // Começar Fase 2
-      gerenciadorEstado.setEstadoJogo(estadoJogo::ESCOLHAPLAYERS);
-    }
-    else if (selectedItem == 2)
-    {
-      // Configurações
-    }
-    else if (selectedItem == 3)
-    {
-      gerenciadorEstado.setEstadoJogo(estadoJogo::LEADERBOARD);
-    }
+
+    twoPlayers = (bool)selectedItem;
+
+    gerenciadorEstado.setEstadoJogo(fase);
   }
 }
 
-void MenuInicio::executar()
+void MenuEscolhaPlayers::executar()
 {
   desenhar();
 }
 
-void MenuInicio::desenhar()
+void MenuEscolhaPlayers::desenhar()
 {
   pGG->centerCamera(sf::Vector2f(pGG->getWindowSize().x / 2, pGG->getWindowSize().y / 2));
   pGG->draw(fundo);
@@ -85,4 +70,9 @@ void MenuInicio::desenhar()
     pGG->draw(botoes[i]);
     pGG->draw(textos[i]);
   }
+}
+
+bool MenuEscolhaPlayers::getTwoPlayers()
+{
+  return twoPlayers;
 }

@@ -19,6 +19,7 @@
 #include "Menus/MenuFimDeJogo.hpp"
 #include "Menus/Leaderboard.hpp"
 #include "Menus/Pause.hpp"
+#include "Menus/MenuEscolhaPlayers.hpp"
 #include "Fases/Fase_Primeira.hpp"
 #include "Fases/Fase_Segunda.hpp"
 
@@ -38,6 +39,7 @@ private:
     MenuFimDeJogo *menuFimDeJogo;
     Leaderboard *leaderboard;
     Pause *pauseMenu;
+    MenuEscolhaPlayers *menuEscolhaPlayers;
 
 public:
     Jogo();

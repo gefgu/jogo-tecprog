@@ -25,7 +25,6 @@ protected:
 
     void setBotaoTexto(int index, const std::string &texto);
     void setFundoTexto(int index, const std::string &texto);
-    int getSelectedItemIndex() const;
     void centralizaTextoNoBotao(sf::Text &texto, const sf::RectangleShape &botao);
 
 public:
@@ -33,6 +32,7 @@ public:
     ~Menu();
     void nextButton();
     void prevButton();
+    int getSelectedItemIndex() const;
 
     virtual void desenhar() = 0;
     virtual void executar() = 0;
