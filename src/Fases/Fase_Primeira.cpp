@@ -34,6 +34,8 @@ void Fase_Primeira::desenhar()
   plataformas.desenhar();
   entidades.desenhar();
   pGG->draw(vidasJogador);
+  if (temPlayerDois)
+    pGG->draw(vidasJogador2);
   pGG->draw(pontosText);
   caixaDeCorreio.desenhar();
 }

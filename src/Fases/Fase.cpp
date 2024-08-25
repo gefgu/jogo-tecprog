@@ -31,6 +31,9 @@ Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciai
   vidasJogador.setFont(*fonte);
   vidasJogador.setFillColor(sf::Color::White);
   vidasJogador.setCharacterSize(32);
+  vidasJogador2.setFont(*fonte);
+  vidasJogador2.setFillColor(sf::Color::White);
+  vidasJogador2.setCharacterSize(32);
 
   pontosText.setFont(*fonte);
   pontosText.setFillColor(sf::Color::White);
@@ -79,6 +82,8 @@ void Fase::desenhar()
   plataformas.desenhar();
   entidades.desenhar();
   pGG->draw(vidasJogador);
+  if (temPlayerDois)
+    pGG->draw(vidasJogador2);
   pGG->draw(pontosText);
 }
 
@@ -170,6 +175,13 @@ void Fase::atualizaVidaJogador()
   vidasJogador.setString(std::to_string(vidas) + " Vidas");
   sf::Vector2f pos = pGG->getTopLeftPosition();
   vidasJogador.setPosition(pos.x + 25, pos.y + 25);
+  if (temPlayerDois)
+  {
+    vidas = jogador2->getVidas();
+    vidasJogador2.setString(std::to_string(vidas) + " Vidas");
+    sf::Vector2f pos = pGG->getTopRightPosition();
+    vidasJogador2.setPosition(pos.x - vidasJogador2.getGlobalBounds().width - 25, pos.y + 25);
+  }
 }
 
 void Fase::atualizaPontos()

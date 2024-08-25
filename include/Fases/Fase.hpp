@@ -30,6 +30,7 @@ protected:
   int pontos;
   int finalX;
   sf::Text vidasJogador;
+  sf::Text vidasJogador2;
   sf::Text pontosText;
   sf::Clock clock;
   int segundosDesdeInicio;

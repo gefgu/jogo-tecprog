@@ -33,6 +33,8 @@ void Fase_Segunda::desenhar()
   caixaDeCorreio.desenhar();
   entidades.desenhar();
   pGG->draw(vidasJogador);
+  if (temPlayerDois)
+    pGG->draw(vidasJogador2);
   pGG->draw(pontosText);
 }
 
