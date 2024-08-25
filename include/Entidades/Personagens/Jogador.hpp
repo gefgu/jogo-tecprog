@@ -26,6 +26,7 @@ private:
     void correr();
     void pular();
     void andar(int newDirection);
+    void limitMovementByCamera(); // don't go past the view
 
 public:
     Jogador(int px, int py, int vidas, bool player1 = true);

@@ -192,3 +192,13 @@ sf::Vector2f Gerenciador_Grafico::getTopRightPosition()
   int top = view.getCenter().y - (window.getView().getSize().y / 2);
   return sf::Vector2f(left, top);
 }
+
+sf::Vector2f Gerenciador_Grafico::getViewSize()
+{
+  return window.getView().getSize();
+}
+
+sf::Vector2f Gerenciador_Grafico::getViewCenter()
+{
+  return window.getView().getCenter();
+}

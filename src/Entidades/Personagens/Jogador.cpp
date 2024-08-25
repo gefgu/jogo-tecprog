@@ -140,6 +140,7 @@ void Jogador::mover()
 
     x += direcao * velocidadeX;
     y += velocidadeY;
+    limitMovementByCamera();
 }
 
 void Jogador::executar()
@@ -289,4 +290,19 @@ void Jogador::aplicarForcaRepulsao(float forcaX, float forcaY)
     tempoDesdeUltimaMina = 0.0f;
     velocidadeX = forcaX;
     velocidadeY = forcaY;
+}
+
+void Jogador::limitMovementByCamera()
+{
+    sf::Vector2f size = pGG->getViewSize();
+    sf::Vector2f center = pGG->getViewCenter();
+
+    if (x >= center.x + size.x / 2)
+    {
+        x = center.x + size.x / 2;
+    }
+    else if (x <= center.x - size.x / 2)
+    {
+        x = center.x - size.x / 2;
+    }
 }

@@ -55,6 +55,8 @@ public:
   void centerCamera(sf::Vector2f center);
   sf::Vector2f getTopLeftPosition();
   sf::Vector2f getTopRightPosition();
+  sf::Vector2f getViewSize();
+  sf::Vector2f getViewCenter();
 };
 
 #endif // GERENCIADOR_GRAFICO_HPP
