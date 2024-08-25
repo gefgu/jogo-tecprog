@@ -10,10 +10,10 @@ BUILD_DIR = build
 TARGET = game
 
 # Compiler flags
-CXXFLAGS = -std=c++17 -I$(INCLUDE_DIR)
+CXXFLAGS = -std=c++17 -I$(INCLUDE_DIR) -I/usr/include/jsoncpp
 
-# Linker flags for SFML
-LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+# Linker flags for SFML and JSONCPP
+LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -ljsoncpp
 
 # Find all .cpp source files recursively
 SRC_FILES = $(shell find $(SRC_DIR) -name '*.cpp')

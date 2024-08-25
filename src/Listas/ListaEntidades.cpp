@@ -1,4 +1,6 @@
 #include "Listas/ListaEntidades.hpp"
+#include "Entidades/Personagens/Personagem.hpp"
+#include "Entidades/Personagens/Jogador.hpp"
 
 ListaEntidades::ListaEntidades() {}
 
@@ -46,4 +48,30 @@ Entidade *ListaEntidades::getRandom()
 void ListaEntidades::remover(Entidade *pE)
 {
   LEs.remover(pE);
+}
+
+Json::Value ListaEntidades::toJsonArray()
+{
+  Json::Value jsonArray(Json::arrayValue);
+  Elemento<Entidade> *it;
+  for (it = LEs.getPrimeiro(); it != NULL; it = it->getProximo())
+  {
+    Json::Value entityJson;
+
+    entityJson["type"] = it->getInfo()->getTipo();
+    entityJson["x"] = it->getInfo()->getCenter().x;
+    entityJson["y"] = it->getInfo()->getCenter().y;
+    if (it->getInfo()->getTipo() == JOGADOR || it->getInfo()->getTipo() == FIGHTER || it->getInfo()->getTipo() == ATIRADOR)
+    {
+      entityJson["vidas"] = static_cast<Personagem *>(it->getInfo())->getVidas();
+    }
+    if (it->getInfo()->getTipo() == JOGADOR)
+    {
+      entityJson["is_p1"] = static_cast<Jogador *>(it->getInfo())->getP1();
+    }
+
+    jsonArray.append(entityJson);
+  }
+
+  return jsonArray;
 }

@@ -49,6 +49,7 @@ protected:
   void verificaFim();
   void fimDeJogo();
   void centralizaCamera();
+  void saveEntitiesToJson();
 
 public:
   Fase(int pontos_iniciais = 1000, int qty_plt = 50, bool temP2 = false);

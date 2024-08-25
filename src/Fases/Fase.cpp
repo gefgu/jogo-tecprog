@@ -1,5 +1,7 @@
 #include "Fases/Fase.hpp"
 #include <cstring>
+#include <fstream>
+#include <json/json.h> // JSON library that supports C++03
 
 Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciais), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0), _gerenciadorInput(Gerenciador_Input::getInstance()), temPlayerDois(temP2), jogador(NULL), jogador2(NULL)
 {
@@ -21,11 +23,11 @@ Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciai
   }
 
   criarPlataformas(qty_plt);
-  // criaEspinhos();
-  // criaLixos();
-  // criaMina();
+  criaEspinhos();
+  criaLixos();
+  criaMina();
   criaFighters();
-  // criaAtiradores();
+  criaAtiradores();
   // sf::Font *fonte = pGG->carregaFonte("./assets/fonts/INVASION2000.TTF");
   sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
   vidasJogador.setFont(*fonte);
@@ -43,6 +45,7 @@ Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciai
 
   atualizaVidaJogador();
   atualizaPontos();
+  saveEntitiesToJson();
 }
 
 Fase::~Fase()
@@ -257,4 +260,30 @@ void Fase::centralizaCamera()
     y = jogador->getCenter().y;
   }
   pGG->centerCamera(sf::Vector2f(x, y));
+}
+
+void Fase::saveEntitiesToJson()
+{
+  Json::Value root;
+
+  root["points"] = getPontos();
+  root["fase"] = Gerenciador_Estado::getInstance().getEstadoJogo();
+
+  // Save platforms using the toJsonArray() method
+  root["platforms"] = plataformas.toJsonArray();
+
+  // Save other entities using the toJsonArray() method
+  root["entities"] = entidades.toJsonArray();
+
+  // Save to a file
+  std::ofstream file("salvo.json");
+  if (file.is_open())
+  {
+    file << root;
+    file.close();
+  }
+  else
+  {
+    // Handle error: file could not be opened
+  }
 }

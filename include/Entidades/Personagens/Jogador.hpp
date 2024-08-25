@@ -20,6 +20,7 @@ private:
     const char *teclaPulo;
     const char *teclaCorrida;
     const char *teclaTiro;
+    bool isP1;
 
     void
     mover();
@@ -37,4 +38,5 @@ public:
     void reduzirVelocidade(float fator);
     void aplicarForcaRepulsao(float forcaX, float forcaY);
     void Update(const char *teclaPressionada);
+    bool getP1();
 };
