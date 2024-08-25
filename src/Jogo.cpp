@@ -3,7 +3,7 @@
 #include <iostream>
 
 Jogo::Jogo() : gerenciadorGrafico(Gerenciador_Grafico::getInstance()),
-               gerenciadorEstado(Gerenciador_Estado::getInstance()), menuInicio(NULL), fase1(NULL), fase2(NULL), menuFimDeJogo(NULL), leaderboard(NULL)
+               gerenciadorEstado(Gerenciador_Estado::getInstance()), menuInicio(NULL), fase1(NULL), fase2(NULL), menuFimDeJogo(NULL), leaderboard(NULL), pauseMenu(NULL), gerenciadorInput(Gerenciador_Input::getInstance())
 {
     Ente::setGerenciadorGrafico(&gerenciadorGrafico);
     gerenciadorThreads.iniciarThreadColisoes(&gerenciadorColisoes);
@@ -21,8 +21,10 @@ void Jogo::executar()
     {
         performanceMonitor.startFrame();
         gerenciadorGrafico.clear();
+
         estadoJogo estado = gerenciadorEstado.getEstadoJogo();
         estadoJogo ultimoEstado = gerenciadorEstado.getUltimoEstadoJogo();
+        gerenciadorInput.executar();
         if (estado == estadoJogo::MENUINICIO)
         {
             if (menuInicio == NULL)
@@ -71,6 +73,10 @@ void Jogo::executar()
                 menuFimDeJogo = new MenuFimDeJogo(pontos, ultimoEstado);
                 gerenciadorEstado.setEstadoJogo(estadoJogo::MENUGAMEOVER);
             }
+            else
+            {
+                gerenciadorEstado.setEstadoJogo(estadoJogo::MENUINICIO);
+            }
 
             if (fase1)
                 delete fase1;
@@ -93,6 +99,13 @@ void Jogo::executar()
             else
                 leaderboard->executar();
         }
+        else if (estado == estadoJogo::PAUSE)
+        {
+            if (pauseMenu == NULL)
+                pauseMenu = new Pause(ultimoEstado);
+            else
+                pauseMenu->executar();
+        }
 
         if (ultimoEstado == estadoJogo::MENUGAMEOVER)
         {
@@ -104,6 +117,12 @@ void Jogo::executar()
         {
             delete leaderboard;
             leaderboard = NULL;
+        }
+
+        if (ultimoEstado == estadoJogo::PAUSE)
+        {
+            delete pauseMenu;
+            pauseMenu = NULL;
         }
 
         gerenciadorGrafico.display();

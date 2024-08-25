@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <cstring>
 #include "Entidades/Entidade.hpp"
 #include "Entidades/Personagens/Personagem.hpp"
 #include "Entidades/Personagens/Jogador.hpp"
@@ -17,6 +18,7 @@
 #include "Menus/MenuInicio.hpp"
 #include "Menus/MenuFimDeJogo.hpp"
 #include "Menus/Leaderboard.hpp"
+#include "Menus/Pause.hpp"
 #include "Fases/Fase_Primeira.hpp"
 #include "Fases/Fase_Segunda.hpp"
 
@@ -25,6 +27,7 @@ class Jogo
 private:
     Gerenciador_Grafico &gerenciadorGrafico;
     Gerenciador_Estado &gerenciadorEstado;
+    Gerenciador_Input &gerenciadorInput;
     Gerenciador_Colisoes gerenciadorColisoes;
     Gerenciador_Threads gerenciadorThreads;
     PerformanceMonitor performanceMonitor;
@@ -34,6 +37,7 @@ private:
     Fase_Segunda *fase2;
     MenuFimDeJogo *menuFimDeJogo;
     Leaderboard *leaderboard;
+    Pause *pauseMenu;
 
 public:
     Jogo();

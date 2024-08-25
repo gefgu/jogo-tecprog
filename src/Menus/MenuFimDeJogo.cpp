@@ -5,6 +5,7 @@
 #include <sstream>
 #include <vector>
 #include <algorithm>
+#include <cstring>
 
 MenuFimDeJogo::MenuFimDeJogo(int p, estadoJogo ultimoEstado) : Menu(), pontos(p), textInput(pGG->getWindowSize().x / 2 - 300, 400, 600, 75), ultimaFase(ultimoEstado)
 {
@@ -54,6 +55,18 @@ MenuFimDeJogo::~MenuFimDeJogo()
   // std::cout << "Destruindo menu." << std::endl;
 }
 
+void MenuFimDeJogo::Update(const char *teclaPressionada)
+{
+  if (strcmp(teclaPressionada, "Right") == 0)
+    nextButton();
+  else if (strcmp(teclaPressionada, "Left") == 0)
+    prevButton();
+  else if (strcmp(teclaPressionada, "Enter") == 0)
+    encerrar();
+  else if (strcmp(teclaPressionada, "Escape") == 0)
+    gerenciadorEstado.setEstadoJogo(estadoJogo::MENUINICIO);
+}
+
 void MenuFimDeJogo::desenhar()
 {
   pGG->centerCamera(sf::Vector2f(pGG->getWindowSize().x / 2, pGG->getWindowSize().y / 2));
@@ -72,7 +85,9 @@ void MenuFimDeJogo::desenhar()
 
 void MenuFimDeJogo::encerrar()
 {
-
+  if (!acceptingCommands)
+    return;
+  acceptingCommands = false;
   if (itemSelecionado == 1 || itemSelecionado == 2)
   {
     salvar();
@@ -94,33 +109,7 @@ void MenuFimDeJogo::executar()
 {
 
   sf::Event event;
-  while (pGG->pollEvent(event))
-  {
-    if (event.type == sf::Event::Closed)
-    {
-      pGG->fecharJanela();
-    }
-    else if (event.type == sf::Event::KeyPressed)
-    {
-      if (event.key.code == sf::Keyboard::Right)
-      {
-        nextButton();
-      }
-      else if (event.key.code == sf::Keyboard::Left)
-      {
-        prevButton();
-      }
-      else if (event.key.code == sf::Keyboard::Enter)
-      {
-        encerrar();
-      }
-      else if (event.key.code == sf::Keyboard::Escape)
-      {
-        gerenciadorEstado.setEstadoJogo(estadoJogo::MENUINICIO);
-      }
-    }
-    textInput.receiveEvent(event);
-  }
+
   desenhar();
 }
 

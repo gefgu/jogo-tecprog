@@ -1,8 +1,10 @@
 #include "Menus/Menu.hpp"
 #include <iostream>
 
-Menu::Menu() : gerenciadorEstado(Gerenciador_Estado::getInstance()), itemSelecionado(0)
+Menu::Menu() : gerenciadorEstado(Gerenciador_Estado::getInstance()), _gerenciadorInput(Gerenciador_Input::getInstance()), itemSelecionado(0), acceptingCommands(true)
 {
+    // observer
+    _gerenciadorInput.Attach(this);
     fundos.clear();
     botoes.clear();
     textos.clear();
@@ -23,6 +25,9 @@ Menu::~Menu()
     textos.clear();
     fundos.clear();
     textosDecorativos.clear();
+
+    // observer
+    _gerenciadorInput.Detach(this);
 }
 
 void Menu::prevButton()

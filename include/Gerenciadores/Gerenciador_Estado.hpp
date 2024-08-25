@@ -7,7 +7,8 @@ enum estadoJogo
   FASE2,
   GAMEOVER,
   MENUGAMEOVER,
-  LEADERBOARD
+  LEADERBOARD,
+  PAUSE
 };
 
 class Gerenciador_Estado

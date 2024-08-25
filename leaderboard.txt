@@ -2,3 +2,5 @@ ganhando,1467
 ok,1373
 gus,495
 gustavo,494
+WELL,494
+GOOD,487

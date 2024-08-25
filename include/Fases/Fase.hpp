@@ -15,12 +15,14 @@
 #include "Entidades/Personagens/Fighter.hpp"
 #include "Entidades/Personagens/Atirador.hpp"
 #include "Entidades/Projetil.hpp"
+#include "Controladores/Observer.hpp"
 
-class Fase : public Ente
+class Fase : public Ente, Observer
 {
 protected:
   sf::Sprite fundo;
   Gerenciador_Colisoes gerenciadorColisoes;
+  Gerenciador_Input &_gerenciadorInput;
   ListaEntidades plataformas;
   ListaEntidades entidades;
   Jogador *jogador;
@@ -53,6 +55,7 @@ public:
   void addProjetil(int px, int py, int direcao, tipoDeEntidade atirador);
   void alteraPontos(int soma);
   void setPontos(int p);
+  void Update(const char *teclaPressionada);
 };
 
 #endif // FASE_HPP

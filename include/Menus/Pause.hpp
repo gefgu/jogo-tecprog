@@ -10,21 +10,16 @@
 
 using namespace std;
 
-class MenuFimDeJogo : public Menu
+class Pause : public Menu
 {
 private:
-  int pontos;
-  CampoDeTexto textInput;
   estadoJogo ultimaFase;
 
 public:
-  MenuFimDeJogo(int p, estadoJogo ultimoEstado); // pontos
-  ~MenuFimDeJogo();
+  Pause(estadoJogo ultimoEstado);
+  ~Pause();
 
   void desenhar();
   void executar();
-  void encerrar();
-  void salvar();
-  int getPontos();
   void Update(const char *teclaPressionada);
 };

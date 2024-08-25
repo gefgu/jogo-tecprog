@@ -1,8 +1,10 @@
 #include "Fases/Fase.hpp"
+#include <cstring>
 
-Fase::Fase(int pontos_iniciais, int qty_plt) : pontos(pontos_iniciais), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0)
+Fase::Fase(int pontos_iniciais, int qty_plt) : pontos(pontos_iniciais), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0), _gerenciadorInput(Gerenciador_Input::getInstance())
 {
   clock.restart();
+  _gerenciadorInput.Attach(this);
   Entidade::setFase(this);
   jogador = new Jogador(200, 100, 5);
   entidades.incluir(jogador);
@@ -29,7 +31,10 @@ Fase::Fase(int pontos_iniciais, int qty_plt) : pontos(pontos_iniciais), finalX(1
   atualizaPontos();
 }
 
-Fase::~Fase() {}
+Fase::~Fase()
+{
+  _gerenciadorInput.Detach(this);
+}
 
 void Fase::criarPlataformas(int qty_plt)
 {
@@ -192,4 +197,10 @@ void Fase::alteraPontos(int soma)
 {
   pontos += soma;
   pontos = max(pontos, 0);
+}
+
+void Fase::Update(const char *teclaPressionada)
+{
+  if (strcmp(teclaPressionada, "Escape") == 0)
+    Gerenciador_Estado::getInstance().setEstadoJogo(PAUSE);
 }
