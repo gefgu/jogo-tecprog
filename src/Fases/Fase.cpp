@@ -193,7 +193,9 @@ void Fase::atualizaPontos()
 
 void Fase::verificaFim()
 {
-  if (jogador->getMorto() || jogador->getCenter().x >= finalX)
+  bool deadCondition = (jogador->getMorto() && !temPlayerDois) || (temPlayerDois && jogador->getMorto() && jogador2->getMorto());
+  bool endCondition = (jogador->getCenter().x >= finalX && !temPlayerDois) || (temPlayerDois && jogador->getCenter().x >= finalX && jogador2->getCenter().x >= finalX);
+  if (deadCondition || endCondition)
   {
     fimDeJogo();
   }
