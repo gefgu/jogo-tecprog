@@ -45,7 +45,20 @@ void CampoDeVisao::lidarColisao(sf::Vector2f intersecao, Entidade *other)
   if (other->getTipo() == tipoDeEntidade::JOGADOR && !static_cast<Jogador *>(other)->getMorto())
   {
     // cout << "JOGADOR AVISTADO: (" << intersecao.x << ", " << intersecao.y << ")" << endl;
-    pJogador = static_cast<Jogador *>(other);
+    Jogador *newJogador = static_cast<Jogador *>(other);
+    if (pJogador != NULL)
+    {
+      int oldDis = abs(pJogador->getCenter().x - getCenter().x);
+      int newDis = abs(newJogador->getCenter().x - getCenter().x);
+      if (newDis < oldDis)
+      {
+        pJogador = newJogador;
+      }
+    }
+    else
+    {
+      pJogador = newJogador;
+    }
   }
 }
 
