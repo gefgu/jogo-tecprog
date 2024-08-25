@@ -1,6 +1,7 @@
 #include "Menus/CampoDeTexto.hpp"
+#include <cstring>
 
-CampoDeTexto::CampoDeTexto(int px, int py, int width, int height) : playerText(), playerInput(""), fundo(sf::Vector2f(width, height))
+CampoDeTexto::CampoDeTexto(int px, int py, int width, int height) : playerText(), playerInput(""), fundo(sf::Vector2f(width, height)), _gerenciadorInput(Gerenciador_Input::getInstance())
 {
   sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
   fundo.setFillColor(sf::Color::White);
@@ -10,9 +11,14 @@ CampoDeTexto::CampoDeTexto(int px, int py, int width, int height) : playerText()
   playerText.setFont(*fonte);
   playerText.setFillColor(sf::Color::Black);
   centralizaTexto();
+
+  _gerenciadorInput.Attach(this);
 }
 
-CampoDeTexto::~CampoDeTexto() {}
+CampoDeTexto::~CampoDeTexto()
+{
+  _gerenciadorInput.Detach(this);
+}
 
 void CampoDeTexto::desenhar()
 {
@@ -30,16 +36,15 @@ const char *CampoDeTexto::getTexto()
   return playerInputStr.c_str();
 }
 
-void CampoDeTexto::receiveEvent(sf::Event event)
+void CampoDeTexto::Update(const char *teclaPressionada)
 {
-  if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::BackSpace)
+  if (strcmp(teclaPressionada, "BackSpace") == 0)
   {
     playerInput = playerInput.substring(0, playerInput.getSize() - 1);
   }
-  else if (event.type == sf::Event::TextEntered)
+  else if (teclaPressionada && isalnum(teclaPressionada[0]) && teclaPressionada[1] == '\0')
   {
-    if (event.text.unicode > 60 && event.text.unicode < 128)
-      playerInput = playerInput + event.text.unicode;
+    playerInput = playerInput + teclaPressionada;
   }
   playerText.setString(playerInput);
   centralizaTexto();

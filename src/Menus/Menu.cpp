@@ -1,7 +1,7 @@
 #include "Menus/Menu.hpp"
 #include <iostream>
 
-Menu::Menu() : gerenciadorEstado(Gerenciador_Estado::getInstance()), _gerenciadorInput(Gerenciador_Input::getInstance()), itemSelecionado(0)
+Menu::Menu() : gerenciadorEstado(Gerenciador_Estado::getInstance()), _gerenciadorInput(Gerenciador_Input::getInstance()), itemSelecionado(0), acceptingCommands(true)
 {
     fundos.clear();
     botoes.clear();

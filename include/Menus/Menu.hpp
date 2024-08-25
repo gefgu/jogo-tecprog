@@ -21,6 +21,7 @@ protected:
     vector<sf::RectangleShape> fundos;  // Botões
     vector<sf::Text> textosDecorativos; // Textos nos botões
     int itemSelecionado;
+    bool acceptingCommands;
 
     void setBotaoTexto(int index, const std::string &texto);
     void setFundoTexto(int index, const std::string &texto);
