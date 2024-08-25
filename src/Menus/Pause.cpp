@@ -31,10 +31,10 @@ Pause::Pause(estadoJogo ultimoEstado) : Menu(), ultimaFase(ultimoEstado)
   textosDecorativos.push_back(texto);
 
   // Botões
-  for (int i = 0; i < 2; i++)
+  for (int i = 0; i < 3; i++)
   {
-    sf::RectangleShape botao(sf::Vector2f(425, 75)); // Tamanho dos botões
-    botao.setPosition(sf::Vector2f(125 + ((i % 2) * 525), (altura / 2) + 100 + (i >= 2) * 150));
+    sf::RectangleShape botao(sf::Vector2f(300, 75)); // Tamanho dos botões
+    botao.setPosition(sf::Vector2f(125 + (i * 350), (altura / 2) + 100));
     botao.setTexture(texturaBotao);
     botoes.push_back(botao);
 
@@ -48,6 +48,7 @@ Pause::Pause(estadoJogo ultimoEstado) : Menu(), ultimaFase(ultimoEstado)
 
   setBotaoTexto(0, "Voltar");
   setBotaoTexto(1, "Salvar e Sair");
+  setBotaoTexto(2, "Sair");
 }
 
 Pause::~Pause()
