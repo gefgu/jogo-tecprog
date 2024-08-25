@@ -105,7 +105,6 @@ void Personagem::setPosition(int px, int py)
 {
     animacao.setPosition(px, py);
     colisionBox.setPosition(px, py);
-    pGG->centerCamera(sf::Vector2f(px, py));
 }
 
 void Personagem::desenhar()

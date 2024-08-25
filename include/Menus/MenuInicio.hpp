@@ -6,7 +6,6 @@ using namespace std;
 
 class MenuInicio : public Menu
 {
-protected:
 public:
   MenuInicio();
   ~MenuInicio();

@@ -23,16 +23,21 @@ const float SHOT_ANIMATION_TIME = 150.0f;
 const float HURT_ANIMATION_TIME = 250.0f;
 const float DEATH_ANIMATION_TIME = 1200.0f;
 
-Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, 0, 0, vidas, tipoDeEntidade::JOGADOR),
+Jogador::Jogador(int px, int py, int vidas, bool player1) : Personagem(px, py, 0, 0, vidas, tipoDeEntidade::JOGADOR),
 
-                                              tempoDesdeUltimoPulo(0.0f),
-                                              tempoDesdeUltimoEspinho(COOLDOWN_ESPINHO),
-                                              tempoDesdeUltimoLixo(COOLDOWN_LIXO),
-                                              tempoDesdeUltimoTiro(COOLDOWN_TIRO),
-                                              tempoDesdeUltimaMina(COOLDOWN_MINA),
-                                              tempoDesdeUltimaAcao(COOLDOWN_ACAO),
-                                              slowness(1),
-                                              _gerenciadorInput(Gerenciador_Input::getInstance())
+                                                            tempoDesdeUltimoPulo(0.0f),
+                                                            tempoDesdeUltimoEspinho(COOLDOWN_ESPINHO),
+                                                            tempoDesdeUltimoLixo(COOLDOWN_LIXO),
+                                                            tempoDesdeUltimoTiro(COOLDOWN_TIRO),
+                                                            tempoDesdeUltimaMina(COOLDOWN_MINA),
+                                                            tempoDesdeUltimaAcao(COOLDOWN_ACAO),
+                                                            slowness(1),
+                                                            _gerenciadorInput(Gerenciador_Input::getInstance()),
+                                                            teclaEsquerda(player1 ? "A" : "Left"),
+                                                            teclaDireita(player1 ? "D" : "Right"),
+                                                            teclaPulo(player1 ? "W" : "Up"),
+                                                            teclaCorrida(player1 ? "Shift" : "RShift"),
+                                                            teclaTiro(player1 ? "F" : "RControl")
 
 {
     _gerenciadorInput.AttachContinuous(this);
@@ -47,8 +52,6 @@ Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, 0, 0, vidas, ti
     animacao.setScale(SCALING_FACTOR, SCALING_FACTOR);
     setColisionBoxSize(sf::Vector2f(30 * SCALING_FACTOR, 128 * SCALING_FACTOR));
     setAnimationState();
-
-    // observer
 }
 
 Jogador::~Jogador()
@@ -60,15 +63,15 @@ void Jogador::Update(const char *teclaPressionada)
 {
     // cout << "Update: " << teclaPressionada << endl;
     tempoDesdeUltimaAcao = 0.0f;
-    if (strcmp(teclaPressionada, "A") == 0)
+    if (strcmp(teclaPressionada, teclaEsquerda) == 0)
         andar(-1);
-    if (strcmp(teclaPressionada, "D") == 0)
+    if (strcmp(teclaPressionada, teclaDireita) == 0)
         andar(1);
-    if (strcmp(teclaPressionada, "W") == 0)
+    if (strcmp(teclaPressionada, teclaPulo) == 0)
         pular();
-    if (strcmp(teclaPressionada, "F") == 0)
+    if (strcmp(teclaPressionada, teclaTiro) == 0)
         atacar();
-    if (strcmp(teclaPressionada, "Shift") == 0)
+    if (strcmp(teclaPressionada, teclaCorrida) == 0)
         correr();
 }
 
@@ -137,10 +140,14 @@ void Jogador::mover()
 
     x += direcao * velocidadeX;
     y += velocidadeY;
+    limitMovementByCamera();
 }
 
 void Jogador::executar()
 {
+    if (morto)
+        return;
+
     // Reset noChao at the start of each frame
     noChao = tempoDesdeUltimoPiso <= COOLDOWN_PISO;
     if (tempoDesdeUltimoLixo >= COOLDOWN_LIXO)
@@ -207,7 +214,7 @@ void Jogador::executar()
     if (newState == IDLE)
         velocidadeX = 0;
 
-    if (mudouDirecao || newState != state)
+    if (state != DEAD && (mudouDirecao || newState != state))
     {
         // cout << "HERE: " << mudouDirecao << endl;
         mudouDirecao = false;
@@ -239,6 +246,10 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
             }
         }
     }
+
+    if (morto)
+        return;
+
     if (other->getTipo() == tipoDeEntidade::FIGHTER && !static_cast<Fighter *>(other)->getMorto())
     {
         if (intersecao.x > 0)
@@ -279,4 +290,19 @@ void Jogador::aplicarForcaRepulsao(float forcaX, float forcaY)
     tempoDesdeUltimaMina = 0.0f;
     velocidadeX = forcaX;
     velocidadeY = forcaY;
+}
+
+void Jogador::limitMovementByCamera()
+{
+    sf::Vector2f size = pGG->getViewSize();
+    sf::Vector2f center = pGG->getViewCenter();
+
+    if (x >= center.x + size.x / 2)
+    {
+        x = center.x + size.x / 2;
+    }
+    else if (x <= center.x - size.x / 2)
+    {
+        x = center.x - size.x / 2;
+    }
 }

@@ -13,12 +13,14 @@
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
 #include "Gerenciadores/Gerenciador_Estado.hpp"
 #include "Gerenciadores/Gerenciador_Threads.hpp"
+#include "Gerenciadores/Configuracoes.hpp"
 #include "Ente.hpp"
 #include "PerformanceMonitor.hpp"
 #include "Menus/MenuInicio.hpp"
 #include "Menus/MenuFimDeJogo.hpp"
 #include "Menus/Leaderboard.hpp"
 #include "Menus/Pause.hpp"
+#include "Menus/MenuEscolhaPlayers.hpp"
 #include "Fases/Fase_Primeira.hpp"
 #include "Fases/Fase_Segunda.hpp"
 
@@ -28,6 +30,7 @@ private:
     Gerenciador_Grafico &gerenciadorGrafico;
     Gerenciador_Estado &gerenciadorEstado;
     Gerenciador_Input &gerenciadorInput;
+    Configuracoes &configuracoes;
     Gerenciador_Colisoes gerenciadorColisoes;
     Gerenciador_Threads gerenciadorThreads;
     PerformanceMonitor performanceMonitor;
@@ -38,6 +41,7 @@ private:
     MenuFimDeJogo *menuFimDeJogo;
     Leaderboard *leaderboard;
     Pause *pauseMenu;
+    MenuEscolhaPlayers *menuEscolhaPlayers;
 
 public:
     Jogo();

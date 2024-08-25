@@ -26,13 +26,16 @@ protected:
   ListaEntidades plataformas;
   ListaEntidades entidades;
   Jogador *jogador;
+  Jogador *jogador2;
   int pontos;
   int finalX;
   sf::Text vidasJogador;
+  sf::Text vidasJogador2;
   sf::Text pontosText;
   sf::Clock clock;
   int segundosDesdeInicio;
   ObjetoEstatico caixaDeCorreio;
+  bool temPlayerDois;
 
   void criarPlataformas(int qty_plt);
   virtual void criarCenario() = 0;
@@ -45,16 +48,16 @@ protected:
   void atualizaPontos();
   void verificaFim();
   void fimDeJogo();
+  void centralizaCamera();
 
 public:
-  Fase(int pontos_iniciais = 1000, int qty_plt = 50);
+  Fase(int pontos_iniciais = 1000, int qty_plt = 50, bool temP2 = false);
   ~Fase();
   void desenhar();
   virtual void executar();
   int getPontos();
   void addProjetil(int px, int py, int direcao, tipoDeEntidade atirador);
   void alteraPontos(int soma);
-  void setPontos(int p);
   void Update(const char *teclaPressionada);
 };
 

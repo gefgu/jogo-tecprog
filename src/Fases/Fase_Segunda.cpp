@@ -1,6 +1,6 @@
 #include "Fases/Fase_Segunda.hpp"
 
-Fase_Segunda::Fase_Segunda(int pontos_iniciais) : Fase(pontos_iniciais, 50)
+Fase_Segunda::Fase_Segunda(bool temP2, int pontos_iniciais) : Fase(pontos_iniciais, 50, temP2)
 {
   criarCenario();
 }
@@ -33,6 +33,8 @@ void Fase_Segunda::desenhar()
   caixaDeCorreio.desenhar();
   entidades.desenhar();
   pGG->draw(vidasJogador);
+  if (temPlayerDois)
+    pGG->draw(vidasJogador2);
   pGG->draw(pontosText);
 }
 
@@ -40,6 +42,7 @@ void Fase_Segunda::executar()
 {
   gerenciadorColisoes.executar();
   entidades.executar();
+  centralizaCamera();
   atualizaVidaJogador();
   atualizaPontos();
   verificaFim();

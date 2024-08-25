@@ -1,14 +1,25 @@
 #include "Fases/Fase.hpp"
 #include <cstring>
 
-Fase::Fase(int pontos_iniciais, int qty_plt) : pontos(pontos_iniciais), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0), _gerenciadorInput(Gerenciador_Input::getInstance())
+Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciais), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0), _gerenciadorInput(Gerenciador_Input::getInstance()), temPlayerDois(temP2), jogador(NULL), jogador2(NULL)
 {
   clock.restart();
   _gerenciadorInput.Attach(this);
   Entidade::setFase(this);
-  jogador = new Jogador(200, 100, 5);
+  jogador = new Jogador(200, 100, 5, true);
   entidades.incluir(jogador);
   gerenciadorColisoes.incluirEntidadeMovel(jogador);
+  if (temPlayerDois)
+  {
+    jogador2 = new Jogador(200, 100, 5, false);
+    entidades.incluir(jogador2);
+    gerenciadorColisoes.incluirEntidadeMovel(jogador2);
+  }
+  else
+  {
+    jogador2 = NULL;
+  }
+
   criarPlataformas(qty_plt);
   // criaEspinhos();
   // criaLixos();
@@ -20,6 +31,9 @@ Fase::Fase(int pontos_iniciais, int qty_plt) : pontos(pontos_iniciais), finalX(1
   vidasJogador.setFont(*fonte);
   vidasJogador.setFillColor(sf::Color::White);
   vidasJogador.setCharacterSize(32);
+  vidasJogador2.setFont(*fonte);
+  vidasJogador2.setFillColor(sf::Color::White);
+  vidasJogador2.setCharacterSize(32);
 
   pontosText.setFont(*fonte);
   pontosText.setFillColor(sf::Color::White);
@@ -68,6 +82,8 @@ void Fase::desenhar()
   plataformas.desenhar();
   entidades.desenhar();
   pGG->draw(vidasJogador);
+  if (temPlayerDois)
+    pGG->draw(vidasJogador2);
   pGG->draw(pontosText);
 }
 
@@ -159,6 +175,13 @@ void Fase::atualizaVidaJogador()
   vidasJogador.setString(std::to_string(vidas) + " Vidas");
   sf::Vector2f pos = pGG->getTopLeftPosition();
   vidasJogador.setPosition(pos.x + 25, pos.y + 25);
+  if (temPlayerDois)
+  {
+    vidas = jogador2->getVidas();
+    vidasJogador2.setString(std::to_string(vidas) + " Vidas");
+    sf::Vector2f pos = pGG->getTopRightPosition();
+    vidasJogador2.setPosition(pos.x - vidasJogador2.getGlobalBounds().width - 25, pos.y + 25);
+  }
 }
 
 void Fase::atualizaPontos()
@@ -170,7 +193,9 @@ void Fase::atualizaPontos()
 
 void Fase::verificaFim()
 {
-  if (jogador->getMorto() || jogador->getCenter().x >= finalX)
+  bool deadCondition = (jogador->getMorto() && !temPlayerDois) || (temPlayerDois && jogador->getMorto() && jogador2->getMorto());
+  bool endCondition = (jogador->getCenter().x >= finalX && !temPlayerDois) || (temPlayerDois && jogador->getCenter().x >= finalX && jogador2->getCenter().x >= finalX);
+  if (deadCondition || endCondition)
   {
     fimDeJogo();
   }
@@ -203,4 +228,33 @@ void Fase::Update(const char *teclaPressionada)
 {
   if (strcmp(teclaPressionada, "Escape") == 0)
     Gerenciador_Estado::getInstance().setEstadoJogo(PAUSE);
+}
+
+void Fase::centralizaCamera()
+{
+  int x, y;
+  if (temPlayerDois)
+  {
+    if (!jogador->getMorto() && !jogador2->getMorto())
+    {
+      x = (jogador->getCenter().x + jogador2->getCenter().x) / 2;
+      y = (jogador->getCenter().y + jogador2->getCenter().y) / 2;
+    }
+    else if (!jogador->getMorto())
+    {
+      x = jogador->getCenter().x;
+      y = jogador->getCenter().y;
+    }
+    else
+    {
+      x = jogador2->getCenter().x;
+      y = jogador2->getCenter().y;
+    }
+  }
+  else
+  {
+    x = jogador->getCenter().x;
+    y = jogador->getCenter().y;
+  }
+  pGG->centerCamera(sf::Vector2f(x, y));
 }

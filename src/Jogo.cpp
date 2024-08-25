@@ -3,7 +3,7 @@
 #include <iostream>
 
 Jogo::Jogo() : gerenciadorGrafico(Gerenciador_Grafico::getInstance()),
-               gerenciadorEstado(Gerenciador_Estado::getInstance()), menuInicio(NULL), fase1(NULL), fase2(NULL), menuFimDeJogo(NULL), leaderboard(NULL), pauseMenu(NULL), gerenciadorInput(Gerenciador_Input::getInstance())
+               gerenciadorEstado(Gerenciador_Estado::getInstance()), menuInicio(NULL), fase1(NULL), fase2(NULL), menuFimDeJogo(NULL), leaderboard(NULL), pauseMenu(NULL), gerenciadorInput(Gerenciador_Input::getInstance()), menuEscolhaPlayers(NULL), configuracoes(Configuracoes::getInstance())
 {
     Ente::setGerenciadorGrafico(&gerenciadorGrafico);
     gerenciadorThreads.iniciarThreadColisoes(&gerenciadorColisoes);
@@ -37,11 +37,11 @@ void Jogo::executar()
             {
                 if (ultimoEstado == MENUGAMEOVER)
                 {
-                    fase1 = new Fase_Primeira(menuFimDeJogo->getPontos());
+                    fase1 = new Fase_Primeira(configuracoes.getDoisJogadores(), menuFimDeJogo->getPontos());
                 }
                 else
                 {
-                    fase1 = new Fase_Primeira();
+                    fase1 = new Fase_Primeira(configuracoes.getDoisJogadores());
                 }
             }
             fase1->executar();
@@ -52,11 +52,11 @@ void Jogo::executar()
             {
                 if (ultimoEstado == MENUGAMEOVER)
                 {
-                    fase2 = new Fase_Segunda(menuFimDeJogo->getPontos());
+                    fase2 = new Fase_Segunda(configuracoes.getDoisJogadores(), menuFimDeJogo->getPontos());
                 }
                 else
                 {
-                    fase2 = new Fase_Segunda();
+                    fase2 = new Fase_Segunda(configuracoes.getDoisJogadores());
                 }
             }
             fase2->executar();
@@ -106,6 +106,24 @@ void Jogo::executar()
             else
                 pauseMenu->executar();
         }
+        else if (estado == estadoJogo::ESCOLHAPLAYERS)
+        {
+            if (menuEscolhaPlayers == NULL)
+            {
+                if (menuInicio->getSelectedItemIndex() == 0)
+                {
+                    menuEscolhaPlayers = new MenuEscolhaPlayers(FASE1);
+                }
+                else if (menuInicio->getSelectedItemIndex() == 1)
+                {
+                    menuEscolhaPlayers = new MenuEscolhaPlayers(FASE2);
+                }
+            }
+            else
+            {
+                menuEscolhaPlayers->executar();
+            }
+        }
 
         if (ultimoEstado == estadoJogo::MENUGAMEOVER)
         {
@@ -123,6 +141,12 @@ void Jogo::executar()
         {
             delete pauseMenu;
             pauseMenu = NULL;
+        }
+
+        if (ultimoEstado == estadoJogo::MENUINICIO && estado != MENUINICIO)
+        {
+            delete menuInicio;
+            menuInicio = NULL;
         }
 
         gerenciadorGrafico.display();

@@ -1,6 +1,6 @@
 #include "Fases/Fase_Primeira.hpp"
 
-Fase_Primeira::Fase_Primeira(int pontos_iniciais) : Fase(pontos_iniciais, 40)
+Fase_Primeira::Fase_Primeira(bool temP2, int pontos_iniciais) : Fase(pontos_iniciais, 40, temP2)
 {
   criarCenario();
 }
@@ -34,6 +34,8 @@ void Fase_Primeira::desenhar()
   plataformas.desenhar();
   entidades.desenhar();
   pGG->draw(vidasJogador);
+  if (temPlayerDois)
+    pGG->draw(vidasJogador2);
   pGG->draw(pontosText);
   caixaDeCorreio.desenhar();
 }
@@ -42,6 +44,7 @@ void Fase_Primeira::executar()
 {
   gerenciadorColisoes.executar();
   entidades.executar();
+  centralizaCamera();
   atualizaVidaJogador();
   atualizaPontos();
   verificaFim();

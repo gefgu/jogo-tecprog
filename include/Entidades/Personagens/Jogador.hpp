@@ -7,6 +7,7 @@
 class Jogador : public Personagem, Observer
 {
 private:
+    Gerenciador_Input &_gerenciadorInput;
     float tempoDesdeUltimoPulo;
     float tempoDesdeUltimoEspinho;
     float tempoDesdeUltimoLixo;
@@ -14,16 +15,21 @@ private:
     float tempoDesdeUltimaMina;
     float tempoDesdeUltimaAcao;
     float slowness;
-    Gerenciador_Input &_gerenciadorInput;
+    const char *teclaEsquerda;
+    const char *teclaDireita;
+    const char *teclaPulo;
+    const char *teclaCorrida;
+    const char *teclaTiro;
 
     void
     mover();
     void correr();
     void pular();
     void andar(int newDirection);
+    void limitMovementByCamera(); // don't go past the view
 
 public:
-    Jogador(int px, int py, int vidas);
+    Jogador(int px, int py, int vidas, bool player1 = true);
     ~Jogador();
     void atacar() override;
     void executar();
