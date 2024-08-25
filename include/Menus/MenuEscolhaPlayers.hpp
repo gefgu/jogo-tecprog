@@ -1,13 +1,14 @@
 #pragma once
 
 #include "Menu.hpp"
+#include "Gerenciadores/Configuracoes.hpp"
 
 using namespace std;
 
 class MenuEscolhaPlayers : public Menu
 {
 private:
-  bool twoPlayers;
+  Configuracoes &configuracoes;
   estadoJogo fase;
 
 public:
@@ -16,5 +17,4 @@ public:
   void desenhar();
   void executar();
   void Update(const char *teclaPressionada);
-  bool getTwoPlayers();
 };

@@ -1,7 +1,7 @@
 #include "Menus/MenuEscolhaPlayers.hpp"
 #include <cstring>
 
-MenuEscolhaPlayers::MenuEscolhaPlayers(estadoJogo proxFase) : Menu(), twoPlayers(false), fase(proxFase)
+MenuEscolhaPlayers::MenuEscolhaPlayers(estadoJogo proxFase) : Menu(), fase(proxFase), configuracoes(Configuracoes::getInstance())
 {
   int largura = pGG->getWindowSize().x;
   int altura = pGG->getWindowSize().y;
@@ -49,7 +49,7 @@ void MenuEscolhaPlayers::Update(const char *teclaPressionada)
   {
     int selectedItem = getSelectedItemIndex();
 
-    twoPlayers = (bool)selectedItem;
+    configuracoes.setDoisJogadores((bool)selectedItem);
 
     gerenciadorEstado.setEstadoJogo(fase);
   }
@@ -70,9 +70,4 @@ void MenuEscolhaPlayers::desenhar()
     pGG->draw(botoes[i]);
     pGG->draw(textos[i]);
   }
-}
-
-bool MenuEscolhaPlayers::getTwoPlayers()
-{
-  return twoPlayers;
 }

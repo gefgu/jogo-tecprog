@@ -13,6 +13,7 @@
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
 #include "Gerenciadores/Gerenciador_Estado.hpp"
 #include "Gerenciadores/Gerenciador_Threads.hpp"
+#include "Gerenciadores/Configuracoes.hpp"
 #include "Ente.hpp"
 #include "PerformanceMonitor.hpp"
 #include "Menus/MenuInicio.hpp"
@@ -29,6 +30,7 @@ private:
     Gerenciador_Grafico &gerenciadorGrafico;
     Gerenciador_Estado &gerenciadorEstado;
     Gerenciador_Input &gerenciadorInput;
+    Configuracoes &configuracoes;
     Gerenciador_Colisoes gerenciadorColisoes;
     Gerenciador_Threads gerenciadorThreads;
     PerformanceMonitor performanceMonitor;
