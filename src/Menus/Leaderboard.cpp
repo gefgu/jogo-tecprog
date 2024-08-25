@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <cstring>
 
 Leaderboard::Leaderboard() : Menu()
 {
@@ -52,7 +53,14 @@ Leaderboard::Leaderboard() : Menu()
 
 Leaderboard::~Leaderboard() {}
 
-void Leaderboard::Update(const char *teclaPressionada) {}
+void Leaderboard::Update(const char *teclaPressionada)
+{
+
+  if (strcmp(teclaPressionada, "Enter") == 0 || strcmp(teclaPressionada, "Escape") == 0)
+  {
+    gerenciadorEstado.setEstadoJogo(estadoJogo::MENUINICIO);
+  }
+}
 
 void Leaderboard::readLeaderboard()
 {
@@ -95,21 +103,6 @@ void Leaderboard::readLeaderboard()
 
 void Leaderboard::executar()
 {
-  sf::Event event;
-  while (pGG->pollEvent(event))
-  {
-    if (event.type == sf::Event::Closed)
-    {
-      pGG->fecharJanela();
-    }
-    else if (event.type == sf::Event::KeyPressed)
-    {
-      if (event.key.code == sf::Keyboard::Enter || event.key.code == sf::Keyboard::Escape)
-      {
-        gerenciadorEstado.setEstadoJogo(estadoJogo::MENUINICIO);
-      }
-    }
-  }
   desenhar();
 }
 
