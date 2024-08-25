@@ -235,8 +235,21 @@ void Fase::centralizaCamera()
   int x, y;
   if (temPlayerDois)
   {
-    x = (jogador->getCenter().x + jogador2->getCenter().x) / 2;
-    y = (jogador->getCenter().y + jogador2->getCenter().y) / 2;
+    if (!jogador->getMorto() && !jogador2->getMorto())
+    {
+      x = (jogador->getCenter().x + jogador2->getCenter().x) / 2;
+      y = (jogador->getCenter().y + jogador2->getCenter().y) / 2;
+    }
+    else if (!jogador->getMorto())
+    {
+      x = jogador->getCenter().x;
+      y = jogador->getCenter().y;
+    }
+    else
+    {
+      x = jogador2->getCenter().x;
+      y = jogador2->getCenter().y;
+    }
   }
   else
   {
