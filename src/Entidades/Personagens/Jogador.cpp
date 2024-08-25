@@ -213,7 +213,7 @@ void Jogador::executar()
     if (newState == IDLE)
         velocidadeX = 0;
 
-    if (mudouDirecao || newState != state)
+    if (state != DEAD && (mudouDirecao || newState != state))
     {
         // cout << "HERE: " << mudouDirecao << endl;
         mudouDirecao = false;
