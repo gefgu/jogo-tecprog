@@ -3,6 +3,7 @@
 
 CampoDeTexto::CampoDeTexto(int px, int py, int width, int height) : playerText(), playerInput(""), fundo(sf::Vector2f(width, height)), _gerenciadorInput(Gerenciador_Input::getInstance())
 {
+  _gerenciadorInput.Attach(this);
   sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
   fundo.setFillColor(sf::Color::White);
   fundo.setPosition(px, py);
@@ -11,8 +12,6 @@ CampoDeTexto::CampoDeTexto(int px, int py, int width, int height) : playerText()
   playerText.setFont(*fonte);
   playerText.setFillColor(sf::Color::Black);
   centralizaTexto();
-
-  _gerenciadorInput.Attach(this);
 }
 
 CampoDeTexto::~CampoDeTexto()

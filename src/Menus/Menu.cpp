@@ -3,6 +3,8 @@
 
 Menu::Menu() : gerenciadorEstado(Gerenciador_Estado::getInstance()), _gerenciadorInput(Gerenciador_Input::getInstance()), itemSelecionado(0), acceptingCommands(true)
 {
+    // observer
+    _gerenciadorInput.Attach(this);
     fundos.clear();
     botoes.clear();
     textos.clear();
@@ -15,9 +17,6 @@ Menu::Menu() : gerenciadorEstado(Gerenciador_Estado::getInstance()), _gerenciado
     float scaleX = static_cast<float>(largura) / fundo.getTexture()->getSize().x;
     float scaleY = static_cast<float>(altura) / fundo.getTexture()->getSize().y;
     fundo.setScale(scaleX, scaleY);
-
-    // observer
-    _gerenciadorInput.Attach(this);
 }
 
 Menu::~Menu()

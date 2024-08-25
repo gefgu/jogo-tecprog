@@ -4,6 +4,7 @@
 Fase::Fase(int pontos_iniciais, int qty_plt) : pontos(pontos_iniciais), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0), _gerenciadorInput(Gerenciador_Input::getInstance())
 {
   clock.restart();
+  _gerenciadorInput.Attach(this);
   Entidade::setFase(this);
   jogador = new Jogador(200, 100, 5);
   entidades.incluir(jogador);
@@ -28,8 +29,6 @@ Fase::Fase(int pontos_iniciais, int qty_plt) : pontos(pontos_iniciais), finalX(1
 
   atualizaVidaJogador();
   atualizaPontos();
-
-  _gerenciadorInput.Attach(this);
 }
 
 Fase::~Fase()

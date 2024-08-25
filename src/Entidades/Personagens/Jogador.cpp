@@ -35,6 +35,7 @@ Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, 0, 0, vidas, ti
                                               _gerenciadorInput(Gerenciador_Input::getInstance())
 
 {
+    _gerenciadorInput.AttachContinuous(this);
     animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Idle.png"));
     animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Run.png"));
     animacao.addTrilha("walking", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Walk.png"));
@@ -48,7 +49,6 @@ Jogador::Jogador(int px, int py, int vidas) : Personagem(px, py, 0, 0, vidas, ti
     setAnimationState();
 
     // observer
-    _gerenciadorInput.AttachContinuous(this);
 }
 
 Jogador::~Jogador()
