@@ -7,6 +7,7 @@
 #include <sstream>
 #include <vector>
 #include <algorithm>
+#include <cstring>
 
 Pause::Pause(estadoJogo ultimoEstado) : Menu(), ultimaFase(ultimoEstado)
 {
@@ -47,7 +48,6 @@ Pause::Pause(estadoJogo ultimoEstado) : Menu(), ultimaFase(ultimoEstado)
 
   setBotaoTexto(0, "Voltar");
   setBotaoTexto(1, "Salvar e Sair");
-  prevButton();
 }
 
 Pause::~Pause()
@@ -55,7 +55,31 @@ Pause::~Pause()
   // std::cout << "Destruindo menu." << std::endl;
 }
 
-void Pause::Update(const char *teclaPressionada) {}
+void Pause::Update(const char *teclaPressionada)
+{
+  if (strcmp(teclaPressionada, "Right") == 0)
+  {
+    nextButton();
+  }
+  else if (strcmp(teclaPressionada, "Left") == 0)
+  {
+    prevButton();
+  }
+  else if (strcmp(teclaPressionada, "Enter") == 0)
+  {
+    if (itemSelecionado == 0)
+      gerenciadorEstado.setEstadoJogo(ultimaFase);
+    else
+    {
+      gerenciadorEstado.setEstadoJogo(PAUSE); // some strange bug
+      gerenciadorEstado.setEstadoJogo(GAMEOVER);
+    }
+  }
+  else if (strcmp(teclaPressionada, "Escape") == 0)
+  {
+    gerenciadorEstado.setEstadoJogo(ultimaFase);
+  }
+}
 
 void Pause::desenhar()
 {
@@ -75,37 +99,5 @@ void Pause::desenhar()
 
 void Pause::executar()
 {
-
-  sf::Event event;
-  while (pGG->pollEvent(event))
-  {
-    if (event.type == sf::Event::Closed)
-    {
-      pGG->fecharJanela();
-    }
-    else if (event.type == sf::Event::KeyPressed)
-    {
-      if (event.key.code == sf::Keyboard::Right)
-      {
-        nextButton();
-      }
-      else if (event.key.code == sf::Keyboard::Left)
-      {
-        prevButton();
-      }
-      else if (event.key.code == sf::Keyboard::Enter)
-      {
-        if (itemSelecionado == 0)
-          gerenciadorEstado.setEstadoJogo(ultimaFase);
-        else
-          gerenciadorEstado.setEstadoJogo(GAMEOVER);
-      }
-      else if (event.key.code == sf::Keyboard::Escape)
-      {
-        gerenciadorEstado.setEstadoJogo(ultimaFase);
-      }
-    }
-    // textInput.receiveEvent(event);
-  }
   desenhar();
 }

@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <cstring>
 #include "Entidades/Entidade.hpp"
 #include "Entidades/Personagens/Personagem.hpp"
 #include "Entidades/Personagens/Jogador.hpp"

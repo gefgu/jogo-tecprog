@@ -43,15 +43,10 @@ MenuInicio::~MenuInicio() {}
 
 void MenuInicio::Update(const char *teclaPressionada)
 {
-  cout << teclaPressionada << endl;
   if (strcmp(teclaPressionada, "Up") == 0)
-  {
     prevButton();
-  }
   if (strcmp(teclaPressionada, "Down") == 0)
-  {
     nextButton();
-  }
   else if (strcmp(teclaPressionada, "Enter") == 0)
   {
     int selectedItem = getSelectedItemIndex();

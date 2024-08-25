@@ -121,8 +121,8 @@ void Jogo::executar()
 
         if (ultimoEstado == estadoJogo::PAUSE)
         {
-            delete leaderboard;
-            leaderboard = NULL;
+            delete pauseMenu;
+            pauseMenu = NULL;
         }
 
         gerenciadorGrafico.display();
