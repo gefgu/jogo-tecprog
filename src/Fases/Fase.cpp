@@ -1,14 +1,20 @@
 #include "Fases/Fase.hpp"
 #include <cstring>
 
-Fase::Fase(int pontos_iniciais, int qty_plt) : pontos(pontos_iniciais), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0), _gerenciadorInput(Gerenciador_Input::getInstance())
+Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciais), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0), _gerenciadorInput(Gerenciador_Input::getInstance()), temPlayerDois(temP2)
 {
   clock.restart();
   _gerenciadorInput.Attach(this);
   Entidade::setFase(this);
-  jogador = new Jogador(200, 100, 5);
+  jogador = new Jogador(200, 100, 5, true);
   entidades.incluir(jogador);
   gerenciadorColisoes.incluirEntidadeMovel(jogador);
+  if (temPlayerDois)
+  {
+    Jogador *jogador2 = new Jogador(200, 100, 5, false);
+    entidades.incluir(jogador2);
+    gerenciadorColisoes.incluirEntidadeMovel(jogador2);
+  }
   criarPlataformas(qty_plt);
   // criaEspinhos();
   // criaLixos();
