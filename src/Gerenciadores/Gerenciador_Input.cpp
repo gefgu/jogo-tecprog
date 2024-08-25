@@ -77,7 +77,29 @@ void Gerenciador_Input::executar()
       std::map<sf::Keyboard::Key, std::string>::iterator it = keyMap.find(event.key.code);
       if (it != keyMap.end())
       {
-        Notify(it->second.c_str());
+        if (pressedKeys.find(event.key.code) == pressedKeys.end())
+        {
+          pressedKeys.insert(event.key.code);
+          Notify(it->second.c_str());
+        }
+      }
+    }
+    else if (event.type == sf::Event::KeyReleased)
+    {
+      pressedKeys.erase(event.key.code);
+    }
+  }
+
+  // Notify for continuous key presses
+  std::set<sf::Keyboard::Key>::iterator it;
+  for (it = pressedKeys.begin(); it != pressedKeys.end(); ++it)
+  {
+    if (sf::Keyboard::isKeyPressed(*it))
+    {
+      std::map<sf::Keyboard::Key, std::string>::iterator keyIt = keyMap.find(*it);
+      if (keyIt != keyMap.end())
+      {
+        Notify(keyIt->second.c_str());
       }
     }
   }

@@ -15,7 +15,7 @@ const float COOLDOWN_ESPINHO = 500.0f;
 const float COOLDOWN_LIXO = 250.0f;
 const float COOLDOWN_TIRO = 1250.0f;
 const float COOLDOWN_MINA = 1250.0f;
-const float COOLDOWN_ACAO = 200.0f;
+const float COOLDOWN_ACAO = 25.0f;
 
 const float SCALING_FACTOR = 3.f;
 
@@ -58,7 +58,7 @@ Jogador::~Jogador()
 
 void Jogador::Update(const char *teclaPressionada)
 {
-    cout << "Update: " << teclaPressionada << endl;
+    // cout << "Update: " << teclaPressionada << endl;
     tempoDesdeUltimaAcao = 0.0f;
     if (strcmp(teclaPressionada, "A") == 0)
         andar(-1);
@@ -97,7 +97,7 @@ void Jogador::correr()
     float elapsed_time = pGG->getElapsedTime();
     newState = RUN;
     velocidadeX += (elapsed_time / 100.0f) / slowness; // taking up speed
-    velocidadeX = min(velocidadeX, RUN_VELOCIDADE_MAXIMA);
+    // velocidadeX = RUN_VELOCIDADE_MAXIMA;
 }
 
 void Jogador::andar(int newDirection)
@@ -114,6 +114,7 @@ void Jogador::andar(int newDirection)
         velocidadeX = min(velocidadeX, RUN_VELOCIDADE_MAXIMA);
     else
         velocidadeX = min(velocidadeX, WALK_VELOCIDADE_MAXIMA);
+    // velocidadeX = WALK_VELOCIDADE_MAXIMA;
 }
 
 void Update()

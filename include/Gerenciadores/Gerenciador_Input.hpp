@@ -2,12 +2,14 @@
 
 #include "Controladores/Subject.hpp"
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
+#include <set>
 
 class Gerenciador_Input : public Subject
 {
 private:
   Gerenciador_Grafico &pGG;
   map<sf::Keyboard::Key, std::string> keyMap;
+  set<sf::Keyboard::Key> pressedKeys;
   Gerenciador_Input();  // Singleton
   ~Gerenciador_Input(); // Singleton
 
