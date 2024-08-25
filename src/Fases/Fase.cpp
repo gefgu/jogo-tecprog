@@ -2,6 +2,9 @@
 #include <cstring>
 #include <fstream>
 #include <json/json.h> // JSON library that supports C++03
+#include <ctime>
+#include <sstream>
+#include <iomanip>
 
 Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciais), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0), _gerenciadorInput(Gerenciador_Input::getInstance()), temPlayerDois(temP2), jogador(NULL), jogador2(NULL)
 {
@@ -275,8 +278,21 @@ void Fase::saveEntitiesToJson()
   // Save other entities using the toJsonArray() method
   root["entities"] = entidades.toJsonArray();
 
-  // Save to a file
-  std::ofstream file("salvo.json");
+  // Get the current time
+  std::time_t now = std::time(0);
+  std::tm *now_tm = std::localtime(&now);
+
+  // Format the time to create a filename
+  std::ostringstream filename;
+  filename << "salvo_" << (now_tm->tm_year + 1900)
+           << std::setw(2) << std::setfill('0') << (now_tm->tm_mon + 1)
+           << std::setw(2) << std::setfill('0') << now_tm->tm_mday << "_"
+           << std::setw(2) << std::setfill('0') << now_tm->tm_hour
+           << std::setw(2) << std::setfill('0') << now_tm->tm_min
+           << std::setw(2) << std::setfill('0') << now_tm->tm_sec << ".json";
+
+  // Save to a file with the generated filename
+  std::ofstream file(filename.str().c_str());
   if (file.is_open())
   {
     file << root;
