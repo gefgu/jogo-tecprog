@@ -40,6 +40,7 @@ public:
     const tipoDeEntidade getTipo() const;
     static void setFase(Fase *pF);
     const bool getAtivo() const;
+    sf::Vector2f getPosition();
 };
 
 #endif // ENTIDADE_HPP

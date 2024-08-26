@@ -60,8 +60,8 @@ Json::Value ListaEntidades::toJsonArray()
     Json::Value entityJson;
 
     entityJson["type"] = it->getInfo()->getTipo();
-    entityJson["x"] = it->getInfo()->getCenter().x;
-    entityJson["y"] = it->getInfo()->getCenter().y;
+    entityJson["x"] = it->getInfo()->getPosition().x;
+    entityJson["y"] = it->getInfo()->getPosition().y;
     if (it->getInfo()->getTipo() == JOGADOR || it->getInfo()->getTipo() == FIGHTER || it->getInfo()->getTipo() == ATIRADOR)
     {
       entityJson["vidas"] = static_cast<Personagem *>(it->getInfo())->getVidas();

@@ -30,7 +30,7 @@ Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciai
 
   if (true)
   {
-    loadFromJson("salvo_20240825_212342.json");
+    loadFromJson("salvo_20240825_213111.json");
   }
   else
   {
@@ -54,6 +54,7 @@ Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciai
       jogador2 = NULL;
     }
   }
+  // saveEntitiesToJson();
 }
 
 Fase::~Fase()
