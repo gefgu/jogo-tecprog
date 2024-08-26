@@ -11,6 +11,28 @@ Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciai
   clock.restart();
   _gerenciadorInput.Attach(this);
   Entidade::setFase(this);
+
+  sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
+  vidasJogador.setFont(*fonte);
+  vidasJogador.setFillColor(sf::Color::White);
+  vidasJogador.setCharacterSize(32);
+  vidasJogador2.setFont(*fonte);
+  vidasJogador2.setFillColor(sf::Color::White);
+  vidasJogador2.setCharacterSize(32);
+
+  pontosText.setFont(*fonte);
+  pontosText.setFillColor(sf::Color::White);
+  pontosText.setCharacterSize(32);
+
+  atualizaVidaJogador();
+  atualizaPontos();
+
+  if (true)
+  {
+    loadFromJson("salvo_20240825_205507.json");
+  }
+  // else
+  // {
   jogador = new Jogador(200, 100, 5, true);
   entidades.incluir(jogador);
   gerenciadorColisoes.incluirEntidadeMovel(jogador);
@@ -25,30 +47,16 @@ Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciai
     jogador2 = NULL;
   }
 
-  criarPlataformas(qty_plt);
+  // criarPlataformas(qty_plt);
   criaEspinhos();
   criaLixos();
   criaMina();
   criaFighters();
   criaAtiradores();
-  // sf::Font *fonte = pGG->carregaFonte("./assets/fonts/INVASION2000.TTF");
-  sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
-  vidasJogador.setFont(*fonte);
-  vidasJogador.setFillColor(sf::Color::White);
-  vidasJogador.setCharacterSize(32);
-  vidasJogador2.setFont(*fonte);
-  vidasJogador2.setFillColor(sf::Color::White);
-  vidasJogador2.setCharacterSize(32);
-
-  pontosText.setFont(*fonte);
-  pontosText.setFillColor(sf::Color::White);
-  pontosText.setCharacterSize(32);
+  // }
 
   caixaDeCorreio.setScale(3, 3);
-
-  atualizaVidaJogador();
-  atualizaPontos();
-  saveEntitiesToJson();
+  // saveEntitiesToJson();
 }
 
 Fase::~Fase()
@@ -177,6 +185,8 @@ void Fase::criaAtiradores()
 
 void Fase::atualizaVidaJogador()
 {
+  if (jogador == NULL)
+    return;
   int vidas = jogador->getVidas();
   vidasJogador.setString(std::to_string(vidas) + " Vidas");
   sf::Vector2f pos = pGG->getTopLeftPosition();
@@ -199,6 +209,8 @@ void Fase::atualizaPontos()
 
 void Fase::verificaFim()
 {
+  if (jogador == NULL)
+    return;
   bool deadCondition = (jogador->getMorto() && !temPlayerDois) || (temPlayerDois && jogador->getMorto() && jogador2->getMorto());
   bool endCondition = (jogador->getCenter().x >= finalX && !temPlayerDois) || (temPlayerDois && jogador->getCenter().x >= finalX && jogador2->getCenter().x >= finalX);
   if (deadCondition || endCondition)
@@ -302,4 +314,94 @@ void Fase::saveEntitiesToJson()
   {
     // Handle error: file could not be opened
   }
+}
+
+void Fase::loadFromJson(const char *filename)
+{
+  std::ifstream file(filename);
+  if (!file.is_open())
+  {
+    // Handle error: file could not be opened
+    return;
+  }
+
+  Json::Value root;
+  file >> root;
+  file.close();
+
+  // Load points
+  if (root.isMember("points"))
+  {
+    pontos = root["points"].asInt();
+  }
+
+  // Load phase type
+  if (root.isMember("fase"))
+  {
+    // Gerenciador_Estado::getInstance().setEstadoJogo(root["fase"].asString());
+    cout << "Fase: " << root["fase"].asString() << endl;
+  }
+
+  // Load platforms
+  if (root.isMember("platforms"))
+  {
+    // plataformas.clear(); // Clear existing platforms if any
+    Json::Value platformJson;
+    for (Json::Value::ArrayIndex i = 0; i < root["platforms"].size(); ++i)
+    {
+      platformJson = root["platforms"][i];
+      Plataforma *plataforma = new Plataforma(platformJson["x"].asInt(), platformJson["y"].asInt());
+      plataformas.incluir(plataforma);
+      gerenciadorColisoes.incluirEntidadeEstatica(plataforma);
+    }
+    finalX = platformJson["x"].asInt() - PLATAFORMA_WIDTH * 3;
+    caixaDeCorreio.setPosition(finalX, platformJson["y"].asInt() - ((PLATAFORMA_HEIGHT * 3) / 2) + caixaDeCorreio.getSize().height / 2);
+  }
+
+  // // Load other entities
+  // if (root.isMember("entities"))
+  // {
+  //   entidades.clear(); // Clear existing entities if any
+  //   for (Json::Value::ArrayIndex i = 0; i < root["entities"].size(); ++i)
+  //   {
+  //     Json::Value entityJson = root["entities"][i];
+  //     std::string entityType = entityJson["type"].asString();
+  //     if (entityType == "Jogador")
+  //     {
+  //       Jogador *jogador = new Jogador(entityJson["x"].asInt(), entityJson["y"].asInt());
+  //       entidades.add(jogador);
+  //     }
+  //     else if (entityType == "Espinho")
+  //     {
+  //       Espinho *espinho = new Espinho(entityJson["x"].asInt(), entityJson["y"].asInt());
+  //       entidades.add(espinho);
+  //     }
+  //     else if (entityType == "Lixo")
+  //     {
+  //       Lixo *lixo = new Lixo(entityJson["x"].asInt(), entityJson["y"].asInt());
+  //       entidades.add(lixo);
+  //     }
+  //     else if (entityType == "Mina")
+  //     {
+  //       Mina *mina = new Mina(entityJson["x"].asInt(), entityJson["y"].asInt());
+  //       entidades.add(mina);
+  //     }
+  //     else if (entityType == "Fighter")
+  //     {
+  //       Fighter *fighter = new Fighter(entityJson["x"].asInt(), entityJson["y"].asInt());
+  //       entidades.add(fighter);
+  //     }
+  //     else if (entityType == "Atirador")
+  //     {
+  //       Atirador *atirador = new Atirador(entityJson["x"].asInt(), entityJson["y"].asInt());
+  //       entidades.add(atirador);
+  //     }
+  //     else if (entityType == "Projetil")
+  //     {
+  //       Projetil *projetil = new Projetil(entityJson["x"].asInt(), entityJson["y"].asInt(), entityJson["direcao"].asInt());
+  //       entidades.add(projetil);
+  //     }
+  //     // Add more entity types as needed
+  //   }
+  // }
 }
