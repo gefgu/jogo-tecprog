@@ -1,6 +1,7 @@
 #include "Listas/ListaEntidades.hpp"
 #include "Entidades/Personagens/Personagem.hpp"
 #include "Entidades/Personagens/Jogador.hpp"
+#include "Entidades/Projetil.hpp"
 
 ListaEntidades::ListaEntidades() {}
 
@@ -68,6 +69,10 @@ Json::Value ListaEntidades::toJsonArray()
     if (it->getInfo()->getTipo() == JOGADOR)
     {
       entityJson["is_p1"] = static_cast<Jogador *>(it->getInfo())->getP1();
+    }
+    if (it->getInfo()->getTipo() == PROJETIL)
+    {
+      entityJson["atirador"] = static_cast<Projetil *>(it->getInfo())->getAtirador();
     }
 
     jsonArray.append(entityJson);

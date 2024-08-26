@@ -26,37 +26,34 @@ Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciai
 
   atualizaVidaJogador();
   atualizaPontos();
+  caixaDeCorreio.setScale(3, 3);
 
   if (true)
   {
-    loadFromJson("salvo_20240825_205507.json");
-  }
-  // else
-  // {
-  jogador = new Jogador(200, 100, 5, true);
-  entidades.incluir(jogador);
-  gerenciadorColisoes.incluirEntidadeMovel(jogador);
-  if (temPlayerDois)
-  {
-    jogador2 = new Jogador(200, 100, 5, false);
-    entidades.incluir(jogador2);
-    gerenciadorColisoes.incluirEntidadeMovel(jogador2);
+    loadFromJson("salvo_20240825_212342.json");
   }
   else
   {
-    jogador2 = NULL;
+    criarPlataformas(qty_plt);
+    criaEspinhos();
+    criaLixos();
+    criaMina();
+    criaFighters();
+    criaAtiradores();
+    jogador = new Jogador(200, 100, 5, true);
+    entidades.incluir(jogador);
+    gerenciadorColisoes.incluirEntidadeMovel(jogador);
+    if (temPlayerDois)
+    {
+      jogador2 = new Jogador(200, 100, 5, false);
+      entidades.incluir(jogador2);
+      gerenciadorColisoes.incluirEntidadeMovel(jogador2);
+    }
+    else
+    {
+      jogador2 = NULL;
+    }
   }
-
-  // criarPlataformas(qty_plt);
-  criaEspinhos();
-  criaLixos();
-  criaMina();
-  criaFighters();
-  criaAtiradores();
-  // }
-
-  caixaDeCorreio.setScale(3, 3);
-  // saveEntitiesToJson();
 }
 
 Fase::~Fase()
@@ -358,50 +355,69 @@ void Fase::loadFromJson(const char *filename)
     caixaDeCorreio.setPosition(finalX, platformJson["y"].asInt() - ((PLATAFORMA_HEIGHT * 3) / 2) + caixaDeCorreio.getSize().height / 2);
   }
 
-  // // Load other entities
-  // if (root.isMember("entities"))
-  // {
-  //   entidades.clear(); // Clear existing entities if any
-  //   for (Json::Value::ArrayIndex i = 0; i < root["entities"].size(); ++i)
-  //   {
-  //     Json::Value entityJson = root["entities"][i];
-  //     std::string entityType = entityJson["type"].asString();
-  //     if (entityType == "Jogador")
-  //     {
-  //       Jogador *jogador = new Jogador(entityJson["x"].asInt(), entityJson["y"].asInt());
-  //       entidades.add(jogador);
-  //     }
-  //     else if (entityType == "Espinho")
-  //     {
-  //       Espinho *espinho = new Espinho(entityJson["x"].asInt(), entityJson["y"].asInt());
-  //       entidades.add(espinho);
-  //     }
-  //     else if (entityType == "Lixo")
-  //     {
-  //       Lixo *lixo = new Lixo(entityJson["x"].asInt(), entityJson["y"].asInt());
-  //       entidades.add(lixo);
-  //     }
-  //     else if (entityType == "Mina")
-  //     {
-  //       Mina *mina = new Mina(entityJson["x"].asInt(), entityJson["y"].asInt());
-  //       entidades.add(mina);
-  //     }
-  //     else if (entityType == "Fighter")
-  //     {
-  //       Fighter *fighter = new Fighter(entityJson["x"].asInt(), entityJson["y"].asInt());
-  //       entidades.add(fighter);
-  //     }
-  //     else if (entityType == "Atirador")
-  //     {
-  //       Atirador *atirador = new Atirador(entityJson["x"].asInt(), entityJson["y"].asInt());
-  //       entidades.add(atirador);
-  //     }
-  //     else if (entityType == "Projetil")
-  //     {
-  //       Projetil *projetil = new Projetil(entityJson["x"].asInt(), entityJson["y"].asInt(), entityJson["direcao"].asInt());
-  //       entidades.add(projetil);
-  //     }
-  //     // Add more entity types as needed
-  //   }
-  // }
+  // Load other entities
+  if (root.isMember("entities"))
+  {
+    // entidades.clear(); // Clear existing entities if any
+    for (Json::Value::ArrayIndex i = 0; i < root["entities"].size(); ++i)
+    {
+      Json::Value entityJson = root["entities"][i];
+      tipoDeEntidade entityType = (tipoDeEntidade)entityJson["type"].asInt();
+      if (entityType == JOGADOR)
+      {
+        if ((bool)entityJson["is_p1"].asInt())
+        {
+          jogador = new Jogador(entityJson["x"].asInt(), entityJson["y"].asInt(), entityJson["vidas"].asInt(), true);
+          entidades.incluir(jogador);
+          gerenciadorColisoes.incluirEntidadeMovel(jogador);
+        }
+        else
+        {
+          temPlayerDois = true;
+          jogador2 = new Jogador(entityJson["x"].asInt(), entityJson["y"].asInt(), entityJson["vidas"].asInt(), false);
+          entidades.incluir(jogador2);
+          gerenciadorColisoes.incluirEntidadeMovel(jogador2);
+        }
+      }
+      if (entityType == ESPINHO)
+      {
+        Espinho *espinho = new Espinho(entityJson["x"].asInt(), entityJson["y"].asInt());
+        entidades.incluir(espinho);
+        gerenciadorColisoes.incluirEntidadeEstatica(espinho);
+      }
+      else if (entityType == LIXO)
+      {
+        Lixo *lixo = new Lixo(entityJson["x"].asInt(), entityJson["y"].asInt());
+        entidades.incluir(lixo);
+        gerenciadorColisoes.incluirEntidadeEstatica(lixo);
+      }
+      else if (entityType == MINA)
+      {
+        Mina *mina = new Mina(entityJson["x"].asInt(), entityJson["y"].asInt());
+        entidades.incluir(mina);
+        gerenciadorColisoes.incluirEntidadeEstatica(mina);
+      }
+      else if (entityType == FIGHTER)
+      {
+        Fighter *fighter = new Fighter(entityJson["x"].asInt(), entityJson["y"].asInt(), entityType["vidas"]);
+        entidades.incluir(fighter);
+        gerenciadorColisoes.incluirEntidadeMovel(fighter);
+        gerenciadorColisoes.incluirEntidadeMovel(fighter->getCampoDeVisao());
+      }
+      else if (entityType == ATIRADOR)
+      {
+        Atirador *atirador = new Atirador(entityJson["x"].asInt(), entityJson["y"].asInt(), entityType["vidas"]);
+        entidades.incluir(atirador);
+        gerenciadorColisoes.incluirEntidadeMovel(atirador);
+        gerenciadorColisoes.incluirEntidadeMovel(atirador->getCampoDeVisao());
+      }
+      else if (entityType == PROJETIL)
+      {
+        Projetil *projetil = new Projetil(entityJson["x"].asInt(), entityJson["y"].asInt(), entityJson["direcao"].asInt(), (tipoDeEntidade)entityJson["atirador"].asInt());
+        entidades.incluir(projetil);
+        gerenciadorColisoes.incluirEntidadeMovel(projetil);
+      }
+      //   // Add more entity types as needed
+    }
+  }
 }
