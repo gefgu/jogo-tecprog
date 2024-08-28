@@ -10,7 +10,8 @@ enum estadoJogo
   LEADERBOARD,
   PAUSE,
   ESCOLHAPLAYERS,
-  MENUCARREGAMENTO
+  MENUCARREGAMENTO,
+  SALVAMENTO,
 };
 
 class Gerenciador_Estado

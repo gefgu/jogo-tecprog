@@ -28,9 +28,9 @@ Fase::Fase(string filename, int pontos_iniciais, int qty_plt, bool temP2) : pont
   atualizaPontos();
   caixaDeCorreio.setScale(3, 3);
 
-  if (true)
+  if (!filename.empty())
   {
-    loadFromJson("salvo_20240825_213111.json");
+    loadFromJson(filename);
   }
   else
   {

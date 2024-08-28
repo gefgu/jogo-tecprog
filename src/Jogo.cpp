@@ -143,6 +143,18 @@ void Jogo::executar()
                 menuCarregamento->executar();
             }
         }
+        else if (estado == estadoJogo::SALVAMENTO)
+        {
+            if (fase1 != NULL)
+            {
+                fase1->saveEntitiesToJson();
+            }
+            else if (fase2 != NULL)
+            {
+                fase2->saveEntitiesToJson();
+            }
+            gerenciadorEstado.setEstadoJogo(GAMEOVER);
+        }
 
         if (ultimoEstado == estadoJogo::MENUGAMEOVER)
         {

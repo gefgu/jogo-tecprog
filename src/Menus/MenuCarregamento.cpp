@@ -74,7 +74,8 @@ void MenuCarregamento::Update(const char *teclaPressionada)
     }
     else
     {
-      int fase = getFaseFromJson(filenames[selectedItem].c_str());
+      int fase = getFaseFromJson(filenames[selectedItem]);
+      cout << fase << endl;
       if (fase == -1)
       {
         gerenciadorEstado.setEstadoJogo(estadoJogo::MENUINICIO);
@@ -83,7 +84,7 @@ void MenuCarregamento::Update(const char *teclaPressionada)
       {
         gerenciadorEstado.setEstadoJogo(estadoJogo::FASE1);
       }
-      else if (fase == 2)
+      else if (fase == 9) // fase2
       {
         gerenciadorEstado.setEstadoJogo(estadoJogo::FASE2);
       }

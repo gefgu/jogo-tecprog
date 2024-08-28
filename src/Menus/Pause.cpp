@@ -68,7 +68,11 @@ void Pause::Update(const char *teclaPressionada)
   {
     if (itemSelecionado == 0)
       gerenciadorEstado.setEstadoJogo(ultimaFase);
-    else
+    if (itemSelecionado == 1)
+    {
+      gerenciadorEstado.setEstadoJogo(SALVAMENTO); // some strange bug
+    }
+    else if (itemSelecionado == 2)
     {
       gerenciadorEstado.setEstadoJogo(PAUSE); // some strange bug
       gerenciadorEstado.setEstadoJogo(GAMEOVER);

@@ -49,7 +49,6 @@ protected:
   void verificaFim();
   void fimDeJogo();
   void centralizaCamera();
-  void saveEntitiesToJson();
   void loadFromJson(string filename);
 
 public:
@@ -61,6 +60,7 @@ public:
   void addProjetil(int px, int py, int direcao, tipoDeEntidade atirador);
   void alteraPontos(int soma);
   void Update(const char *teclaPressionada);
+  void saveEntitiesToJson();
 };
 
 #endif // FASE_HPP
