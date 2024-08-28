@@ -17,6 +17,7 @@ public:
 
     void executar() override;
     void lidarColisao(sf::Vector2f intersecao, Entidade *other) override;
+    Json::Value gravar();
 };
 
 #endif

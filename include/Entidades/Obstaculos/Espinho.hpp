@@ -14,6 +14,7 @@ public:
   ~Espinho();
   void executar();
   void lidarColisao(sf::Vector2f intersecao, Entidade *other);
+  Json::Value gravar();
 };
 
 #endif // OBSTACULO_FACIL_HPP

@@ -64,13 +64,18 @@ void Pause::Update(const char *teclaPressionada)
   {
     prevButton();
   }
+  else if (strcmp(teclaPressionada, "Escape") == 0)
+  {
+    gerenciadorEstado.setEstadoJogo(PAUSE); // some strange bug
+    gerenciadorEstado.setEstadoJogo(GAMEOVER);
+  }
   else if (strcmp(teclaPressionada, "Enter") == 0)
   {
     if (itemSelecionado == 0)
       gerenciadorEstado.setEstadoJogo(ultimaFase);
     if (itemSelecionado == 1)
     {
-      gerenciadorEstado.setEstadoJogo(SALVAMENTO); // some strange bug
+      gerenciadorEstado.setEstadoJogo(SALVAMENTO);
     }
     else if (itemSelecionado == 2)
     {

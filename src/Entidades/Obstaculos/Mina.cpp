@@ -33,3 +33,13 @@ void Mina::lidarColisao(sf::Vector2f intersecao, Entidade *other)
     ativo = false;
   }
 }
+
+Json::Value Mina::gravar()
+{
+  Json::Value entityJson;
+
+  entityJson["type"] = getTipo();
+  entityJson["x"] = getPosition().x;
+  entityJson["y"] = getPosition().y;
+  return entityJson;
+}
