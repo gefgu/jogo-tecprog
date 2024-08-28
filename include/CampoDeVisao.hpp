@@ -19,4 +19,5 @@ public:
   void lidarColisao(sf::Vector2f intersecao, Entidade *other);
   void desenhar();
   void executar();
+  Json::Value gravar();
 };

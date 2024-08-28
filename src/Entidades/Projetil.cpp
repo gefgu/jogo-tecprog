@@ -77,3 +77,14 @@ tipoDeEntidade Projetil::getAtirador()
 {
   return atirador;
 }
+
+Json::Value Projetil::gravar()
+{
+  Json::Value entityJson;
+
+  entityJson["type"] = getTipo();
+  entityJson["x"] = getPosition().x;
+  entityJson["y"] = getPosition().y;
+  entityJson["atirador"] = getAtirador();
+  return entityJson;
+}

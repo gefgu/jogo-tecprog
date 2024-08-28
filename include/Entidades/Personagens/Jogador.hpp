@@ -39,4 +39,5 @@ public:
     void aplicarForcaRepulsao(float forcaX, float forcaY);
     void Update(const char *teclaPressionada);
     bool getP1();
+    Json::Value gravar();
 };

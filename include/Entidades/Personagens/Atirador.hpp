@@ -19,4 +19,5 @@ public:
   void olhar();
   void atacar();
   void lidarColisao(sf::Vector2f intersecao, Entidade *other);
+  Json::Value gravar();
 };

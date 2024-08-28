@@ -57,25 +57,7 @@ Json::Value ListaEntidades::toJsonArray()
   Elemento<Entidade> *it;
   for (it = LEs.getPrimeiro(); it != NULL; it = it->getProximo())
   {
-    Json::Value entityJson;
-
-    entityJson["type"] = it->getInfo()->getTipo();
-    entityJson["x"] = it->getInfo()->getPosition().x;
-    entityJson["y"] = it->getInfo()->getPosition().y;
-    if (it->getInfo()->getTipo() == JOGADOR || it->getInfo()->getTipo() == FIGHTER || it->getInfo()->getTipo() == ATIRADOR)
-    {
-      entityJson["vidas"] = static_cast<Personagem *>(it->getInfo())->getVidas();
-    }
-    if (it->getInfo()->getTipo() == JOGADOR)
-    {
-      entityJson["is_p1"] = static_cast<Jogador *>(it->getInfo())->getP1();
-    }
-    if (it->getInfo()->getTipo() == PROJETIL)
-    {
-      entityJson["atirador"] = static_cast<Projetil *>(it->getInfo())->getAtirador();
-    }
-
-    jsonArray.append(entityJson);
+    jsonArray.append(it->getInfo()->gravar());
   }
 
   return jsonArray;

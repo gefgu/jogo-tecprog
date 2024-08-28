@@ -311,3 +311,15 @@ bool Jogador::getP1()
 {
     return isP1;
 }
+
+Json::Value Jogador::gravar()
+{
+    Json::Value entityJson;
+
+    entityJson["type"] = getTipo();
+    entityJson["x"] = getPosition().x;
+    entityJson["y"] = getPosition().y;
+    entityJson["vidas"] = getVidas();
+    entityJson["is_p1"] = getP1();
+    return entityJson;
+}
