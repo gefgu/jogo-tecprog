@@ -53,7 +53,7 @@ protected:
   void loadFromJson(string filename);
 
 public:
-  Fase(string filename = NULL, int pontos_iniciais = 1000, int qty_plt = 50, bool temP2 = false);
+  Fase(string filename = "", int pontos_iniciais = 1000, int qty_plt = 50, bool temP2 = false);
   ~Fase();
   void desenhar();
   virtual void executar();

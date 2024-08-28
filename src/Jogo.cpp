@@ -41,7 +41,7 @@ void Jogo::executar()
                 }
                 else if (ultimoEstado == MENUCARREGAMENTO)
                 {
-                    fase2 = new Fase_Segunda(configuracoes.getDoisJogadores(), menuCarregamento->getSelectedSalve());
+                    fase1 = new Fase_Primeira(configuracoes.getDoisJogadores(), menuCarregamento->getSelectedSalve());
                 }
                 else
                 {

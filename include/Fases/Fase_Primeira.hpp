@@ -9,7 +9,7 @@ private:
   void criarCenario();
 
 public:
-  Fase_Primeira(bool temP2, string filename = NULL, int pontos_iniciais = 1000);
+  Fase_Primeira(bool temP2, string filename = "", int pontos_iniciais = 1000);
   ~Fase_Primeira();
   void executar();
   void criarInimigosFaceis();
