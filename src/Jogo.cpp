@@ -3,7 +3,7 @@
 #include <iostream>
 
 Jogo::Jogo() : gerenciadorGrafico(Gerenciador_Grafico::getInstance()),
-               gerenciadorEstado(Gerenciador_Estado::getInstance()), menuInicio(NULL), fase1(NULL), fase2(NULL), menuFimDeJogo(NULL), leaderboard(NULL), pauseMenu(NULL), gerenciadorInput(Gerenciador_Input::getInstance()), menuEscolhaPlayers(NULL), configuracoes(Configuracoes::getInstance())
+               gerenciadorEstado(Gerenciador_Estado::getInstance()), menuInicio(NULL), fase1(NULL), fase2(NULL), menuFimDeJogo(NULL), leaderboard(NULL), pauseMenu(NULL), gerenciadorInput(Gerenciador_Input::getInstance()), menuEscolhaPlayers(NULL), configuracoes(Configuracoes::getInstance()), menuCarregamento(NULL)
 {
     Ente::setGerenciadorGrafico(&gerenciadorGrafico);
     gerenciadorThreads.iniciarThreadColisoes(&gerenciadorColisoes);
@@ -37,7 +37,11 @@ void Jogo::executar()
             {
                 if (ultimoEstado == MENUGAMEOVER)
                 {
-                    fase1 = new Fase_Primeira(configuracoes.getDoisJogadores(), menuFimDeJogo->getPontos());
+                    fase1 = new Fase_Primeira(configuracoes.getDoisJogadores(), "", menuFimDeJogo->getPontos());
+                }
+                else if (ultimoEstado == MENUCARREGAMENTO)
+                {
+                    fase2 = new Fase_Segunda(configuracoes.getDoisJogadores(), menuCarregamento->getSelectedSalve());
                 }
                 else
                 {
@@ -52,7 +56,11 @@ void Jogo::executar()
             {
                 if (ultimoEstado == MENUGAMEOVER)
                 {
-                    fase2 = new Fase_Segunda(configuracoes.getDoisJogadores(), menuFimDeJogo->getPontos());
+                    fase2 = new Fase_Segunda(configuracoes.getDoisJogadores(), "", menuFimDeJogo->getPontos());
+                }
+                else if (ultimoEstado == MENUCARREGAMENTO)
+                {
+                    fase2 = new Fase_Segunda(configuracoes.getDoisJogadores(), menuCarregamento->getSelectedSalve());
                 }
                 else
                 {
@@ -124,6 +132,17 @@ void Jogo::executar()
                 menuEscolhaPlayers->executar();
             }
         }
+        else if (estado == estadoJogo::MENUCARREGAMENTO)
+        {
+            if (menuCarregamento == NULL)
+            {
+                menuCarregamento = new MenuCarregamento();
+            }
+            else
+            {
+                menuCarregamento->executar();
+            }
+        }
 
         if (ultimoEstado == estadoJogo::MENUGAMEOVER)
         {
@@ -153,6 +172,12 @@ void Jogo::executar()
         {
             delete menuEscolhaPlayers;
             menuEscolhaPlayers = NULL;
+        }
+
+        if (ultimoEstado == MENUCARREGAMENTO)
+        {
+            delete menuCarregamento;
+            menuCarregamento = NULL;
         }
 
         gerenciadorGrafico.display();

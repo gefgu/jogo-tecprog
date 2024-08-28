@@ -9,7 +9,8 @@ enum estadoJogo
   MENUGAMEOVER,
   LEADERBOARD,
   PAUSE,
-  ESCOLHAPLAYERS
+  ESCOLHAPLAYERS,
+  MENUCARREGAMENTO
 };
 
 class Gerenciador_Estado

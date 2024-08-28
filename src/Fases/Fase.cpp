@@ -6,7 +6,7 @@
 #include <sstream>
 #include <iomanip>
 
-Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciais), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0), _gerenciadorInput(Gerenciador_Input::getInstance()), temPlayerDois(temP2), jogador(NULL), jogador2(NULL)
+Fase::Fase(string filename, int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciais), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0), _gerenciadorInput(Gerenciador_Input::getInstance()), temPlayerDois(temP2), jogador(NULL), jogador2(NULL)
 {
   clock.restart();
   _gerenciadorInput.Attach(this);
@@ -314,7 +314,7 @@ void Fase::saveEntitiesToJson()
   }
 }
 
-void Fase::loadFromJson(const char *filename)
+void Fase::loadFromJson(string filename)
 {
   std::ifstream file(filename);
   if (!file.is_open())
@@ -355,6 +355,7 @@ void Fase::loadFromJson(const char *filename)
     finalX = platformJson["x"].asInt() - PLATAFORMA_WIDTH * 3;
     caixaDeCorreio.setPosition(finalX, platformJson["y"].asInt() - ((PLATAFORMA_HEIGHT * 3) / 2) + caixaDeCorreio.getSize().height / 2);
   }
+  cout << "Added " << root["platforms"].size() << " platforms" << endl;
 
   // Load other entities
   if (root.isMember("entities"))
@@ -379,24 +380,28 @@ void Fase::loadFromJson(const char *filename)
           entidades.incluir(jogador2);
           gerenciadorColisoes.incluirEntidadeMovel(jogador2);
         }
+        cout << "Loaded player" << endl;
       }
       if (entityType == ESPINHO)
       {
         Espinho *espinho = new Espinho(entityJson["x"].asInt(), entityJson["y"].asInt());
         entidades.incluir(espinho);
         gerenciadorColisoes.incluirEntidadeEstatica(espinho);
+        cout << "Loaded espinho" << endl;
       }
       else if (entityType == LIXO)
       {
         Lixo *lixo = new Lixo(entityJson["x"].asInt(), entityJson["y"].asInt());
         entidades.incluir(lixo);
         gerenciadorColisoes.incluirEntidadeEstatica(lixo);
+        cout << "Loaded lixo" << endl;
       }
       else if (entityType == MINA)
       {
         Mina *mina = new Mina(entityJson["x"].asInt(), entityJson["y"].asInt());
         entidades.incluir(mina);
         gerenciadorColisoes.incluirEntidadeEstatica(mina);
+        cout << "Loaded mina" << endl;
       }
       else if (entityType == FIGHTER)
       {
@@ -404,6 +409,7 @@ void Fase::loadFromJson(const char *filename)
         entidades.incluir(fighter);
         gerenciadorColisoes.incluirEntidadeMovel(fighter);
         gerenciadorColisoes.incluirEntidadeMovel(fighter->getCampoDeVisao());
+        cout << "Loaded figther" << endl;
       }
       else if (entityType == ATIRADOR)
       {
@@ -411,12 +417,14 @@ void Fase::loadFromJson(const char *filename)
         entidades.incluir(atirador);
         gerenciadorColisoes.incluirEntidadeMovel(atirador);
         gerenciadorColisoes.incluirEntidadeMovel(atirador->getCampoDeVisao());
+        cout << "Loaded atirador" << endl;
       }
       else if (entityType == PROJETIL)
       {
         Projetil *projetil = new Projetil(entityJson["x"].asInt(), entityJson["y"].asInt(), entityJson["direcao"].asInt(), (tipoDeEntidade)entityJson["atirador"].asInt());
         entidades.incluir(projetil);
         gerenciadorColisoes.incluirEntidadeMovel(projetil);
+        cout << "Loaded projetil" << endl;
       }
       //   // Add more entity types as needed
     }

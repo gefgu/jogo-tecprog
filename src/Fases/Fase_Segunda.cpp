@@ -1,6 +1,6 @@
 #include "Fases/Fase_Segunda.hpp"
 
-Fase_Segunda::Fase_Segunda(bool temP2, int pontos_iniciais) : Fase(pontos_iniciais, 50, temP2)
+Fase_Segunda::Fase_Segunda(bool temP2, string filename, int pontos_iniciais) : Fase(filename, pontos_iniciais, 50, temP2)
 {
   criarCenario();
 }
