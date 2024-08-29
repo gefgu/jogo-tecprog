@@ -57,12 +57,6 @@ void Fase_Segunda::criaSoldadoChefe()
 
 void Fase_Segunda::desenhar()
 {
-  int tempo = clock.getElapsedTime().asSeconds();
-  if (tempo > segundosDesdeInicio)
-  {
-    segundosDesdeInicio++;
-    pontos--;
-  }
   pGG->draw(fundo);
   plataformas.desenhar();
   caixaDeCorreio.desenhar();
@@ -75,6 +69,13 @@ void Fase_Segunda::desenhar()
 
 void Fase_Segunda::executar()
 {
+  int tempo = clock.getElapsedTime().asSeconds();
+  if (tempo > segundosDesdeInicio)
+  {
+    segundosDesdeInicio++;
+    pontos--;
+    pontos = max(pontos, 0);
+  }
   gerenciadorColisoes.executar();
   entidades.executar();
   centralizaCamera();

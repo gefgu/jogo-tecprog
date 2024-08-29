@@ -57,7 +57,7 @@ void Fighter::perseguir()
   {
     newState = RUN;
   }
-  else if (abs(distance) > 30 * 3)
+  else if (abs(distance) > 33 * 3)
   {
     newState = WALK;
   }

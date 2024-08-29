@@ -229,7 +229,7 @@ void Fase::alteraPontos(int soma)
   {
     pontos += soma;
   }
-  pontos = std::max(pontos, 0);
+  pontos = max(pontos, 0);
 }
 
 void Fase::Update(const char *teclaPressionada)

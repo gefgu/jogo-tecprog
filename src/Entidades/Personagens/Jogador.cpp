@@ -259,23 +259,35 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
 
     if (other->getTipo() == tipoDeEntidade::FIGHTER && !static_cast<Fighter *>(other)->getMorto())
     {
-        if (intersecao.x > 0)
+        if (other->getCenter().x >= getCenter().x)
         {
             x -= intersecao.x - 1;
+        }
+        else
+        {
+            x += intersecao.x + 1;
         }
     }
     else if (other->getTipo() == tipoDeEntidade::ATIRADOR && !static_cast<Atirador *>(other)->getMorto())
     {
-        if (intersecao.x > 0)
+        if (other->getCenter().x >= getCenter().x)
         {
             x -= intersecao.x - 2;
+        }
+        else
+        {
+            x += intersecao.x + 2;
         }
     }
     else if (other->getTipo() == tipoDeEntidade::SOLDADO && !static_cast<Atirador *>(other)->getMorto())
     {
-        if (intersecao.x > 0)
+        if (other->getCenter().x >= getCenter().x)
         {
             x -= intersecao.x - 2;
+        }
+        else
+        {
+            x += intersecao.x + 2;
         }
     }
 

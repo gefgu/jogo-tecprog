@@ -25,13 +25,6 @@ void Fase_Primeira::criarCenario()
 
 void Fase_Primeira::desenhar()
 {
-  int tempo = clock.getElapsedTime().asSeconds();
-  if (tempo > segundosDesdeInicio)
-  {
-    segundosDesdeInicio++;
-    pontos--;
-  }
-
   pGG->draw(fundo);
   plataformas.desenhar();
   entidades.desenhar();
@@ -44,6 +37,14 @@ void Fase_Primeira::desenhar()
 
 void Fase_Primeira::executar()
 {
+  int tempo = clock.getElapsedTime().asSeconds();
+  if (tempo > segundosDesdeInicio)
+  {
+    segundosDesdeInicio++;
+    pontos--;
+    pontos = max(pontos, 0);
+  }
+
   gerenciadorColisoes.executar();
   entidades.executar();
   centralizaCamera();
