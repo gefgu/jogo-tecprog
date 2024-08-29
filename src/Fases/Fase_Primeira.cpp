@@ -3,6 +3,7 @@
 Fase_Primeira::Fase_Primeira(bool temP2, string filename, int pontos_iniciais) : Fase(filename, pontos_iniciais, 40, temP2)
 {
   criarCenario();
+  criaAtiradores();
 }
 
 Fase_Primeira::~Fase_Primeira() {}
@@ -49,4 +50,19 @@ void Fase_Primeira::executar()
   atualizaPontos();
   verificaFim();
   desenhar();
+}
+
+void Fase_Primeira::criaAtiradores()
+{
+  int total_atiradores = 3 + (rand() % 2);
+  for (int i = 0; i < total_atiradores; i++)
+  {
+    Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
+    int px = p->getCenter().x;
+    int py = p->getCenter().y - (p->getSize().height / 2.f) - (ATIRADOR_HEIGHT / 2.f);
+    Atirador *a = new Atirador(px, py, 3 + (rand() % 4));
+    entidades.incluir(a);
+    gerenciadorColisoes.incluirEntidadeMovel(a);
+    gerenciadorColisoes.incluirEntidadeMovel(a->getCampoDeVisao());
+  }
 }

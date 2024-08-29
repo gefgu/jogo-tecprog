@@ -14,12 +14,14 @@ enum tipoDeEntidade
     JOGADOR,
     FIGHTER,
     ATIRADOR,
+    SOLDADO,
     OBSTACULO,
     ESPINHO,
     LIXO,
     MINA,
     VISAO,
-    PROJETIL
+    PROJETIL,
+    GRANADA
 };
 
 class Entidade : public Ente

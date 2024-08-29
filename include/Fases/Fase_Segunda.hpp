@@ -2,18 +2,19 @@
 #define FASE_SEGUNDA_HPP
 
 #include "Fase.hpp"
+#include "Entidades/Personagens/SoldadoChefe.hpp"
 
 class Fase_Segunda : public Fase
 {
 private:
   void criarCenario();
+  void criaMina();
+  void criaSoldadoChefe();
 
 public:
   Fase_Segunda(bool temP2, string filename = "", int pontos_iniciais = 1000);
   ~Fase_Segunda();
   void executar();
-  void criarInimigosFaceis();
-  void criarObstaculosDificeis();
   void desenhar();
 };
 

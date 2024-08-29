@@ -11,9 +11,9 @@ const float GRAVIDADE = 9.8f; // Aceleração da gravidade (em unidades por segu
 
 const float COOLDOWN_PULO = 800.0f; // Tempo de espera entre pulos (em milissegundos)
 
-const float COOLDOWN_ESPINHO = 500.0f;
+const float COOLDOWN_ESPINHO = 1500.0f;
 const float COOLDOWN_LIXO = 250.0f;
-const float COOLDOWN_TIRO = 1250.0f;
+const float COOLDOWN_TIRO = 500.0f;
 const float COOLDOWN_MINA = 1250.0f;
 const float COOLDOWN_ACAO = 25.0f;
 
@@ -258,6 +258,13 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
         }
     }
     else if (other->getTipo() == tipoDeEntidade::ATIRADOR && !static_cast<Atirador *>(other)->getMorto())
+    {
+        if (intersecao.x > 0)
+        {
+            x -= intersecao.x - 2;
+        }
+    }
+    else if (other->getTipo() == tipoDeEntidade::SOLDADO && !static_cast<Atirador *>(other)->getMorto())
     {
         if (intersecao.x > 0)
         {

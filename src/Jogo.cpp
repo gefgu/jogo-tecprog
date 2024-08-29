@@ -180,7 +180,7 @@ void Jogo::executar()
             menuInicio = NULL;
         }
 
-        if (ultimoEstado == ESCOLHAPLAYERS)
+        if (ultimoEstado == estadoJogo::ESCOLHAPLAYERS)
         {
             delete menuEscolhaPlayers;
             menuEscolhaPlayers = NULL;

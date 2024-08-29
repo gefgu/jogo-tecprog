@@ -96,6 +96,10 @@ void Personagem::setAnimationState()
     {
         animacao.setTrilha("shot");
     }
+    else if (state == GRENADE)
+    {
+        animacao.setTrilha("grenade");
+    }
 
     // Ajusta a escala com base na direção atual
     animacao.setScale(direcao * SCALING_FACTOR, SCALING_FACTOR);
