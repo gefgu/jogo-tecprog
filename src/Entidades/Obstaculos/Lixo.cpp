@@ -24,3 +24,13 @@ void Lixo::lidarColisao(sf::Vector2f intersecao, Entidade *other)
     static_cast<Jogador *>(other)->reduzirVelocidade(fator_de_impedimento);
   }
 }
+
+Json::Value Lixo::gravar()
+{
+  Json::Value entityJson;
+
+  entityJson["type"] = getTipo();
+  entityJson["x"] = getPosition().x;
+  entityJson["y"] = getPosition().y;
+  return entityJson;
+}

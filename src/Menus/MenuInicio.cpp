@@ -62,6 +62,7 @@ void MenuInicio::Update(const char *teclaPressionada)
     else if (selectedItem == 2)
     {
       // Configurações
+      gerenciadorEstado.setEstadoJogo(estadoJogo::MENUCARREGAMENTO);
     }
     else if (selectedItem == 3)
     {

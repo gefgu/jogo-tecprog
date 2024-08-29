@@ -3,6 +3,7 @@
 
 #include "Entidades/Entidade.hpp"
 #include "Listas/Lista.hpp"
+#include <json/json.h> // JSON library that supports C++03
 
 class ListaEntidades
 {
@@ -17,6 +18,7 @@ public:
   void executar();
   void desenhar();
   Entidade *getRandom();
+  Json::Value toJsonArray();
 };
 
 #endif // LISTAENTIDADES_HPP

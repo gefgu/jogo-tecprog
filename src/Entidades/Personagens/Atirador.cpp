@@ -156,3 +156,14 @@ void Atirador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
     }
   }
 }
+
+Json::Value Atirador::gravar()
+{
+  Json::Value entityJson;
+
+  entityJson["type"] = getTipo();
+  entityJson["x"] = getPosition().x;
+  entityJson["y"] = getPosition().y;
+  entityJson["vidas"] = getVidas();
+  return entityJson;
+}

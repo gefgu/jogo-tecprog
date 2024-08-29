@@ -69,3 +69,10 @@ void CampoDeVisao::desenhar()
   visao.setFillColor(sf::Color::Red);
   pGG->draw(visao);
 }
+
+Json::Value CampoDeVisao::gravar()
+{
+  Json::Value entityJson;
+
+  return entityJson;
+}

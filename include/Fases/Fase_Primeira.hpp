@@ -10,7 +10,7 @@ private:
   void criarCenario();
   void criaAtiradores();
 public:
-  Fase_Primeira(bool temP2, int pontos_iniciais = 1000);
+  Fase_Primeira(bool temP2, string filename = "", int pontos_iniciais = 1000);
   ~Fase_Primeira();
   void executar();
   void desenhar();

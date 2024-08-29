@@ -19,4 +19,5 @@ public:
   sf::Vector2f getCenter();
   sf::FloatRect getSize();
   void lidarColisao(sf::Vector2f intersecao, Entidade *other);
+  Json::Value gravar();
 };

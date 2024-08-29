@@ -31,5 +31,6 @@ public:
   sf::FloatRect getSize();
   void lidarColisao(sf::Vector2f intersecao, Entidade *other);
   tipoDeEntidade getAtirador();
+  Json::Value gravar();
 };
 #endif // Granada_HPP

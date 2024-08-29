@@ -18,3 +18,13 @@ void Espinho::executar()
 }
 
 void Espinho::lidarColisao(sf::Vector2f intersecao, Entidade *other) {}
+
+Json::Value Espinho::gravar()
+{
+  Json::Value entityJson;
+
+  entityJson["type"] = getTipo();
+  entityJson["x"] = getPosition().x;
+  entityJson["y"] = getPosition().y;
+  return entityJson;
+}

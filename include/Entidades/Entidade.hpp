@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Ente.hpp"
+#include <json/json.h> // JSON library that supports C++03
 // #include "Fases/Fase.hpp"
 
 class Fase;
@@ -42,6 +43,8 @@ public:
     const tipoDeEntidade getTipo() const;
     static void setFase(Fase *pF);
     const bool getAtivo() const;
+    sf::Vector2f getPosition();
+    virtual Json::Value gravar() = 0;
 };
 
 #endif // ENTIDADE_HPP

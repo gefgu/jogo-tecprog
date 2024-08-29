@@ -1,6 +1,4 @@
 #include "Menus/Pause.hpp"
-
-#include "Menus/Pause.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -66,11 +64,20 @@ void Pause::Update(const char *teclaPressionada)
   {
     prevButton();
   }
+  else if (strcmp(teclaPressionada, "Escape") == 0)
+  {
+    gerenciadorEstado.setEstadoJogo(PAUSE); // some strange bug
+    gerenciadorEstado.setEstadoJogo(GAMEOVER);
+  }
   else if (strcmp(teclaPressionada, "Enter") == 0)
   {
     if (itemSelecionado == 0)
       gerenciadorEstado.setEstadoJogo(ultimaFase);
-    else
+    if (itemSelecionado == 1)
+    {
+      gerenciadorEstado.setEstadoJogo(SALVAMENTO);
+    }
+    else if (itemSelecionado == 2)
     {
       gerenciadorEstado.setEstadoJogo(PAUSE); // some strange bug
       gerenciadorEstado.setEstadoJogo(GAMEOVER);

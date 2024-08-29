@@ -21,6 +21,7 @@
 #include "Menus/Leaderboard.hpp"
 #include "Menus/Pause.hpp"
 #include "Menus/MenuEscolhaPlayers.hpp"
+#include "Menus/MenuCarregamento.hpp"
 #include "Fases/Fase_Primeira.hpp"
 #include "Fases/Fase_Segunda.hpp"
 
@@ -42,6 +43,7 @@ private:
     Leaderboard *leaderboard;
     Pause *pauseMenu;
     MenuEscolhaPlayers *menuEscolhaPlayers;
+    MenuCarregamento *menuCarregamento;
 
 public:
     Jogo();

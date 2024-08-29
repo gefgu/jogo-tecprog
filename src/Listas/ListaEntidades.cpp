@@ -1,4 +1,7 @@
 #include "Listas/ListaEntidades.hpp"
+#include "Entidades/Personagens/Personagem.hpp"
+#include "Entidades/Personagens/Jogador.hpp"
+#include "Entidades/Projetil.hpp"
 
 ListaEntidades::ListaEntidades() {}
 
@@ -46,4 +49,16 @@ Entidade *ListaEntidades::getRandom()
 void ListaEntidades::remover(Entidade *pE)
 {
   LEs.remover(pE);
+}
+
+Json::Value ListaEntidades::toJsonArray()
+{
+  Json::Value jsonArray(Json::arrayValue);
+  Elemento<Entidade> *it;
+  for (it = LEs.getPrimeiro(); it != NULL; it = it->getProximo())
+  {
+    jsonArray.append(it->getInfo()->gravar());
+  }
+
+  return jsonArray;
 }

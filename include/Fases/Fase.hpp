@@ -15,6 +15,7 @@
 #include "Entidades/Personagens/Fighter.hpp"
 #include "Entidades/Projetil.hpp"
 #include "Entidades/Granada.hpp"
+#include "Entidades/Personagens/SoldadoChefe.hpp"
 #include "Controladores/Observer.hpp"
 
 class Fase : public Ente, Observer
@@ -47,17 +48,19 @@ protected:
   void verificaFim();
   void fimDeJogo();
   void centralizaCamera();
+  void loadFromJson(string filename);
 
 public:
-  Fase(int pontos_iniciais = 1000, int qty_plt = 50, bool temP2 = false);
+  Fase(string filename = "", int pontos_iniciais = 1000, int qty_plt = 50, bool temP2 = false);
   ~Fase();
   void desenhar();
   virtual void executar();
   int getPontos();
-  Projetil* addProjetil(int px, int py, int direcao, tipoDeEntidade atirador);
-  Granada* addGranada(int px, int py, int direcao, tipoDeEntidade atirador);
+  Projetil *addProjetil(int px, int py, int direcao, tipoDeEntidade atirador);
+  Granada *addGranada(int px, int py, int direcao, tipoDeEntidade atirador);
   void alteraPontos(int soma);
   void Update(const char *teclaPressionada);
+  void saveEntitiesToJson();
 };
 
 #endif // FASE_HPP

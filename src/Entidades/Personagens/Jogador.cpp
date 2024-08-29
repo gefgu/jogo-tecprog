@@ -37,7 +37,7 @@ Jogador::Jogador(int px, int py, int vidas, bool player1) : Personagem(px, py, 0
                                                             teclaDireita(player1 ? "D" : "Right"),
                                                             teclaPulo(player1 ? "W" : "Up"),
                                                             teclaCorrida(player1 ? "Shift" : "RShift"),
-                                                            teclaTiro(player1 ? "F" : "RControl")
+                                                            teclaTiro(player1 ? "F" : "RControl"), isP1(player1)
 
 {
     _gerenciadorInput.AttachContinuous(this);
@@ -100,7 +100,7 @@ void Jogador::correr()
     float elapsed_time = pGG->getElapsedTime();
     newState = RUN;
     velocidadeX += (elapsed_time / 100.0f) / slowness; // taking up speed
-    velocidadeX = min(RUN_VELOCIDADE_MAXIMA / slowness, velocidadeX);
+    velocidadeX = max(RUN_VELOCIDADE_MAXIMA / slowness, velocidadeX);
 }
 
 void Jogador::andar(int newDirection)
@@ -114,9 +114,9 @@ void Jogador::andar(int newDirection)
     velocidadeX += (elapsed_time / 50.0f) / slowness; // taking up speed
     newState = (newState == RUN) ? RUN : WALK;
     if (state == RUN)
-        velocidadeX = min(velocidadeX, RUN_VELOCIDADE_MAXIMA/slowness);
+        velocidadeX = min(velocidadeX, RUN_VELOCIDADE_MAXIMA / slowness);
     else
-        velocidadeX = min(velocidadeX, WALK_VELOCIDADE_MAXIMA/slowness);
+        velocidadeX = min(velocidadeX, WALK_VELOCIDADE_MAXIMA / slowness);
     // velocidadeX = WALK_VELOCIDADE_MAXIMA;
 }
 
@@ -272,7 +272,6 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
         }
     }
 
-
     else if (other->getTipo() == tipoDeEntidade::LIXO && tempoDesdeUltimoLixo >= COOLDOWN_LIXO)
     {
         slowness = 0.5;
@@ -313,4 +312,21 @@ void Jogador::limitMovementByCamera()
     {
         x = center.x - size.x / 2;
     }
+}
+
+bool Jogador::getP1()
+{
+    return isP1;
+}
+
+Json::Value Jogador::gravar()
+{
+    Json::Value entityJson;
+
+    entityJson["type"] = getTipo();
+    entityJson["x"] = getPosition().x;
+    entityJson["y"] = getPosition().y;
+    entityJson["vidas"] = getVidas();
+    entityJson["is_p1"] = getP1();
+    return entityJson;
 }

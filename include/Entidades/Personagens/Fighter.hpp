@@ -19,4 +19,5 @@ public:
   void perseguir();
   void danificar(Jogador *pJ);
   void lidarColisao(sf::Vector2f intersecao, Entidade *other);
+  Json::Value gravar();
 };

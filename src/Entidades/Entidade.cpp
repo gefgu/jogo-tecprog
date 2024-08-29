@@ -22,3 +22,8 @@ const bool Entidade::getAtivo() const
 {
     return ativo;
 }
+
+sf::Vector2f Entidade::getPosition()
+{
+    return sf::Vector2f(x, y);
+}

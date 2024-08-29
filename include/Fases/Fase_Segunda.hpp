@@ -12,7 +12,7 @@ private:
   void criaSoldadoChefe();
 
 public:
-  Fase_Segunda(bool temP2, int pontos_iniciais = 1000);
+  Fase_Segunda(bool temP2, string filename = "", int pontos_iniciais = 1000);
   ~Fase_Segunda();
   void executar();
   void desenhar();

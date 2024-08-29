@@ -8,7 +8,7 @@ const float COOLDOWN_TIRO = 600.0f;
 const float HURT_ANIMATION_TIME = 150.0f;
 const float DEATH_ANIMATION_TIME = 750.0f;
 const float SHOT_ANIMATION_TIME = 1200.0f;
-const float GRENADE_COOLDOWN = 5000.0f; 
+const float GRENADE_COOLDOWN = 5000.0f;
 
 using namespace std;
 
@@ -26,8 +26,8 @@ SoldadoChefe::SoldadoChefe(int px, int py, int vidas) : Inimigo(px, py, vidas, t
     setColisionBoxSize(sf::Vector2f(30 * SCALING_FACTOR, 128 * SCALING_FACTOR));
     visao.setPosition(px, py);
     setAnimationState();
-    
-    maxTiros +=rand()%3;
+
+    maxTiros += rand() % 3;
 }
 
 SoldadoChefe::~SoldadoChefe() {}
@@ -62,8 +62,8 @@ void SoldadoChefe::olhar()
             atacar();
             newState = SHOT;
         }
-        else if (tirosDisparados >= maxTiros )
-        { 
+        else if (tirosDisparados >= maxTiros)
+        {
             lancarGranada();
             newState = GRENADE;
         }
@@ -93,12 +93,12 @@ void SoldadoChefe::executar()
                 tempoUltimaGranada += elapsed_time;
                 if (tempoUltimaGranada >= GRENADE_COOLDOWN)
                 {
-                    tempoUltimaGranada = 0.0f; 
+                    tempoUltimaGranada = 0.0f;
                     tirosDisparados = 0;
-                    numeroGranadas = 1;       
+                    numeroGranadas = 1;
                 }
             }
-        }   
+        }
         else
         {
             tempoDisparo = 0;
@@ -151,7 +151,7 @@ void SoldadoChefe::atacar()
     if (tempoDisparo >= COOLDOWN_TIRO)
     {
         Jogador *pJ = visao.getJogador();
-        Projetil* proj = pFase->addProjetil(x + direcao * 120, y + (getSize().height / 9), direcao, SOLDADO);
+        Projetil *proj = pFase->addProjetil(x + direcao * 120, y + (getSize().height / 9), direcao, SOLDADO);
         tempoDisparo = 0;
         tirosDisparados++;
 
@@ -165,15 +165,15 @@ void SoldadoChefe::atacar()
 void SoldadoChefe::lancarGranada()
 {
 
-        float elapsed_time = pGG->getElapsedTime();
-        tempoUltimaGranada += elapsed_time;
-        if (numeroGranadas>0 && tempoUltimaGranada > 1200.0f)
-        {
-            pFase->addGranada(x + direcao , y + (getSize().height / 9), direcao, SOLDADO);
-            numeroGranadas--;
-        }
+    float elapsed_time = pGG->getElapsedTime();
+    tempoUltimaGranada += elapsed_time;
+    if (numeroGranadas > 0 && tempoUltimaGranada > 1200.0f)
+    {
+        pFase->addGranada(x + direcao, y + (getSize().height / 9), direcao, SOLDADO);
+        numeroGranadas--;
+    }
 }
-void SoldadoChefe::danificar(Jogador* p)
+void SoldadoChefe::danificar(Jogador *p)
 {
     p->recebeDano(dano_projetil);
 }
@@ -189,4 +189,15 @@ void SoldadoChefe::lidarColisao(sf::Vector2f intersecao, Entidade *other)
             velocidadeY = 0;
         }
     }
+}
+
+Json::Value SoldadoChefe::gravar()
+{
+    Json::Value entityJson;
+
+    entityJson["type"] = getTipo();
+    entityJson["x"] = getPosition().x;
+    entityJson["y"] = getPosition().y;
+    entityJson["vidas"] = getVidas();
+    return entityJson;
 }
