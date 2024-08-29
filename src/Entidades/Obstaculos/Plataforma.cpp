@@ -1,9 +1,8 @@
-#include "Entidades/Plataforma.hpp"
+#include "Entidades/Obstaculos/Plataforma.hpp"
 
 const char *PLATAFORMA_PATH = "./assets/tiles/plataforma_2.png";
 
-Plataforma::Plataforma(int px, int py) : Entidade(px, py, tipoDeEntidade::PLATAFORMA),
-                                         visual(PLATAFORMA_PATH, true)
+Plataforma::Plataforma(int px, int py) : Obstaculo(px, py, PLATAFORMA_PATH, tipoDeEntidade::PLATAFORMA)
 {
   visual.setPosition(px, py);
   visual.setTextureRect(sf::IntRect(0, 0, 80, 64 * 8));
@@ -14,23 +13,8 @@ Plataforma::~Plataforma()
 {
 }
 
-void Plataforma::desenhar()
-{
-  visual.desenhar();
-}
-
 void Plataforma::executar()
 {
-}
-
-sf::Vector2f Plataforma::getCenter()
-{
-  return visual.getCenter();
-}
-
-sf::FloatRect Plataforma::getSize()
-{
-  return visual.getSize();
 }
 
 void Plataforma::lidarColisao(sf::Vector2f intersecao, Entidade *other) {}

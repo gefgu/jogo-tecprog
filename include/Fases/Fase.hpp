@@ -7,7 +7,7 @@
 #include "Gerenciadores/Gerenciador_Colisoes.hpp"
 #include "Gerenciadores/Gerenciador_Estado.hpp"
 #include "Listas/ListaEntidades.hpp"
-#include "Entidades/Plataforma.hpp"
+#include "Entidades/Obstaculos/Plataforma.hpp"
 #include "Entidades/Personagens/Jogador.hpp"
 #include "Entidades/Obstaculos/Espinho.hpp"
 #include "Entidades/Obstaculos/Lixo.hpp"

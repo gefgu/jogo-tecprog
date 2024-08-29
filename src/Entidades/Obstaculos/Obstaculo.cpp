@@ -1,6 +1,6 @@
 #include "Entidades/Obstaculos/Obstaculo.hpp"
 
-Obstaculo::Obstaculo(int px, int py, const char *img_path, tipoDeEntidade tipo) : Entidade(px, py, tipo), visual(img_path) {}
+Obstaculo::Obstaculo(int px, int py, const char *img_path, tipoDeEntidade tipo) : Entidade(px, py, tipo), visual(img_path, true) {}
 
 Obstaculo::~Obstaculo() {}
 
