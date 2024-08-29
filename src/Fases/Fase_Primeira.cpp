@@ -61,7 +61,7 @@ void Fase_Primeira::criaAtiradores()
     Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
     int px = p->getCenter().x;
     int py = p->getCenter().y - (p->getSize().height / 2.f) - (ATIRADOR_HEIGHT / 2.f);
-    Atirador *a = new Atirador(px, py, 3 + (rand() % 4));
+    Atirador *a = new Atirador(px, py, 3 + (rand() % 3));
     entidades.incluir(a);
     gerenciadorColisoes.incluirEntidadeMovel(a);
     gerenciadorColisoes.incluirEntidadeMovel(a->getCampoDeVisao());

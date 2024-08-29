@@ -36,6 +36,7 @@ public:
     void executar();
     void lidarColisao(sf::Vector2f intersecao, Entidade *other);
     void reduzirVelocidade(float fator);
+    Jogador& operator++(); 
     void aplicarForcaRepulsao(float forcaX, float forcaY);
     void Update(const char *teclaPressionada);
     bool getP1();

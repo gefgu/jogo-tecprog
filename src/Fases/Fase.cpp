@@ -37,12 +37,12 @@ Fase::Fase(string filename, int pontos_iniciais, int qty_plt, bool temP2) : pont
     criaEspinhos();
     criaLixos();
     criaFighters();
-    jogador = new Jogador(200, 100, 5, true);
+    jogador = new Jogador(200, 100, 10, true);
     entidades.incluir(jogador);
     gerenciadorColisoes.incluirEntidadeMovel(jogador);
     if (temPlayerDois)
     {
-      jogador2 = new Jogador(200, 100, 5, false);
+      jogador2 = new Jogador(200, 100, 10, false);
       entidades.incluir(jogador2);
       gerenciadorColisoes.incluirEntidadeMovel(jogador2);
     }
@@ -82,7 +82,7 @@ void Fase::criarPlataformas(int qty_plt)
     gerenciadorColisoes.incluirEntidadeEstatica(p);
   }
   finalX = PLATAFORMA_WIDTH * 3 * (i - 1);
-  caixaDeCorreio.setPosition(finalX, py - ((PLATAFORMA_HEIGHT * 3) / 2) + caixaDeCorreio.getSize().height / 2);
+  caixaDeCorreio.setPosition(finalX, py - ((PLATAFORMA_HEIGHT * 3) / 2) + caixaDeCorreio.getSize().height/ 4);
 }
 
 void Fase::desenhar()
@@ -142,7 +142,7 @@ void Fase::criaFighters()
     Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
     int px = p->getCenter().x;
     int py = p->getCenter().y - (p->getSize().height / 2.f) - (FIGHTER_HEIGHT / 2.f);
-    Fighter *f = new Fighter(px, py, 3 + (rand() % 4));
+    Fighter *f = new Fighter(px, py, 3 + (rand() % 3));
     entidades.incluir(f);
     gerenciadorColisoes.incluirEntidadeMovel(f);
     gerenciadorColisoes.incluirEntidadeMovel(f->getCampoDeVisao());
@@ -211,10 +211,19 @@ Granada *Fase::addGranada(int px, int py, int direcao, tipoDeEntidade atirador)
   return g;
 }
 
-void Fase::alteraPontos(int soma)
-{
-  pontos += soma;
-  pontos = max(pontos, 0);
+void Fase::alteraPontos(int soma) {
+    if (soma > 0) {
+      pontos += soma;
+        if (jogador) {
+            ++(*jogador);
+        }
+        if (temPlayerDois && jogador2) {
+            ++(*jogador2);
+        }
+    } else {
+        pontos += soma;
+    }
+    pontos = std::max(pontos, 0);
 }
 
 void Fase::Update(const char *teclaPressionada)

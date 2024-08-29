@@ -17,18 +17,31 @@ int Personagem::getVidas()
     return num_vidas;
 }
 
+Personagem& Personagem::operator--()
+{
+    num_vidas = std::max(0, num_vidas - 1);
+    return *this;
+}
+
 void Personagem::recebeDano(int vidas_perdidas)
 {
     if (tempoDesdeUltimoDano >= DANO_COOLDOWN)
     {
-        num_vidas = max(0, num_vidas - vidas_perdidas);
+        // Decrementa a vida do personagem usando o operador
+        for (int i = 0; i < vidas_perdidas; ++i)
+        {
+            --(*this); 
+        }
+
         tempoDesdeUltimoDano = 0.0f;
         podeAnimar = false;
+
         if (tipo == JOGADOR && tempoDesdeMorte == 0.0f)
         {
             pFase->alteraPontos(-100);
         }
     }
+
     if (tempoDesdeUltimoDano < 2)
     {
         podeAnimar = true;

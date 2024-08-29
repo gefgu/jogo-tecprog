@@ -8,7 +8,7 @@ class Inimigo : public Personagem
 {
 protected:
     CampoDeVisao visao;
-
+    
 public:
     Inimigo(int px, int py, int vidas, tipoDeEntidade tipo);
     ~Inimigo();

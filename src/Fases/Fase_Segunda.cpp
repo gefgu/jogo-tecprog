@@ -48,7 +48,7 @@ void Fase_Segunda::criaSoldadoChefe()
     Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
     int px = p->getCenter().x;
     int py = p->getCenter().y - (p->getSize().height / 2.f) - (SOLDADO_HEIGHT / 2.f);
-    SoldadoChefe *s = new SoldadoChefe(px, py, 7 + (rand() % 4));
+    SoldadoChefe *s = new SoldadoChefe(px, py, 7 + (rand() % 3));
     entidades.incluir(s);
     gerenciadorColisoes.incluirEntidadeMovel(s);
     gerenciadorColisoes.incluirEntidadeMovel(s->getCampoDeVisao());

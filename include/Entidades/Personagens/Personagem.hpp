@@ -51,6 +51,7 @@ public:
     int getDirecao();
     void desenhar();
     void recebeDano(int vidas_perdidas);
+    Personagem &operator--();
     void setColisionBoxSize(sf::Vector2f s);
     void setColisionBoxPosition(int px, int py);
     sf::Vector2f getCenter();

@@ -129,7 +129,7 @@ void SoldadoChefe::executar()
         else if (tempoDesdeMorte > DEATH_ANIMATION_TIME)
         {
             morto = true;
-            pFase->alteraPontos(200);
+            pFase->alteraPontos(500);
         }
 
         if (!morto && (mudouDirecao || newState != state))

@@ -2,6 +2,7 @@
 
 Inimigo::Inimigo(int px, int py, int vidas, tipoDeEntidade tipo) : Personagem(px, py, 0, 0, vidas, tipo)
 {
+  
 }
 
 Inimigo::~Inimigo() {}

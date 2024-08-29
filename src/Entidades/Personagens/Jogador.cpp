@@ -100,7 +100,7 @@ void Jogador::correr()
     float elapsed_time = pGG->getElapsedTime();
     newState = RUN;
     velocidadeX += (elapsed_time / 100.0f) / slowness; // taking up speed
-    velocidadeX = max(RUN_VELOCIDADE_MAXIMA / slowness, velocidadeX);
+    velocidadeX = min(RUN_VELOCIDADE_MAXIMA / slowness, velocidadeX);
 }
 
 void Jogador::andar(int newDirection)
@@ -216,7 +216,6 @@ void Jogador::executar()
 
     if (state != DEAD && (mudouDirecao || newState != state))
     {
-        // cout << "HERE: " << mudouDirecao << endl;
         mudouDirecao = false;
         state = newState;
         setAnimationState();
@@ -290,6 +289,11 @@ void Jogador::reduzirVelocidade(float fator)
 {
     tempoDesdeUltimoLixo = 0.0f;
     slowness = fator;
+}
+
+Jogador& Jogador::operator++() {
+    this->num_vidas = std::max(0, num_vidas + 1);
+    return *this;
 }
 
 void Jogador::aplicarForcaRepulsao(float forcaX, float forcaY)

@@ -130,7 +130,7 @@ void Fighter::executar()
     if (tempoDesdeUltimoDano < HURT_ANIMATION_TIME)
     {
       newState = HURT;
-      x -= direcao * 2;
+      x += 2;
     }
 
     if (tempoDesdeMorte > 0.0f && tempoDesdeMorte <= DEATH_ANIMATION_TIME)
