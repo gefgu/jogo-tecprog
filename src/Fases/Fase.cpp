@@ -383,7 +383,8 @@ void Fase::loadFromJson(string filename)
 
       else if (entityType == FIGHTER)
       {
-        Fighter *fighter = new Fighter(entityJson["x"].asInt(), entityJson["y"].asInt(), entityType["vidas"]);
+        // cout << entityType["vidas"].asInt() << endl;
+        Fighter *fighter = new Fighter(entityJson["x"].asInt(), entityJson["y"].asInt(), entityJson["vidas"].asInt());
         entidades.incluir(fighter);
         gerenciadorColisoes.incluirEntidadeMovel(fighter);
         gerenciadorColisoes.incluirEntidadeMovel(fighter->getCampoDeVisao());
@@ -391,7 +392,7 @@ void Fase::loadFromJson(string filename)
       }
       else if (entityType == ATIRADOR)
       {
-        Atirador *atirador = new Atirador(entityJson["x"].asInt(), entityJson["y"].asInt(), entityType["vidas"]);
+        Atirador *atirador = new Atirador(entityJson["x"].asInt(), entityJson["y"].asInt(), entityJson["vidas"].asInt());
         entidades.incluir(atirador);
         gerenciadorColisoes.incluirEntidadeMovel(atirador);
         gerenciadorColisoes.incluirEntidadeMovel(atirador->getCampoDeVisao());
@@ -399,7 +400,7 @@ void Fase::loadFromJson(string filename)
       }
       else if (entityType == SOLDADO)
       {
-        SoldadoChefe *soldado = new SoldadoChefe(entityJson["x"].asInt(), entityJson["y"].asInt(), entityType["vidas"]);
+        SoldadoChefe *soldado = new SoldadoChefe(entityJson["x"].asInt(), entityJson["y"].asInt(), entityJson["vidas"].asInt());
         entidades.incluir(soldado);
         gerenciadorColisoes.incluirEntidadeMovel(soldado);
         gerenciadorColisoes.incluirEntidadeMovel(soldado->getCampoDeVisao());

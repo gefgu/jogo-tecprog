@@ -101,5 +101,6 @@ Json::Value Granada::gravar()
   entityJson["x"] = getPosition().x;
   entityJson["y"] = getPosition().y;
   entityJson["atirador"] = getAtirador();
+  entityJson["direcao"] = direcao;
   return entityJson;
 }

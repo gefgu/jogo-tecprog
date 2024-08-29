@@ -49,38 +49,38 @@ void Projetil::aplicarGravidade()
 
 void Projetil::lidarColisao(sf::Vector2f intersecao, Entidade *other)
 {
-    if (other == nullptr) return;
+  if (other == nullptr)
+    return;
 
-    if (other->getTipo() == FIGHTER && !static_cast<Fighter *>(other)->getMorto() && atirador != ATIRADOR)
-    {
-        auto* fighter = static_cast<Fighter *>(other);
-        fighter->recebeDano(dano);
-        ativo = false;
-    }
-    else if (other->getTipo() == ATIRADOR && !static_cast<Fighter *>(other)->getMorto() && atirador != ATIRADOR)
-    {
-        auto* atiradorEntidade = static_cast<Atirador *>(other);
-        atiradorEntidade->recebeDano(dano);
-        ativo = false;
-    }
-    else if (other->getTipo() == SOLDADO && !static_cast<SoldadoChefe *>(other)->getMorto() && atirador != SOLDADO)
-    {
-        auto* atiradorEntidade = static_cast<Atirador *>(other);
-        atiradorEntidade->recebeDano(dano);
-        ativo = false;
-    }
-    else if (other->getTipo() == JOGADOR && !static_cast<Jogador *>(other)->getMorto() && atirador != JOGADOR)
-    {
-        auto* jogador = static_cast<Jogador *>(other);
-        jogador->recebeDano(dano);
-        ativo = false;
-    }
-    else if (other->getTipo() == tipoDeEntidade::PLATAFORMA)
-    {
-        ativo = false;
-    }
+  if (other->getTipo() == FIGHTER && !static_cast<Fighter *>(other)->getMorto() && atirador != ATIRADOR)
+  {
+    auto *fighter = static_cast<Fighter *>(other);
+    fighter->recebeDano(dano);
+    ativo = false;
+  }
+  else if (other->getTipo() == ATIRADOR && !static_cast<Fighter *>(other)->getMorto() && atirador != ATIRADOR)
+  {
+    auto *atiradorEntidade = static_cast<Atirador *>(other);
+    atiradorEntidade->recebeDano(dano);
+    ativo = false;
+  }
+  else if (other->getTipo() == SOLDADO && !static_cast<SoldadoChefe *>(other)->getMorto() && atirador != SOLDADO)
+  {
+    auto *atiradorEntidade = static_cast<Atirador *>(other);
+    atiradorEntidade->recebeDano(dano);
+    ativo = false;
+  }
+  else if (other->getTipo() == JOGADOR && !static_cast<Jogador *>(other)->getMorto() && atirador != JOGADOR)
+  {
+    auto *jogador = static_cast<Jogador *>(other);
+    jogador->recebeDano(dano);
+    ativo = false;
+  }
+  else if (other->getTipo() == tipoDeEntidade::PLATAFORMA)
+  {
+    ativo = false;
+  }
 }
-
 
 tipoDeEntidade Projetil::getAtirador()
 {
@@ -95,5 +95,6 @@ Json::Value Projetil::gravar()
   entityJson["x"] = getPosition().x;
   entityJson["y"] = getPosition().y;
   entityJson["atirador"] = getAtirador();
+  entityJson["direcao"] = direcao;
   return entityJson;
 }
