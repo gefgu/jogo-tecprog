@@ -19,7 +19,7 @@ void Fase_Segunda::criarCenario()
   int altura = pGG->getWindowSize().y;
   sf::Texture *texturaFundo = pGG->carregaTextura("./assets/images/fundo_fase_2.png");
   fundo.setTexture(*texturaFundo);
-  fundo.setPosition(-largura * 2, -altura * 2);
+  fundo.setPosition(-largura * 2, -altura * 1);
   fundo.setScale(static_cast<float>(largura) * 4 / fundo.getTexture()->getSize().x,
                  static_cast<float>(altura) * 4 / fundo.getTexture()->getSize().y);
   texturaFundo->setRepeated(true);

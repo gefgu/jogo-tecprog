@@ -227,7 +227,7 @@ void Jogador::executar()
 
 void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
 {
-    sf::FloatRect pisoBounds = other->getSize();
+    sf::FloatRect otherBounds = other->getSize();
     sf::FloatRect jogadorBounds = getSize();
 
     // Imprimir a interseção para debug
@@ -235,7 +235,7 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
 
     if (other->getTipo() == tipoDeEntidade::PLATAFORMA)
     {
-        if (intersecao.y > 0)
+        if (intersecao.y > 0 && jogadorBounds.top + jogadorBounds.height / 2 <= otherBounds.top)
         {
             y -= intersecao.y - 1;
             tempoDesdeUltimoPiso = 0.0f;
@@ -243,6 +243,14 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
             {
                 velocidadeY = 0;
             }
+        }
+        else if (intersecao.x >= 0)
+        {
+            x -= intersecao.x - 1;
+        }
+        else if (intersecao.x < 0)
+        {
+            x += intersecao.x + 1;
         }
     }
 
@@ -291,7 +299,8 @@ void Jogador::reduzirVelocidade(float fator)
     slowness = fator;
 }
 
-Jogador& Jogador::operator++() {
+Jogador &Jogador::operator++()
+{
     this->num_vidas = std::max(0, num_vidas + 1);
     return *this;
 }

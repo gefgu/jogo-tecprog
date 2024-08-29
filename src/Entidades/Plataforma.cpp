@@ -6,7 +6,7 @@ Plataforma::Plataforma(int px, int py) : Entidade(px, py, tipoDeEntidade::PLATAF
                                          visual(PLATAFORMA_PATH, true)
 {
   visual.setPosition(px, py);
-  visual.setTextureRect(sf::IntRect(0, 0, 80, 64 * 2));
+  visual.setTextureRect(sf::IntRect(0, 0, 80, 64 * 8));
   visual.setScale(3, 3);
 }
 

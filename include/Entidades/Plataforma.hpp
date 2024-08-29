@@ -5,7 +5,7 @@
 #include "ElementosGraficos/ObjetoEstatico.hpp"
 
 const int PLATAFORMA_WIDTH = 80;
-const int PLATAFORMA_HEIGHT = 64 * 2;
+const int PLATAFORMA_HEIGHT = 64 * 8;
 class Plataforma : public Entidade
 {
 private:
