@@ -149,6 +149,12 @@ void Jogo::executar()
             menuInicio = NULL;
         }
 
+        if (ultimoEstado == estadoJogo::ESCOLHAPLAYERS)
+        {
+            delete menuEscolhaPlayers;
+            menuEscolhaPlayers = NULL;
+        }
+
         gerenciadorGrafico.display();
         performanceMonitor.endFrame(); // Finaliza a medição do tempo do quadro
         performanceMonitor.printFPS();
