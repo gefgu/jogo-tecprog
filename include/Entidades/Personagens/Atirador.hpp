@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ATIRADOR_HPP
+#define ATIRADOR_HPP
 
 #include "Inimigo.hpp"
 #include "Jogador.hpp"
@@ -18,5 +19,7 @@ public:
   void executar();
   void olhar();
   void atacar();
+  void danificar(Jogador *pJ);
   void lidarColisao(sf::Vector2f intersecao, Entidade *other);
 };
+#endif // ATIRADOR_HPP

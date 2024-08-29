@@ -6,12 +6,12 @@ Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciai
   clock.restart();
   _gerenciadorInput.Attach(this);
   Entidade::setFase(this);
-  jogador = new Jogador(200, 100, 5, true);
+  jogador = new Jogador(200, 100, 10, true);
   entidades.incluir(jogador);
   gerenciadorColisoes.incluirEntidadeMovel(jogador);
   if (temPlayerDois)
   {
-    jogador2 = new Jogador(200, 100, 5, false);
+    jogador2 = new Jogador(200, 100, 10, false);
     entidades.incluir(jogador2);
     gerenciadorColisoes.incluirEntidadeMovel(jogador2);
   }
@@ -21,11 +21,9 @@ Fase::Fase(int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciai
   }
 
   criarPlataformas(qty_plt);
-  // criaEspinhos();
-  // criaLixos();
-  // criaMina();
-  criaFighters();
-  // criaAtiradores();
+  criaEspinhos();
+  criaLixos();
+  // criaFighters();
   // sf::Font *fonte = pGG->carregaFonte("./assets/fonts/INVASION2000.TTF");
   sf::Font *fonte = pGG->carregaFonte("./assets/fonts/BACKTO1982.TTF");
   vidasJogador.setFont(*fonte);
@@ -125,19 +123,6 @@ void Fase::criaLixos()
   }
 }
 
-void Fase::criaMina()
-{
-  int total_minas = 10 + (rand() % 5);
-  for (int i = 0; i < total_minas; i++)
-  {
-    Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
-    int px = p->getCenter().x;
-    int py = p->getCenter().y - (p->getSize().height / 2.f) - (MINA_HEIGHT * 2) / 2;
-    Mina *m = new Mina(px, py);
-    entidades.incluir(m);
-    gerenciadorColisoes.incluirEntidadeEstatica(m);
-  }
-}
 
 void Fase::criaFighters()
 {
@@ -154,20 +139,7 @@ void Fase::criaFighters()
   }
 }
 
-void Fase::criaAtiradores()
-{
-  int total_atiradores = 1 + (rand() % 3);
-  for (int i = 0; i < total_atiradores; i++)
-  {
-    Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
-    int px = p->getCenter().x;
-    int py = p->getCenter().y - (p->getSize().height / 2.f) - (ATIRADOR_HEIGHT / 2.f);
-    Atirador *a = new Atirador(px, py, 3 + (rand() % 4));
-    entidades.incluir(a);
-    gerenciadorColisoes.incluirEntidadeMovel(a);
-    gerenciadorColisoes.incluirEntidadeMovel(a->getCampoDeVisao());
-  }
-}
+
 
 void Fase::atualizaVidaJogador()
 {
@@ -211,12 +183,22 @@ int Fase::getPontos()
   return pontos;
 }
 
-void Fase::addProjetil(int px, int py, int direcao, tipoDeEntidade atirador)
+Projetil* Fase::addProjetil(int px, int py, int direcao, tipoDeEntidade atirador)
 {
   Projetil *p = new Projetil(px, py, direcao, atirador);
   entidades.incluir(p);
   gerenciadorColisoes.incluirEntidadeMovel(p);
+  return p;
 }
+
+Granada* Fase::addGranada(int px, int py, int direcao, tipoDeEntidade atirador)
+{
+  Granada *g = new Granada(px, py, direcao, atirador);
+  entidades.incluir(g);
+  gerenciadorColisoes.incluirEntidadeMovel(g);
+  return g;
+}
+
 
 void Fase::alteraPontos(int soma)
 {

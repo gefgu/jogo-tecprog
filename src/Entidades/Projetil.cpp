@@ -1,5 +1,4 @@
 #include "Entidades/Projetil.hpp"
-#include "Entidades/Personagens/Atirador.hpp"
 
 const char *PROJETIL_PATH = "./assets/images/bullet.png";
 
@@ -50,28 +49,38 @@ void Projetil::aplicarGravidade()
 
 void Projetil::lidarColisao(sf::Vector2f intersecao, Entidade *other)
 {
-  if (other->getTipo() == FIGHTER && !static_cast<Fighter *>(other)->getMorto() && atirador != ATIRADOR)
-  {
-    static_cast<Fighter *>(other)->recebeDano(dano);
-    ativo = false;
-  }
+    if (other == nullptr) return;
 
-  if (other->getTipo() == ATIRADOR && !static_cast<Fighter *>(other)->getMorto() && atirador != ATIRADOR)
-  {
-    static_cast<Atirador *>(other)->recebeDano(dano);
-    ativo = false;
-  }
-  if (other->getTipo() == JOGADOR && !static_cast<Jogador *>(other)->getMorto() && atirador != JOGADOR)
-  {
-    static_cast<Jogador *>(other)->recebeDano(dano);
-    ativo = false;
-  }
-
-  if (other->getTipo() == tipoDeEntidade::PLATAFORMA || other->getTipo() == PROJETIL)
-  {
-    ativo = false;
-  }
+    if (other->getTipo() == FIGHTER && !static_cast<Fighter *>(other)->getMorto() && atirador != ATIRADOR)
+    {
+        auto* fighter = static_cast<Fighter *>(other);
+        fighter->recebeDano(dano);
+        ativo = false;
+    }
+    else if (other->getTipo() == ATIRADOR && !static_cast<Fighter *>(other)->getMorto() && atirador != ATIRADOR)
+    {
+        auto* atiradorEntidade = static_cast<Atirador *>(other);
+        atiradorEntidade->recebeDano(dano);
+        ativo = false;
+    }
+    else if (other->getTipo() == SOLDADO && !static_cast<SoldadoChefe *>(other)->getMorto() && atirador != SOLDADO)
+    {
+        auto* atiradorEntidade = static_cast<Atirador *>(other);
+        atiradorEntidade->recebeDano(dano);
+        ativo = false;
+    }
+    else if (other->getTipo() == JOGADOR && !static_cast<Jogador *>(other)->getMorto() && atirador != JOGADOR)
+    {
+        auto* jogador = static_cast<Jogador *>(other);
+        jogador->recebeDano(dano);
+        ativo = false;
+    }
+    else if (other->getTipo() == tipoDeEntidade::PLATAFORMA)
+    {
+        ativo = false;
+    }
 }
+
 
 tipoDeEntidade Projetil::getAtirador()
 {
