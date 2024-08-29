@@ -3,9 +3,12 @@
 Fase_Segunda::Fase_Segunda(bool temP2, string filename, int pontos_iniciais) : Fase(filename, pontos_iniciais, 50, temP2)
 {
   criarCenario();
-  criaMina();
-  criaSoldadoChefe();
 
+  if (filename.empty())
+  {
+    criaMina();
+    criaSoldadoChefe();
+  }
 }
 
 Fase_Segunda::~Fase_Segunda() {}
@@ -40,7 +43,7 @@ void Fase_Segunda::criaMina()
 void Fase_Segunda::criaSoldadoChefe()
 {
   int total_soldados = 3;
-  for(int i = 0; i < total_soldados; i++)
+  for (int i = 0; i < total_soldados; i++)
   {
     Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
     int px = p->getCenter().x;

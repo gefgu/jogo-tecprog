@@ -3,7 +3,8 @@
 Fase_Primeira::Fase_Primeira(bool temP2, string filename, int pontos_iniciais) : Fase(filename, pontos_iniciais, 40, temP2)
 {
   criarCenario();
-  criaAtiradores();
+  if (filename.empty())
+    criaAtiradores();
 }
 
 Fase_Primeira::~Fase_Primeira() {}
