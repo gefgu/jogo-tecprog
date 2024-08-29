@@ -13,8 +13,8 @@
 #include "Entidades/Obstaculos/Lixo.hpp"
 #include "Entidades/Obstaculos/Mina.hpp"
 #include "Entidades/Personagens/Fighter.hpp"
-#include "Entidades/Personagens/Atirador.hpp"
 #include "Entidades/Projetil.hpp"
+#include "Entidades/Granada.hpp"
 #include "Controladores/Observer.hpp"
 
 class Fase : public Ente, Observer
@@ -41,9 +41,7 @@ protected:
   virtual void criarCenario() = 0;
   void criaEspinhos();
   void criaLixos();
-  void criaMina();
   void criaFighters();
-  void criaAtiradores();
   void atualizaVidaJogador();
   void atualizaPontos();
   void verificaFim();
@@ -56,7 +54,8 @@ public:
   void desenhar();
   virtual void executar();
   int getPontos();
-  void addProjetil(int px, int py, int direcao, tipoDeEntidade atirador);
+  Projetil* addProjetil(int px, int py, int direcao, tipoDeEntidade atirador);
+  Granada* addGranada(int px, int py, int direcao, tipoDeEntidade atirador);
   void alteraPontos(int soma);
   void Update(const char *teclaPressionada);
 };

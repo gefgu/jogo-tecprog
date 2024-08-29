@@ -16,6 +16,7 @@ enum estadoPersonagem
     HURT,
     DEAD,
     SHOT,
+    GRENADE
 };
 
 class Personagem : public Entidade

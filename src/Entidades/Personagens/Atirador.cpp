@@ -4,7 +4,7 @@
 
 const float SCALING_FACTOR = 3;
 
-const float COOLDOWN_TIRO = 995.0f;
+const float COOLDOWN_TIRO = 965.0f;
 
 const float HURT_ANIMATION_TIME = 150.0f;
 const float DEATH_ANIMATION_TIME = 750.0f;
@@ -96,6 +96,7 @@ void Atirador::executar()
     if (tempoDesdeUltimoDano < HURT_ANIMATION_TIME)
     {
       newState = HURT;
+      tempoDisparo = 0;
     }
 
     if (tempoDesdeMorte > 0.0f && tempoDesdeMorte <= DEATH_ANIMATION_TIME)
@@ -124,12 +125,24 @@ void Atirador::executar()
 
 void Atirador::atacar()
 {
-  if (tempoDisparo >= COOLDOWN_TIRO)
-  {
-    pFase->addProjetil(x + direcao * 120, y + (getSize().height / 12), direcao, ATIRADOR);
-    tempoDisparo = 0;
-  }
+    if (tempoDisparo >= COOLDOWN_TIRO)
+    {
+        Jogador *pJ = visao.getJogador();
+        Projetil* proj = pFase->addProjetil(x + direcao * 120, y + (getSize().height / 12), direcao, ATIRADOR);
+        tempoDisparo = 0;
+
+        if (proj->getSize().intersects(pJ->getSize()))
+        {
+            danificar(pJ);
+        }
+    }
 }
+
+void Atirador::danificar(Jogador*p)
+{
+    p->recebeDano(dano_projetil);
+}
+
 
 void Atirador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
 {

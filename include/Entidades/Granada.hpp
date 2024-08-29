@@ -1,5 +1,5 @@
-#ifndef PROJETIL_HPP
-#define PROJETIL_HPP
+#ifndef Granada_HPP
+#define Granada_HPP
 
 #include <SFML/Graphics.hpp>
 #include "Entidades/Entidade.hpp"
@@ -8,21 +8,23 @@
 #include "Entidades/Personagens/Atirador.hpp"
 #include "Entidades/Personagens/SoldadoChefe.hpp"
 
-const int PROJETIL_WIDTH = 80;
-const int PROJETIL_HEIGHT = 64 * 2;
-class Projetil : public Entidade
+const int GRANADA_WIDTH = 80;
+const int GRANADA_HEIGHT = 64 * 2;
+class Granada : public Entidade
 {
 private:
   ObjetoEstatico visual;
   int dano;
   int direcao;
   float velocidadeY;
+  float velocidadeX;
+  float forca;
   tipoDeEntidade atirador;
   void aplicarGravidade();
 
 public:
-  Projetil(int px, int py, int direcao, tipoDeEntidade p); // posição e escala não mudam
-  ~Projetil();
+  Granada(int px, int py, int direcao, tipoDeEntidade p); // posição e escala não mudam
+  ~Granada();
   void desenhar();
   void executar();
   sf::Vector2f getCenter();
@@ -30,4 +32,4 @@ public:
   void lidarColisao(sf::Vector2f intersecao, Entidade *other);
   tipoDeEntidade getAtirador();
 };
-#endif // PROJETIL_HPP
+#endif // Granada_HPP

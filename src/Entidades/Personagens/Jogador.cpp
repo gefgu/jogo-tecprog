@@ -11,9 +11,9 @@ const float GRAVIDADE = 9.8f; // Aceleração da gravidade (em unidades por segu
 
 const float COOLDOWN_PULO = 800.0f; // Tempo de espera entre pulos (em milissegundos)
 
-const float COOLDOWN_ESPINHO = 500.0f;
+const float COOLDOWN_ESPINHO = 1500.0f;
 const float COOLDOWN_LIXO = 250.0f;
-const float COOLDOWN_TIRO = 1250.0f;
+const float COOLDOWN_TIRO = 500.0f;
 const float COOLDOWN_MINA = 1250.0f;
 const float COOLDOWN_ACAO = 25.0f;
 
@@ -100,7 +100,7 @@ void Jogador::correr()
     float elapsed_time = pGG->getElapsedTime();
     newState = RUN;
     velocidadeX += (elapsed_time / 100.0f) / slowness; // taking up speed
-    // velocidadeX = RUN_VELOCIDADE_MAXIMA;
+    velocidadeX = min(RUN_VELOCIDADE_MAXIMA / slowness, velocidadeX);
 }
 
 void Jogador::andar(int newDirection)
@@ -114,9 +114,9 @@ void Jogador::andar(int newDirection)
     velocidadeX += (elapsed_time / 50.0f) / slowness; // taking up speed
     newState = (newState == RUN) ? RUN : WALK;
     if (state == RUN)
-        velocidadeX = min(velocidadeX, RUN_VELOCIDADE_MAXIMA);
+        velocidadeX = min(velocidadeX, RUN_VELOCIDADE_MAXIMA/slowness);
     else
-        velocidadeX = min(velocidadeX, WALK_VELOCIDADE_MAXIMA);
+        velocidadeX = min(velocidadeX, WALK_VELOCIDADE_MAXIMA/slowness);
     // velocidadeX = WALK_VELOCIDADE_MAXIMA;
 }
 
@@ -264,6 +264,14 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
             x -= intersecao.x - 2;
         }
     }
+    else if (other->getTipo() == tipoDeEntidade::SOLDADO && !static_cast<Atirador *>(other)->getMorto())
+    {
+        if (intersecao.x > 0)
+        {
+            x -= intersecao.x - 2;
+        }
+    }
+
 
     else if (other->getTipo() == tipoDeEntidade::LIXO && tempoDesdeUltimoLixo >= COOLDOWN_LIXO)
     {

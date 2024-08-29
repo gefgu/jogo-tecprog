@@ -3,6 +3,7 @@
 
 const char *MINA_PATH = "./assets/mina/mina_3.png";
 
+
 Mina::Mina(int px, int py) : Obstaculo(px, py, MINA_PATH, tipoDeEntidade::MINA), fator_de_repulsao(7.5f)
 {
   visual.setPosition(px, py);
