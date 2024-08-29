@@ -17,8 +17,9 @@ public:
   void remover(Entidade *pE);
   void executar();
   void desenhar();
-  Entidade *getRandom();
+  // Entidade *getRandom();
   Json::Value toJsonArray();
+  Entidade *getOneUsingNormalDistribution();
 };
 
 #endif // LISTAENTIDADES_HPP

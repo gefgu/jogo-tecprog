@@ -82,7 +82,7 @@ void Fase::criarPlataformas(int qty_plt)
     gerenciadorColisoes.incluirEntidadeEstatica(p);
   }
   finalX = PLATAFORMA_WIDTH * 3 * (i - 1);
-  caixaDeCorreio.setPosition(finalX, py - ((PLATAFORMA_HEIGHT * 3) / 2) + caixaDeCorreio.getSize().height/ 4);
+  caixaDeCorreio.setPosition(finalX, py - ((PLATAFORMA_HEIGHT * 3) / 2) + caixaDeCorreio.getSize().height / 4);
 }
 
 void Fase::desenhar()
@@ -111,7 +111,7 @@ void Fase::criaEspinhos()
   int total_espinhos = 3 + (rand() % 5);
   for (int i = 0; i < total_espinhos; i++)
   {
-    Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
+    Plataforma *p = static_cast<Plataforma *>(plataformas.getOneUsingNormalDistribution());
     int px = p->getCenter().x;
     int py = p->getCenter().y - (p->getSize().height / 2.f) - (ESPINHO_HEIGHT * 3) / 2;
     Espinho *e = new Espinho(px, py);
@@ -125,7 +125,7 @@ void Fase::criaLixos()
   int total_lixos = 3 + (rand() % 5);
   for (int i = 0; i < total_lixos; i++)
   {
-    Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
+    Plataforma *p = static_cast<Plataforma *>(plataformas.getOneUsingNormalDistribution());
     int px = p->getCenter().x;
     int py = p->getCenter().y - (p->getSize().height / 2.f) - (LIXO_HEIGHT * 3) / 2;
     Lixo *l = new Lixo(px, py);
@@ -139,7 +139,7 @@ void Fase::criaFighters()
   int total_fighters = 3 + (rand() % 3);
   for (int i = 0; i < total_fighters; i++)
   {
-    Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
+    Plataforma *p = static_cast<Plataforma *>(plataformas.getOneUsingNormalDistribution());
     int px = p->getCenter().x;
     int py = p->getCenter().y - (p->getSize().height / 2.f) - (FIGHTER_HEIGHT / 2.f);
     Fighter *f = new Fighter(px, py, 3 + (rand() % 3));
@@ -211,19 +211,25 @@ Granada *Fase::addGranada(int px, int py, int direcao, tipoDeEntidade atirador)
   return g;
 }
 
-void Fase::alteraPontos(int soma) {
-    if (soma > 0) {
-      pontos += soma;
-        if (jogador) {
-            ++(*jogador);
-        }
-        if (temPlayerDois && jogador2) {
-            ++(*jogador2);
-        }
-    } else {
-        pontos += soma;
+void Fase::alteraPontos(int soma)
+{
+  if (soma > 0)
+  {
+    pontos += soma;
+    if (jogador)
+    {
+      ++(*jogador);
     }
-    pontos = std::max(pontos, 0);
+    if (temPlayerDois && jogador2)
+    {
+      ++(*jogador2);
+    }
+  }
+  else
+  {
+    pontos += soma;
+  }
+  pontos = std::max(pontos, 0);
 }
 
 void Fase::Update(const char *teclaPressionada)

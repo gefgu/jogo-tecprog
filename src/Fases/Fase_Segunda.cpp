@@ -31,7 +31,7 @@ void Fase_Segunda::criaMina()
   int total_minas = 10 + (rand() % 5);
   for (int i = 0; i < total_minas; i++)
   {
-    Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
+    Plataforma *p = static_cast<Plataforma *>(plataformas.getOneUsingNormalDistribution());
     int px = p->getCenter().x;
     int py = p->getCenter().y - (p->getSize().height / 2.f) - (MINA_HEIGHT * 2) / 2;
     Mina *m = new Mina(px, py);
@@ -45,7 +45,7 @@ void Fase_Segunda::criaSoldadoChefe()
   int total_soldados = 3;
   for (int i = 0; i < total_soldados; i++)
   {
-    Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
+    Plataforma *p = static_cast<Plataforma *>(plataformas.getOneUsingNormalDistribution());
     int px = p->getCenter().x;
     int py = p->getCenter().y - (p->getSize().height / 2.f) - (SOLDADO_HEIGHT / 2.f);
     SoldadoChefe *s = new SoldadoChefe(px, py, 7 + (rand() % 3));

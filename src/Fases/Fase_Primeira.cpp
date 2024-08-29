@@ -58,7 +58,7 @@ void Fase_Primeira::criaAtiradores()
   int total_atiradores = 3 + (rand() % 2);
   for (int i = 0; i < total_atiradores; i++)
   {
-    Plataforma *p = static_cast<Plataforma *>(plataformas.getRandom());
+    Plataforma *p = static_cast<Plataforma *>(plataformas.getOneUsingNormalDistribution());
     int px = p->getCenter().x;
     int py = p->getCenter().y - (p->getSize().height / 2.f) - (ATIRADOR_HEIGHT / 2.f);
     Atirador *a = new Atirador(px, py, 3 + (rand() % 3));

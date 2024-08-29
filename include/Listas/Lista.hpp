@@ -9,6 +9,7 @@ class Lista
 private:
   Elemento<TL> *pPrimeiro;
   Elemento<TL> *pUltimo;
+  int _size;
 
 public:
   Lista();
@@ -17,10 +18,12 @@ public:
   void remover(TL *elem);
   Elemento<TL> *getPrimeiro();
   Elemento<TL> *getUltimo();
+  int size();
+  Elemento<TL> *operator[](int index); // Access by index
 };
 
 template <class TL>
-Lista<TL>::Lista() : pPrimeiro(NULL), pUltimo(NULL)
+Lista<TL>::Lista() : pPrimeiro(NULL), pUltimo(NULL), _size(0)
 {
 }
 
@@ -56,6 +59,7 @@ void Lista<TL>::incluir(TL *elem)
       pUltimo->setProximo(e);
       pUltimo = e;
     }
+    _size++;
   }
   else
   {
@@ -88,6 +92,7 @@ void Lista<TL>::remover(TL *elem)
         anterior->setProximo(atual->getProximo());
       }
 
+      _size--;
       // Delete the element and free memory
       delete atual;
       return;
@@ -111,6 +116,29 @@ template <class TL>
 Elemento<TL> *Lista<TL>::getUltimo()
 {
   return pUltimo;
+}
+
+template <class TL>
+int Lista<TL>::size()
+{
+  return _size;
+}
+
+template <class TL>
+Elemento<TL> *Lista<TL>::operator[](int index)
+{
+  if (index < 0 || index >= _size)
+  {
+    std::cout << "Index out of bounds in Lista.operator[]()." << std::endl;
+    return NULL; // Or handle the error as needed
+  }
+
+  Elemento<TL> *current = pPrimeiro;
+  for (int i = 0; i < index; i++)
+  {
+    current = current->getProximo();
+  }
+  return current;
 }
 
 #endif // LISTA_HPP
