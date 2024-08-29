@@ -31,3 +31,5 @@ public:
   tipoDeEntidade getAtirador();
   Json::Value gravar();
 };
+
+#endif

@@ -380,6 +380,7 @@ void Fase::loadFromJson(string filename)
         gerenciadorColisoes.incluirEntidadeEstatica(mina);
         cout << "Loaded mina" << endl;
       }
+
       else if (entityType == FIGHTER)
       {
         Fighter *fighter = new Fighter(entityJson["x"].asInt(), entityJson["y"].asInt(), entityType["vidas"]);
@@ -396,6 +397,14 @@ void Fase::loadFromJson(string filename)
         gerenciadorColisoes.incluirEntidadeMovel(atirador->getCampoDeVisao());
         cout << "Loaded atirador" << endl;
       }
+      else if (entityType == SOLDADO)
+      {
+        SoldadoChefe *soldado = new SoldadoChefe(entityJson["x"].asInt(), entityJson["y"].asInt(), entityType["vidas"]);
+        entidades.incluir(soldado);
+        gerenciadorColisoes.incluirEntidadeMovel(soldado);
+        gerenciadorColisoes.incluirEntidadeMovel(soldado->getCampoDeVisao());
+        cout << "Loaded soldado" << endl;
+      }
       else if (entityType == PROJETIL)
       {
         Projetil *projetil = new Projetil(entityJson["x"].asInt(), entityJson["y"].asInt(), entityJson["direcao"].asInt(), (tipoDeEntidade)entityJson["atirador"].asInt());
@@ -403,7 +412,13 @@ void Fase::loadFromJson(string filename)
         gerenciadorColisoes.incluirEntidadeMovel(projetil);
         cout << "Loaded projetil" << endl;
       }
-      //   // Add more entity types as needed
+      else if (entityType == GRANADA)
+      {
+        Granada *granada = new Granada(entityJson["x"].asInt(), entityJson["y"].asInt(), entityJson["direcao"].asInt(), (tipoDeEntidade)entityJson["atirador"].asInt());
+        entidades.incluir(granada);
+        gerenciadorColisoes.incluirEntidadeMovel(granada);
+        cout << "Loaded granada" << endl;
+      }
     }
   }
 }
