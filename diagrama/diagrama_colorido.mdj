@@ -6578,7 +6578,7 @@
 											"top": 1829,
 											"width": 338.84765625,
 											"height": 13,
-											"text": "«create»+Fase_Segunda(temP2: bool, pontos_iniciais: int)",
+											"text": "«create»+Florenca(temP2: bool, pontos_iniciais: int)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -6596,7 +6596,7 @@
 											"top": 1844,
 											"width": 338.84765625,
 											"height": 13,
-											"text": "«destroy»+Fase_Segunda()",
+											"text": "«destroy»+Florenca()",
 											"horizontalAlignment": 0
 										},
 										{
@@ -6955,7 +6955,7 @@
 											"top": 1037,
 											"width": 282.42822265625,
 											"height": 13,
-											"text": "-fase2: Fase_Segunda*",
+											"text": "-fase2: Florenca*",
 											"horizontalAlignment": 0
 										},
 										{
@@ -7099,7 +7099,7 @@
 											"top": 1142,
 											"width": 282.42822265625,
 											"height": 13,
-											"text": "+fase2: Fase_Segunda*",
+											"text": "+fase2: Florenca*",
 											"horizontalAlignment": 0
 										},
 										{
@@ -28067,7 +28067,7 @@
 							},
 							"name": "fase2",
 							"visibility": "private",
-							"type": "Fase_Segunda*"
+							"type": "Florenca*"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -28140,7 +28140,7 @@
 								"$ref": "lnmEeOvWxEGeGWwDLIc8QQAA"
 							},
 							"name": "fase2",
-							"type": "Fase_Segunda*"
+							"type": "Florenca*"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -28979,7 +28979,7 @@
 							"_parent": {
 								"$ref": "IjAS3/xQpkub0eVRtLFCTQAA"
 							},
-							"name": "Fase_Segunda",
+							"name": "Florenca",
 							"stereotype": "create",
 							"parameters": [
 								{
@@ -29008,7 +29008,7 @@
 							"_parent": {
 								"$ref": "IjAS3/xQpkub0eVRtLFCTQAA"
 							},
-							"name": "Fase_Segunda",
+							"name": "Florenca",
 							"stereotype": "destroy"
 						},
 						{

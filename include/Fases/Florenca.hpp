@@ -4,7 +4,7 @@
 #include "Fase.hpp"
 #include "Entidades/Personagens/SoldadoChefe.hpp"
 
-class Fase_Segunda : public Fase
+class Florenca : public Fase
 {
 private:
   void criarCenario();
@@ -12,8 +12,8 @@ private:
   void criaSoldadoChefe();
 
 public:
-  Fase_Segunda(bool temP2, string filename = "", int pontos_iniciais = 1000);
-  ~Fase_Segunda();
+  Florenca(bool temP2, string filename = "", int pontos_iniciais = 1000);
+  ~Florenca();
   void executar();
   void desenhar();
 };

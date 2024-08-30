@@ -1,6 +1,6 @@
-#include "Fases/Fase_Segunda.hpp"
+#include "Fases/Florenca.hpp"
 
-Fase_Segunda::Fase_Segunda(bool temP2, string filename, int pontos_iniciais) : Fase(filename, pontos_iniciais, 50, temP2)
+Florenca::Florenca(bool temP2, string filename, int pontos_iniciais) : Fase(filename, pontos_iniciais, 50, temP2)
 {
   criarCenario();
 
@@ -11,9 +11,9 @@ Fase_Segunda::Fase_Segunda(bool temP2, string filename, int pontos_iniciais) : F
   }
 }
 
-Fase_Segunda::~Fase_Segunda() {}
+Florenca::~Florenca() {}
 
-void Fase_Segunda::criarCenario()
+void Florenca::criarCenario()
 {
   int largura = pGG->getWindowSize().x;
   int altura = pGG->getWindowSize().y;
@@ -26,7 +26,7 @@ void Fase_Segunda::criarCenario()
   fundo.setTextureRect(sf::IntRect(0, 0, largura * 10, altura * 10));
 }
 
-void Fase_Segunda::criaMina()
+void Florenca::criaMina()
 {
   int total_minas = 10 + (rand() % 5);
   for (int i = 0; i < total_minas; i++)
@@ -40,7 +40,7 @@ void Fase_Segunda::criaMina()
   }
 }
 
-void Fase_Segunda::criaSoldadoChefe()
+void Florenca::criaSoldadoChefe()
 {
   int total_soldados = 3;
   for (int i = 0; i < total_soldados; i++)
@@ -55,7 +55,7 @@ void Fase_Segunda::criaSoldadoChefe()
   }
 }
 
-void Fase_Segunda::desenhar()
+void Florenca::desenhar()
 {
   pGG->draw(fundo);
   plataformas.desenhar();
@@ -67,7 +67,7 @@ void Fase_Segunda::desenhar()
   pGG->draw(pontosText);
 }
 
-void Fase_Segunda::executar()
+void Florenca::executar()
 {
   int tempo = clock.getElapsedTime().asSeconds();
   if (tempo > segundosDesdeInicio)

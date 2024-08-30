@@ -23,7 +23,7 @@
 #include "Menus/MenuEscolhaPlayers.hpp"
 #include "Menus/MenuCarregamento.hpp"
 #include "Fases/Veneza.hpp"
-#include "Fases/Fase_Segunda.hpp"
+#include "Fases/Florenca.hpp"
 
 class Jogo
 {
@@ -38,7 +38,7 @@ private:
 
     MenuInicio *menuInicio;
     Veneza *fase1;
-    Fase_Segunda *fase2;
+    Florenca *fase2;
     MenuFimDeJogo *menuFimDeJogo;
     Leaderboard *leaderboard;
     Pause *pauseMenu;

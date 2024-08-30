@@ -56,15 +56,15 @@ void Jogo::executar()
             {
                 if (ultimoEstado == MENUGAMEOVER)
                 {
-                    fase2 = new Fase_Segunda(configuracoes.getDoisJogadores(), "", menuFimDeJogo->getPontos());
+                    fase2 = new Florenca(configuracoes.getDoisJogadores(), "", menuFimDeJogo->getPontos());
                 }
                 else if (ultimoEstado == MENUCARREGAMENTO)
                 {
-                    fase2 = new Fase_Segunda(configuracoes.getDoisJogadores(), menuCarregamento->getSelectedSalve());
+                    fase2 = new Florenca(configuracoes.getDoisJogadores(), menuCarregamento->getSelectedSalve());
                 }
                 else
                 {
-                    fase2 = new Fase_Segunda(configuracoes.getDoisJogadores());
+                    fase2 = new Florenca(configuracoes.getDoisJogadores());
                 }
             }
             fase2->executar();

@@ -5833,7 +5833,7 @@
 											"top": 857,
 											"width": 132.1728515625,
 											"height": 11,
-											"text": "«create»+Fase_Segunda()",
+											"text": "«create»+Florenca()",
 											"horizontalAlignment": 0
 										},
 										{
@@ -6204,7 +6204,7 @@
 											"top": 1173,
 											"width": 282.42822265625,
 											"height": 11,
-											"text": "+fase2: Fase_Segunda*",
+											"text": "+fase2: Florenca*",
 											"horizontalAlignment": 0
 										},
 										{
@@ -20967,7 +20967,7 @@
 								"$ref": "lnmEeOvWxEGeGWwDLIc8QQAA"
 							},
 							"name": "fase2",
-							"type": "Fase_Segunda*"
+							"type": "Florenca*"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -21536,7 +21536,7 @@
 							"_parent": {
 								"$ref": "IjAS3/xQpkub0eVRtLFCTQAA"
 							},
-							"name": "Fase_Segunda",
+							"name": "Florenca",
 							"stereotype": "create"
 						},
 						{
