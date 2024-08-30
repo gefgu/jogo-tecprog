@@ -37,15 +37,15 @@ void Jogo::executar()
             {
                 if (ultimoEstado == MENUGAMEOVER)
                 {
-                    fase1 = new Fase_Primeira(configuracoes.getDoisJogadores(), "", menuFimDeJogo->getPontos());
+                    fase1 = new Veneza(configuracoes.getDoisJogadores(), "", menuFimDeJogo->getPontos());
                 }
                 else if (ultimoEstado == MENUCARREGAMENTO)
                 {
-                    fase1 = new Fase_Primeira(configuracoes.getDoisJogadores(), menuCarregamento->getSelectedSalve());
+                    fase1 = new Veneza(configuracoes.getDoisJogadores(), menuCarregamento->getSelectedSalve());
                 }
                 else
                 {
-                    fase1 = new Fase_Primeira(configuracoes.getDoisJogadores());
+                    fase1 = new Veneza(configuracoes.getDoisJogadores());
                 }
             }
             fase1->executar();

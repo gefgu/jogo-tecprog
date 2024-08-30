@@ -5518,7 +5518,7 @@
 											"top": 859,
 											"width": 134.5791015625,
 											"height": 11,
-											"text": "«create»+Fase_Primeira()",
+											"text": "«create»+Veneza()",
 											"horizontalAlignment": 0
 										},
 										{
@@ -5537,7 +5537,7 @@
 											"top": 872,
 											"width": 134.5791015625,
 											"height": 11,
-											"text": "«destroy»+Fase_Primeira()",
+											"text": "«destroy»+Veneza()",
 											"horizontalAlignment": 0
 										},
 										{
@@ -6185,7 +6185,7 @@
 											"top": 1160,
 											"width": 282.42822265625,
 											"height": 11,
-											"text": "+fase1: Fase_Primeira*",
+											"text": "+fase1: Veneza*",
 											"horizontalAlignment": 0
 										},
 										{
@@ -20958,7 +20958,7 @@
 								"$ref": "lnmEeOvWxEGeGWwDLIc8QQAA"
 							},
 							"name": "fase1",
-							"type": "Fase_Primeira*"
+							"type": "Veneza*"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -21439,7 +21439,7 @@
 							"_parent": {
 								"$ref": "I/enJjaCiE67U7s5KXV8qgAA"
 							},
-							"name": "Fase_Primeira",
+							"name": "Veneza",
 							"stereotype": "create"
 						},
 						{
@@ -21448,7 +21448,7 @@
 							"_parent": {
 								"$ref": "I/enJjaCiE67U7s5KXV8qgAA"
 							},
-							"name": "Fase_Primeira",
+							"name": "Veneza",
 							"stereotype": "destroy"
 						},
 						{

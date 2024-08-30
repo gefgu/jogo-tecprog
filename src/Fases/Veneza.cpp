@@ -1,15 +1,15 @@
-#include "Fases/Fase_Primeira.hpp"
+#include "Fases/Veneza.hpp"
 
-Fase_Primeira::Fase_Primeira(bool temP2, string filename, int pontos_iniciais) : Fase(filename, pontos_iniciais, 40, temP2)
+Veneza::Veneza(bool temP2, string filename, int pontos_iniciais) : Fase(filename, pontos_iniciais, 40, temP2)
 {
   criarCenario();
   if (filename.empty())
     criaAtiradores();
 }
 
-Fase_Primeira::~Fase_Primeira() {}
+Veneza::~Veneza() {}
 
-void Fase_Primeira::criarCenario()
+void Veneza::criarCenario()
 {
   int largura = pGG->getWindowSize().x;
   int altura = pGG->getWindowSize().y;
@@ -23,7 +23,7 @@ void Fase_Primeira::criarCenario()
   fundo.setTextureRect(sf::IntRect(0, 0, largura * 10, altura * 10));
 }
 
-void Fase_Primeira::desenhar()
+void Veneza::desenhar()
 {
   pGG->draw(fundo);
   plataformas.desenhar();
@@ -35,7 +35,7 @@ void Fase_Primeira::desenhar()
   caixaDeCorreio.desenhar();
 }
 
-void Fase_Primeira::executar()
+void Veneza::executar()
 {
   int tempo = clock.getElapsedTime().asSeconds();
   if (tempo > segundosDesdeInicio)
@@ -54,7 +54,7 @@ void Fase_Primeira::executar()
   desenhar();
 }
 
-void Fase_Primeira::criaAtiradores()
+void Veneza::criaAtiradores()
 {
   int total_atiradores = 3 + (rand() % 2);
   for (int i = 0; i < total_atiradores; i++)

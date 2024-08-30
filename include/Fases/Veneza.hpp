@@ -4,14 +4,15 @@
 #include "Fase.hpp"
 #include "Entidades/Personagens/Atirador.hpp"
 
-class Fase_Primeira : public Fase
+class Veneza : public Fase
 {
 private:
   void criarCenario();
   void criaAtiradores();
+
 public:
-  Fase_Primeira(bool temP2, string filename = "", int pontos_iniciais = 1000);
-  ~Fase_Primeira();
+  Veneza(bool temP2, string filename = "", int pontos_iniciais = 1000);
+  ~Veneza();
   void executar();
   void desenhar();
 };

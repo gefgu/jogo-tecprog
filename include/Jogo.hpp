@@ -22,7 +22,7 @@
 #include "Menus/Pause.hpp"
 #include "Menus/MenuEscolhaPlayers.hpp"
 #include "Menus/MenuCarregamento.hpp"
-#include "Fases/Fase_Primeira.hpp"
+#include "Fases/Veneza.hpp"
 #include "Fases/Fase_Segunda.hpp"
 
 class Jogo
@@ -37,7 +37,7 @@ private:
     PerformanceMonitor performanceMonitor;
 
     MenuInicio *menuInicio;
-    Fase_Primeira *fase1;
+    Veneza *fase1;
     Fase_Segunda *fase2;
     MenuFimDeJogo *menuFimDeJogo;
     Leaderboard *leaderboard;
