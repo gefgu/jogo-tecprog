@@ -1,85 +1,47 @@
 #ifndef LISTA_HPP
 #define LISTA_HPP
 
+#include <iostream> // Add this for cout
+using namespace std;
+
 template <class TL>
 class Lista
 {
+public:
+  class Elemento; // Forward declare Elemento class
+
 private:
-  Elemento<TL> *pPrimeiro;
-  Elemento<TL> *pUltimo;
+  Elemento *pPrimeiro;
+  Elemento *pUltimo;
   int _size;
-
-  template <class TE>
-  class Elemento
-  {
-  private:
-    Elemento<TE> *pProx;
-    TE *pInfo;
-
-  public:
-    Elemento(TE *elem);
-    ~Elemento();
-    TE *getInfo();
-    Elemento<TE> *getProximo();
-    void setProximo(Elemento<TE> *prox);
-  };
-
-  template <class TE>
-  Elemento<TE>::Elemento(TE *elem) : pInfo(NULL), pProx(NULL)
-  {
-    if (elem)
-    {
-      pInfo = elem;
-    }
-    else
-    {
-      cout << "Ponteiro inválido na criação do Elemento" << endl;
-    }
-  }
-
-  template <class TE>
-  Elemento<TE>::~Elemento()
-  {
-    if (pInfo)
-      delete pInfo;
-  }
-
-  template <class TE>
-  TE *Elemento<TE>::getInfo()
-  {
-    return pInfo;
-  }
-
-  template <class TE>
-  Elemento<TE> *Elemento<TE>::getProximo()
-  {
-    return pProx;
-  }
-
-  template <class TE>
-  void Elemento<TE>::setProximo(Elemento<TE> *prox)
-  {
-    if (prox)
-    {
-      pProx = prox;
-    }
-    else
-    {
-      cout << "Ponteiro inválido em Elemento.setProximo()" << endl;
-    }
-  }
 
 public:
   Lista();
   ~Lista();
   void incluir(TL *elem);
   void remover(TL *elem);
-  Elemento<TL> *getPrimeiro();
-  Elemento<TL> *getUltimo();
+  Elemento *getPrimeiro();
+  Elemento *getUltimo();
   int size();
-  Elemento<TL> *operator[](int index); // Access by index
+  Elemento *operator[](int index); // Access by index
+
+  // Nested Elemento class definition
+  class Elemento
+  {
+  private:
+    Elemento *pProx;
+    TL *pInfo;
+
+  public:
+    Elemento(TL *elem);
+    ~Elemento();
+    TL *getInfo();
+    Elemento *getProximo();
+    void setProximo(Elemento *prox);
+  };
 };
 
+// Definitions for Lista class
 template <class TL>
 Lista<TL>::Lista() : pPrimeiro(NULL), pUltimo(NULL), _size(0)
 {
@@ -88,14 +50,14 @@ Lista<TL>::Lista() : pPrimeiro(NULL), pUltimo(NULL), _size(0)
 template <class TL>
 Lista<TL>::~Lista()
 {
-  Elemento<TL> *ultimo = pPrimeiro;
-  Elemento<TL> *atual;
-  do
+  Elemento *ultimo = pPrimeiro;
+  Elemento *atual;
+  while (ultimo != NULL)
   {
     atual = ultimo->getProximo();
     delete ultimo;
     ultimo = atual;
-  } while (ultimo != pUltimo);
+  }
   pPrimeiro = NULL;
   pUltimo = NULL;
 }
@@ -105,15 +67,14 @@ void Lista<TL>::incluir(TL *elem)
 {
   if (elem)
   {
+    Elemento *e = new Elemento(elem);
     if (pPrimeiro == NULL)
     {
-      Elemento<TL> *e = new Elemento(elem);
       pPrimeiro = e;
       pUltimo = e;
     }
     else
     {
-      Elemento<TL> *e = new Elemento(elem);
       pUltimo->setProximo(e);
       pUltimo = e;
     }
@@ -134,8 +95,8 @@ void Lista<TL>::remover(TL *elem)
     return;
   }
 
-  Elemento<TL> *anterior = NULL;
-  Elemento<TL> *atual = pPrimeiro;
+  Elemento *anterior = NULL;
+  Elemento *atual = pPrimeiro;
 
   while (atual != NULL)
   {
@@ -165,13 +126,13 @@ void Lista<TL>::remover(TL *elem)
 }
 
 template <class TL>
-Elemento<TL> *Lista<TL>::getPrimeiro()
+typename Lista<TL>::Elemento *Lista<TL>::getPrimeiro()
 {
   return pPrimeiro;
 }
 
 template <class TL>
-Elemento<TL> *Lista<TL>::getUltimo()
+typename Lista<TL>::Elemento *Lista<TL>::getUltimo()
 {
   return pUltimo;
 }
@@ -183,7 +144,7 @@ int Lista<TL>::size()
 }
 
 template <class TL>
-Elemento<TL> *Lista<TL>::operator[](int index)
+typename Lista<TL>::Elemento *Lista<TL>::operator[](int index)
 {
   if (index < 0 || index >= _size)
   {
@@ -191,12 +152,58 @@ Elemento<TL> *Lista<TL>::operator[](int index)
     return NULL; // Or handle the error as needed
   }
 
-  Elemento<TL> *current = pPrimeiro;
+  Elemento *current = pPrimeiro;
   for (int i = 0; i < index; i++)
   {
     current = current->getProximo();
   }
   return current;
+}
+
+// Definitions for nested Elemento class
+template <class TL>
+Lista<TL>::Elemento::Elemento(TL *elem) : pInfo(NULL), pProx(NULL)
+{
+  if (elem)
+  {
+    pInfo = elem;
+  }
+  else
+  {
+    cout << "Ponteiro inválido na criação do Elemento" << endl;
+  }
+}
+
+template <class TL>
+Lista<TL>::Elemento::~Elemento()
+{
+  if (pInfo)
+    delete pInfo;
+}
+
+template <class TL>
+TL *Lista<TL>::Elemento::getInfo()
+{
+  return pInfo;
+}
+
+template <class TL>
+typename Lista<TL>::Elemento *Lista<TL>::Elemento::getProximo()
+{
+  return pProx;
+}
+
+template <class TL>
+void Lista<TL>::Elemento::setProximo(Elemento *prox)
+{
+  if (prox)
+  {
+    pProx = prox;
+  }
+  else
+  {
+    cout << "Ponteiro inválido em Elemento.setProximo()" << endl;
+  }
 }
 
 #endif // LISTA_HPP

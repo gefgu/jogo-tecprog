@@ -5,6 +5,7 @@
 #include <ctime>
 #include <sstream>
 #include <iomanip>
+#include <iostream>
 
 Fase::Fase(string filename, int pontos_iniciais, int qty_plt, bool temP2) : pontos(pontos_iniciais), finalX(10000), caixaDeCorreio("./assets/images/caixa_de_correio.png"), segundosDesdeInicio(0), _gerenciadorInput(Gerenciador_Input::getInstance()), temPlayerDois(temP2), jogador(NULL), jogador2(NULL)
 {
@@ -29,7 +30,15 @@ Fase::Fase(string filename, int pontos_iniciais, int qty_plt, bool temP2) : pont
 
   if (!filename.empty())
   {
-    loadFromJson(filename);
+    try
+    {
+      loadFromJson(filename);
+    }
+    catch (...)
+    {
+      cout << "Error Loading from json" << endl;
+      exit(1);
+    }
   }
   else
   {
@@ -269,40 +278,48 @@ void Fase::centralizaCamera()
 
 void Fase::saveEntitiesToJson()
 {
-  Json::Value root;
-
-  root["points"] = getPontos();
-  root["fase"] = Gerenciador_Estado::getInstance().getEstadoJogo();
-
-  // Save platforms using the toJsonArray() method
-  root["platforms"] = plataformas.toJsonArray();
-
-  // Save other entities using the toJsonArray() method
-  root["entities"] = entidades.toJsonArray();
-
-  // Get the current time
-  std::time_t now = std::time(0);
-  std::tm *now_tm = std::localtime(&now);
-
-  // Format the time to create a filename
-  std::ostringstream filename;
-  filename << "salvo_" << (now_tm->tm_year + 1900)
-           << std::setw(2) << std::setfill('0') << (now_tm->tm_mon + 1)
-           << std::setw(2) << std::setfill('0') << now_tm->tm_mday << "_"
-           << std::setw(2) << std::setfill('0') << now_tm->tm_hour
-           << std::setw(2) << std::setfill('0') << now_tm->tm_min
-           << std::setw(2) << std::setfill('0') << now_tm->tm_sec << ".json";
-
-  // Save to a file with the generated filename
-  std::ofstream file(filename.str().c_str());
-  if (file.is_open())
+  try
   {
-    file << root;
-    file.close();
+    Json::Value root;
+
+    root["points"] = getPontos();
+    root["fase"] = Gerenciador_Estado::getInstance().getEstadoJogo();
+
+    // Save platforms using the toJsonArray() method
+    root["platforms"] = plataformas.toJsonArray();
+
+    // Save other entities using the toJsonArray() method
+    root["entities"] = entidades.toJsonArray();
+
+    // Get the current time
+    std::time_t now = std::time(0);
+    std::tm *now_tm = std::localtime(&now);
+
+    // Format the time to create a filename
+    std::ostringstream filename;
+    filename << "salvo_" << (now_tm->tm_year + 1900)
+             << std::setw(2) << std::setfill('0') << (now_tm->tm_mon + 1)
+             << std::setw(2) << std::setfill('0') << now_tm->tm_mday << "_"
+             << std::setw(2) << std::setfill('0') << now_tm->tm_hour
+             << std::setw(2) << std::setfill('0') << now_tm->tm_min
+             << std::setw(2) << std::setfill('0') << now_tm->tm_sec << ".json";
+
+    // Save to a file with the generated filename
+    std::ofstream file(filename.str().c_str());
+    if (file.is_open())
+    {
+      file << root;
+      file.close();
+    }
+    else
+    {
+      // Handle error: file could not be opened
+    }
   }
-  else
+  catch (...)
   {
-    // Handle error: file could not be opened
+    cout << "Error saving entities to json" << endl;
+    exit(1);
   }
 }
 
