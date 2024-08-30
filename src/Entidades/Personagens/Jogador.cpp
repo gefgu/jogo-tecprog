@@ -23,6 +23,21 @@ const float SHOT_ANIMATION_TIME = 150.0f;
 const float HURT_ANIMATION_TIME = 250.0f;
 const float DEATH_ANIMATION_TIME = 1200.0f;
 
+const char *p1_idle = "./assets/Gangsters_1/Idle.png";
+const char *p1_run = "./assets/Gangsters_1/Run.png";
+const char *p1_walk = "./assets/Gangsters_1/Walk.png";
+const char *p1_jump = "./assets/Gangsters_1/Jump.png";
+const char *p1_hurt = "./assets/Gangsters_1/Hurt.png";
+const char *p1_dead = "./assets/Gangsters_1/Dead.png";
+const char *p1_shot = "./assets/Gangsters_1/Shot.png";
+const char *p2_idle = "./assets/Gangsters_1_p2/Idle.png";
+const char *p2_run = "./assets/Gangsters_1_p2/Run.png";
+const char *p2_walk = "./assets/Gangsters_1_p2/Walk.png";
+const char *p2_jump = "./assets/Gangsters_1_p2/Jump.png";
+const char *p2_hurt = "./assets/Gangsters_1_p2/Hurt.png";
+const char *p2_dead = "./assets/Gangsters_1_p2/Dead.png";
+const char *p2_shot = "./assets/Gangsters_1_p2/Shot.png";
+
 Jogador::Jogador(int px, int py, int vidas, bool player1) : Personagem(px, py, 0, 0, vidas, tipoDeEntidade::JOGADOR),
 
                                                             tempoDesdeUltimoPulo(0.0f),
@@ -41,13 +56,13 @@ Jogador::Jogador(int px, int py, int vidas, bool player1) : Personagem(px, py, 0
 
 {
     _gerenciadorInput.AttachContinuous(this);
-    animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Idle.png"));
-    animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Run.png"));
-    animacao.addTrilha("walking", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Walk.png"));
-    animacao.addTrilha("jump", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Jump.png"));
-    animacao.addTrilha("hurt", new TrilhaAnimacao(4, 5, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Hurt.png"));
-    animacao.addTrilha("dead", new TrilhaAnimacao(4, 20, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Dead.png", false));
-    animacao.addTrilha("shot", new TrilhaAnimacao(3, 5, 128, 128, 3.0, 3.0, "./assets/Gangsters_1/Shot.png", false));
+    animacao.addTrilha("idle", new TrilhaAnimacao(5, 15, 128, 128, 3.0, 3.0, isP1 ? p1_idle : p2_idle));
+    animacao.addTrilha("running", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, isP1 ? p1_run : p2_run));
+    animacao.addTrilha("walking", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, isP1 ? p1_walk : p2_walk));
+    animacao.addTrilha("jump", new TrilhaAnimacao(9, 10, 128, 128, 3.0, 3.0, isP1 ? p1_jump : p2_jump));
+    animacao.addTrilha("hurt", new TrilhaAnimacao(4, 5, 128, 128, 3.0, 3.0, isP1 ? p1_hurt : p2_hurt));
+    animacao.addTrilha("dead", new TrilhaAnimacao(4, 20, 128, 128, 3.0, 3.0, isP1 ? p1_dead : p2_dead, false));
+    animacao.addTrilha("shot", new TrilhaAnimacao(3, 5, 128, 128, 3.0, 3.0, isP1 ? p1_shot : p2_shot, false));
     animacao.setPosition(px, py);
     animacao.setScale(SCALING_FACTOR, SCALING_FACTOR);
     setColisionBoxSize(sf::Vector2f(30 * SCALING_FACTOR, 128 * SCALING_FACTOR));
@@ -235,7 +250,7 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
 
     if (other->getTipo() == tipoDeEntidade::PLATAFORMA)
     {
-        if (intersecao.y > 0 && jogadorBounds.top + jogadorBounds.height / 2 <= otherBounds.top)
+        if (intersecao.y > 0 && jogadorBounds.top + (jogadorBounds.height / 1.5) <= otherBounds.top)
         {
             y -= intersecao.y - 1;
             tempoDesdeUltimoPiso = 0.0f;

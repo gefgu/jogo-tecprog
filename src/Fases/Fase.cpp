@@ -78,9 +78,9 @@ void Fase::criarPlataformas(int qty_plt)
     {
       int val = rand() % 3; // 0 keeps the same
       if (val == 1)
-        py += 64;
+        py += 164;
       else if (val == 2)
-        py -= 64;
+        py -= 164;
       if (val == 0 && i > 3)
         i += 2;
     }
