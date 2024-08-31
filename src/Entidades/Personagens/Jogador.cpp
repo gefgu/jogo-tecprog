@@ -313,7 +313,7 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
     }
     else if (other->getTipo() == tipoDeEntidade::ESPINHO && tempoDesdeUltimoEspinho >= COOLDOWN_ESPINHO)
     {
-        recebeDano(1);
+        recebeDano(static_cast<Espinho *>(other)->getDano());
         tempoDesdeUltimoEspinho = 0;
     }
 

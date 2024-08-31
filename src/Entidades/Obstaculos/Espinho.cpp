@@ -28,3 +28,8 @@ Json::Value Espinho::gravar()
   entityJson["y"] = getPosition().y;
   return entityJson;
 }
+
+int Espinho::getDano()
+{
+  return dano;
+}
