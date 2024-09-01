@@ -14,7 +14,7 @@ MenuInicio::MenuInicio() : Menu()
   for (int i = 0; i < 4; i++)
   {
     sf::RectangleShape botao(sf::Vector2f(300, 75)); // Tamanho dos botões
-    botao.setPosition(sf::Vector2f((largura / 2) - 150, (200 + 150 * i)));
+    botao.setPosition(sf::Vector2f((largura / 2) - 150, (250 + 150 * i)));
     botao.setTexture(texturaBotao);
     botoes.push_back(botao);
 
