@@ -1,6 +1,6 @@
 #include "Fases/Florenca.hpp"
 
-Florenca::Florenca(bool temP2, string filename, int pontos_iniciais) : Fase(filename, pontos_iniciais, 50, temP2)
+Florenca::Florenca(bool temP2, string filename, int pontos_iniciais) : Fase(filename, pontos_iniciais, 75, temP2)
 {
   criarCenario();
 

@@ -1,6 +1,6 @@
 #include "Fases/Veneza.hpp"
 
-Veneza::Veneza(bool temP2, string filename, int pontos_iniciais) : Fase(filename, pontos_iniciais, 40, temP2)
+Veneza::Veneza(bool temP2, string filename, int pontos_iniciais) : Fase(filename, pontos_iniciais, 50, temP2)
 {
   criarCenario();
   if (filename.empty())
