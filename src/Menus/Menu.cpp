@@ -11,12 +11,19 @@ Menu::Menu() : gerenciadorEstado(Gerenciador_Estado::getInstance()), _gerenciado
     textosDecorativos.clear();
     int largura = pGG->getWindowSize().x;
     int altura = pGG->getWindowSize().y;
+    sf::Texture *texturaFundoInicio = pGG->carregaTextura("./assets/images/Fundo.png");
     sf::Texture *texturaFundo = pGG->carregaTextura("./assets/images/fundo_menu.png");
     fundo.setTexture(*texturaFundo);
     fundo.setPosition(0, 0);
     float scaleX = static_cast<float>(largura) / fundo.getTexture()->getSize().x;
     float scaleY = static_cast<float>(altura) / fundo.getTexture()->getSize().y;
     fundo.setScale(scaleX, scaleY);
+
+    fundoInicio.setTexture(*texturaFundoInicio);
+    fundoInicio.setPosition(0, 0);
+    float scaleXI = static_cast<float>(largura) / fundoInicio.getTexture()->getSize().x;
+    float scaleYI = static_cast<float>(altura) / fundoInicio.getTexture()->getSize().y;
+    fundoInicio.setScale(scaleXI, scaleYI);
 }
 
 Menu::~Menu()

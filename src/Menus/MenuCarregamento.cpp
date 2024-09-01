@@ -64,6 +64,10 @@ void MenuCarregamento::Update(const char *teclaPressionada)
     prevButton();
   if (strcmp(teclaPressionada, "Down") == 0)
     nextButton();
+  if(strcmp(teclaPressionada, "Escape") == 0)
+  {
+    gerenciadorEstado.setEstadoJogo(estadoJogo::MENUINICIO);
+  }
   else if (strcmp(teclaPressionada, "Enter") == 0)
   {
     acceptingCommands = false;

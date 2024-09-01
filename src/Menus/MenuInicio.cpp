@@ -14,7 +14,7 @@ MenuInicio::MenuInicio() : Menu()
   for (int i = 0; i < 4; i++)
   {
     sf::RectangleShape botao(sf::Vector2f(300, 75)); // Tamanho dos botões
-    botao.setPosition(sf::Vector2f((largura / 2) - 150, (150 + 150 * i)));
+    botao.setPosition(sf::Vector2f((largura / 2) - 150, (250 + 150 * i)));
     botao.setTexture(texturaBotao);
     botoes.push_back(botao);
 
@@ -26,8 +26,8 @@ MenuInicio::MenuInicio() : Menu()
   }
 
   // Definir os textos dos botões
-  setBotaoTexto(0, "Stage 1");
-  setBotaoTexto(1, "Stage 2");
+  setBotaoTexto(0, "Florenca");
+  setBotaoTexto(1, "Veneza");
   setBotaoTexto(2, "Load Games");
   setBotaoTexto(3, "Leaderboard");
 
@@ -79,7 +79,7 @@ void MenuInicio::executar()
 void MenuInicio::desenhar()
 {
   pGG->centerCamera(sf::Vector2f(pGG->getWindowSize().x / 2, pGG->getWindowSize().y / 2));
-  pGG->draw(fundo);
+  pGG->draw(fundoInicio);
 
   for (size_t i = 0; i < botoes.size(); i++)
   {
