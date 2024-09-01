@@ -10,6 +10,8 @@ private:
   void criarCenario();
   void criaMina();
   void criaSoldadoChefe();
+  int numeroDeMinas;
+  int numeroDeSoldadosChefes;
 
 public:
   Florenca(bool temP2, string filename = "", int pontos_iniciais = 1000);

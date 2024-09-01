@@ -1,6 +1,6 @@
 #include "Fases/Florenca.hpp"
 
-Florenca::Florenca(bool temP2, string filename, int pontos_iniciais) : Fase(filename, pontos_iniciais, 75, temP2)
+Florenca::Florenca(bool temP2, string filename, int pontos_iniciais) : Fase(filename, pontos_iniciais, 75, temP2), numeroDeMinas(5), numeroDeSoldadosChefes(3)
 {
   criarCenario();
 
@@ -28,7 +28,7 @@ void Florenca::criarCenario()
 
 void Florenca::criaMina()
 {
-  int total_minas = 10 + (rand() % 5);
+  int total_minas = numeroDeMinas+ (rand() % 5);
   for (int i = 0; i < total_minas; i++)
   {
     Plataforma *p = static_cast<Plataforma *>(plataformas.getOneUsingNormalDistribution());
@@ -42,8 +42,7 @@ void Florenca::criaMina()
 
 void Florenca::criaSoldadoChefe()
 {
-  int total_soldados = 3;
-  for (int i = 0; i < total_soldados; i++)
+  for (int i = 0; i < numeroDeSoldadosChefes; i++)
   {
     Plataforma *p = static_cast<Plataforma *>(plataformas.getOneUsingNormalDistribution());
     int px = p->getCenter().x;

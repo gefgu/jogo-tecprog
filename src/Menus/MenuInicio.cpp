@@ -26,8 +26,8 @@ MenuInicio::MenuInicio() : Menu()
   }
 
   // Definir os textos dos botões
-  setBotaoTexto(0, "Florenca");
-  setBotaoTexto(1, "Veneza");
+  setBotaoTexto(0, "Veneza");
+  setBotaoTexto(1, "Florenca");
   setBotaoTexto(2, "Load Games");
   setBotaoTexto(3, "Leaderboard");
 

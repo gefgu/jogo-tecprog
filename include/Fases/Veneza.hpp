@@ -9,6 +9,7 @@ class Veneza : public Fase
 private:
   void criarCenario();
   void criaAtiradores();
+  int numeroDeAtiradores;
 
 public:
   Veneza(bool temP2, string filename = "", int pontos_iniciais = 1000);
