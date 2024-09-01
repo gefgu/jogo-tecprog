@@ -72,6 +72,7 @@ void Fase::criarPlataformas(int qty_plt)
 {
   int py = 1075;
   int i;
+  Plataforma *p;
   for (i = -1; i < qty_plt; i++)
   {
     if (i % 5 == 0)
@@ -82,16 +83,16 @@ void Fase::criarPlataformas(int qty_plt)
       else if (val == 2)
         py -= 164;
       if (val == 0 && i > 3)
-        i += 2;
+        i += 1;
     }
 
     // inclui duas no mesmo nível sempre
-    Plataforma *p = new Plataforma(PLATAFORMA_WIDTH * 3 * i, py);
+    p = new Plataforma(PLATAFORMA_WIDTH * 3 * i, py);
     plataformas.incluir(p);
     gerenciadorColisoes.incluirEntidadeEstatica(p);
   }
   finalX = PLATAFORMA_WIDTH * 3 * (i - 1);
-  caixaDeCorreio.setPosition(finalX, py - ((PLATAFORMA_HEIGHT * 3) / 2) + caixaDeCorreio.getSize().height / 4);
+  caixaDeCorreio.setPosition(finalX, p->getSize().top - caixaDeCorreio.getSize().height / 2);
 }
 
 void Fase::desenhar()
@@ -354,15 +355,16 @@ void Fase::loadFromJson(string filename)
   {
     // plataformas.clear(); // Clear existing platforms if any
     Json::Value platformJson;
+    Plataforma *plataforma;
     for (Json::Value::ArrayIndex i = 0; i < root["platforms"].size(); ++i)
     {
       platformJson = root["platforms"][i];
-      Plataforma *plataforma = new Plataforma(platformJson["x"].asInt(), platformJson["y"].asInt());
+      plataforma = new Plataforma(platformJson["x"].asInt(), platformJson["y"].asInt());
       plataformas.incluir(plataforma);
       gerenciadorColisoes.incluirEntidadeEstatica(plataforma);
     }
     finalX = platformJson["x"].asInt() - PLATAFORMA_WIDTH * 3;
-    caixaDeCorreio.setPosition(finalX, platformJson["y"].asInt() - ((PLATAFORMA_HEIGHT * 3) / 2) + caixaDeCorreio.getSize().height / 2);
+    caixaDeCorreio.setPosition(finalX, plataforma->getSize().top - caixaDeCorreio.getSize().height / 2);
   }
   cout << "Added " << root["platforms"].size() << " platforms" << endl;
 
