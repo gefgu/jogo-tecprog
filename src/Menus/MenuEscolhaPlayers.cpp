@@ -45,6 +45,8 @@ void MenuEscolhaPlayers::Update(const char *teclaPressionada)
     prevButton();
   if (strcmp(teclaPressionada, "Down") == 0)
     nextButton();
+  if (strcmp(teclaPressionada, "Escape") == 0)
+    gerenciadorEstado.setEstadoJogo(MENUINICIO);
   else if (strcmp(teclaPressionada, "Enter") == 0)
   {
     int selectedItem = getSelectedItemIndex();

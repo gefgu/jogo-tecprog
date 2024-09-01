@@ -261,12 +261,12 @@ void Jogador::lidarColisao(sf::Vector2f intersecao, Entidade *other)
         }
         else if (intersecao.x >= 0)
         {
-            x -= intersecao.x - 1;
+            if (direcao == 1)
+                x -= intersecao.x - 1;
+            else
+                x += intersecao.x + 1;
         }
-        else if (intersecao.x < 0)
-        {
-            x += intersecao.x + 1;
-        }
+        
     }
 
     if (morto)

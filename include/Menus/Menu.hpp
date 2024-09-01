@@ -13,7 +13,8 @@
 class Menu : public Ente, Observer
 {
 protected:
-    sf::Sprite fundo; // Fundo do menu
+    sf::Sprite fundoInicio; // Fundo do menuInicial
+    sf::Sprite fundo;       // Fundo do menu
     Gerenciador_Estado &gerenciadorEstado;
     Gerenciador_Input &_gerenciadorInput;
     vector<sf::RectangleShape> botoes;  // Botões
