@@ -1,0 +1,13 @@
+- Para os gerenciadores Gráficos e de Input utilizamos a lógica apresentada por Matheus Burda, 
+retirando do github dele.
+URL: https://github.com/MatheusBurda/Desert/blob/master/src/Managers/Graphics.cpp
+
+- Para animações do jogador e inimigos retiramos as sprites do site Craftpix.net
+URL: https://craftpix.net/
+
+- Os fundos foram gerados por Inteligencia Artificial, mais precisamente o chat GPT.
+
+- Os designs dos botões foram de Autoria própria de Gustavo Padovam.
+
+- Também refencia-se a ajuda do GitHub Copilot, uma IA que ajuda a debugar o código e fazer implementações
+rápidas que agilizaram o desenvolvimento do jogo.
