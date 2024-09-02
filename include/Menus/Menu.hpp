@@ -10,6 +10,8 @@
 #include "Ente.hpp"
 #include "Controladores/Observer.hpp"
 
+using namespace Controladores;
+
 class Menu : public Ente, Observer
 {
 protected:

@@ -1,11 +1,15 @@
 #pragma once
+// using namespace Controladores;
 
-class Subject;
+// class Subject;
 
-class Observer
+namespace Controladores
 {
-public:
-  Observer();
-  virtual ~Observer();
-  virtual void Update(const char *teclaPressionada) = 0;
+  class Observer
+  {
+  public:
+    Observer();
+    virtual ~Observer();
+    virtual void Update(const char *teclaPressionada) = 0;
+  };
 };

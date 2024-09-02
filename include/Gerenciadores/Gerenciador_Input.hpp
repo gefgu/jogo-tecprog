@@ -4,6 +4,8 @@
 #include "Gerenciadores/Gerenciador_Grafico.hpp"
 #include <set>
 
+using namespace Controladores;
+
 class Gerenciador_Input : public Subject
 {
 private:

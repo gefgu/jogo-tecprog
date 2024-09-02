@@ -4,6 +4,8 @@
 #include "Controladores/Observer.hpp"
 #include "Gerenciadores/Gerenciador_Input.hpp"
 
+using namespace Controladores;
+
 class Jogador : public Personagem, Observer
 {
 private:
@@ -36,7 +38,7 @@ public:
     void executar();
     void lidarColisao(sf::Vector2f intersecao, Entidade *other);
     void reduzirVelocidade(float fator);
-    Jogador& operator++(); 
+    Jogador &operator++();
     void aplicarForcaRepulsao(float forcaX, float forcaY);
     void Update(const char *teclaPressionada);
     bool getP1();

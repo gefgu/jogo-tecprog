@@ -1,5 +1,7 @@
 #include "Controladores/Subject.hpp"
 
+using namespace Controladores;
+
 Subject::Subject()
 {
 }
