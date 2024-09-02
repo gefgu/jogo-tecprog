@@ -56,12 +56,20 @@ void Granada::lidarColisao(sf::Vector2f intersecao, Entidade *other)
   else if (other->getTipo() == JOGADOR && !static_cast<Jogador *>(other)->getMorto() && velocidadeX == 0 && velocidadeY == 0)
   {
     auto *jogador = static_cast<Jogador *>(other);
+
+    float energiaBomba = 10.0;
+    float raioChoque = 0.1;
+    float energiaImpacto = energiaBomba / sqrt(pow(raioChoque, 2));
+    forca = sqrt(energiaImpacto);
+
     // Calcular a força de repulsão baseada na interseção
     float forcaX = (intersecao.x < 0) ? forca : -forca;
 
     // Aplicar a força de repulsão no jogador
     jogador->aplicarForcaRepulsao(forcaX, -std::abs(forca));
     // jogador->recebeDano(dano);
+
+    jogador->recebeDano(dano);
     ativo = false;
   }
   else if (other->getTipo() == tipoDeEntidade::PLATAFORMA)
